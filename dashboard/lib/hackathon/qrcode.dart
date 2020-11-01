@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'dart:math';
+import 'package:qrscan/qrscan.dart' as scanner;
+import 'dart:async';
+
 
 void main() {
   // debugPaintSizeEnabled = true;
@@ -56,7 +59,7 @@ class QRPage extends StatelessWidget{
         body: Center(
             child: Column(
                 children: <Widget>[
-                  const SizedBox(height: 80),
+                  const SizedBox(height: 60),
                   QrImage(
                     data: "1234567890987654321",
                     version: QrVersions.auto,
@@ -74,6 +77,20 @@ class QRPage extends StatelessWidget{
                     padding: const EdgeInsets.only(top:10, bottom:10,
                         left:30, right:30),
                     child: Text('View Recent Activity',
+                        style:TextStyle(fontSize:30, color:Colors.white)),
+                  ),
+                  const SizedBox(height: 20),
+                  RaisedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) =>
+                            ScannerPage()),
+                      );
+                    },
+                    padding: const EdgeInsets.only(top:10, bottom:10,
+                        left:30, right:30),
+                    child: Text('To Scanner',
                         style:TextStyle(fontSize:30, color:Colors.white)),
                   )
                 ]
@@ -166,3 +183,50 @@ class HistoryPage extends StatelessWidget{
     );
   }
 }
+
+
+class ScannerPage extends StatefulWidget{
+  @override
+  _ScannerPageState createState() => _ScannerPageState();
+}
+
+class _ScannerPageState extends State<ScannerPage> {
+  String scanRes = "Default Text";
+
+  Future scan() async {
+    scanRes = await scanner.scan();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('Scanner Page', style: TextStyle(fontSize: 30)),
+          toolbarHeight: 70,
+        ),
+        body: Center(
+            child: Column(
+                children: [
+                  Text(
+                      '$scanRes',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      )
+                  ),
+                  RaisedButton(
+                    onPressed: () {
+                      scan();
+                    },
+                    padding: const EdgeInsets.only(top: 10, bottom: 10,
+                        left: 30, right: 30),
+                    child: Text('Start Scanning',
+                        style: TextStyle(fontSize: 30, color: Colors.white)),
+                  )
+                ]
+            )
+        )
+    );
+  }
+}
+
