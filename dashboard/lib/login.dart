@@ -5,7 +5,6 @@ class LogIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      key: key,
       home: Center(
       child: RaisedButton(
         onPressed: () => key.currentState.pushNamed('/app'),
