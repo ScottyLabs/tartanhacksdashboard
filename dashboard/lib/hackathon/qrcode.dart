@@ -18,6 +18,14 @@ class QRHome extends StatefulWidget{
 
 class _QRHomeState extends State<QRHome> {
   List<Widget> tiles = new List<Widget>();
+  String myText = "Default Text";
+
+  Future scan() async {
+    String scanRes = await scanner.scan();
+    setState(() {
+      myText = scanRes;
+    });
+  }
 
   void addTile(textL, textS){
     setState(() {
@@ -59,11 +67,11 @@ class QRPage extends StatelessWidget{
         body: Center(
             child: Column(
                 children: <Widget>[
-                  const SizedBox(height: 60),
+                  const SizedBox(height: 50),
                   QrImage(
                     data: "1234567890987654321",
                     version: QrVersions.auto,
-                    size: 350.0,
+                    size: 300.0,
                   ),
                   const SizedBox(height: 20),
                   RaisedButton(
@@ -191,10 +199,13 @@ class ScannerPage extends StatefulWidget{
 }
 
 class _ScannerPageState extends State<ScannerPage> {
-  String scanRes = "Default Text";
+  String myText = "Default Text";
 
   Future scan() async {
-    scanRes = await scanner.scan();
+    String scanRes = await scanner.scan();
+    setState(() {
+      myText = scanRes;
+    });
   }
 
   @override
@@ -208,7 +219,7 @@ class _ScannerPageState extends State<ScannerPage> {
             child: Column(
                 children: [
                   Text(
-                      '$scanRes',
+                      '$myText',
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
