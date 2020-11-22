@@ -3,6 +3,8 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'dart:math';
 import 'package:qrscan/qrscan.dart' as scanner;
 import 'dart:async';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 
 void main() {
@@ -20,6 +22,7 @@ class _QRHomeState extends State<QRHome> {
 
   List<Widget> tiles = new List<Widget>();
   List<String> scanConfig = ["One", "One"];
+  String id;
 
   void addTile(text1, text2, text3){
     setState(() {
@@ -31,6 +34,30 @@ class _QRHomeState extends State<QRHome> {
     setState(() {
       scanConfig[index] = value;
     });
+  }
+
+  void setID(value){
+    setState(() {
+      id = value;
+    });
+  }
+
+  Future getID() async{
+    var response = await http.post(
+        Uri.encodeFull("https://tartanhacks-testing.herokuapp.com/auth/login"),
+        body: {
+          "email": "joyceh@andrew.cmu.edu",
+          "password": "TartanHacksTest"
+        }
+    );
+    Map data = json.decode(response.body);
+    setID(data["user"]["id"]);
+  }
+
+  @override
+  void initState() {
+    getID();
+    super.initState();
   }
 
   @override
@@ -46,7 +73,7 @@ class _QRHomeState extends State<QRHome> {
           )
       ),
         home: QRPage(tiles: tiles, addTile: addTile, scanConfig: scanConfig,
-            setConfig: setConfig)
+            setConfig: setConfig, id: id)
     );
   }
 }
@@ -58,8 +85,9 @@ class QRPage extends StatelessWidget{
   final Function addTile;
   final List<String> scanConfig;
   final Function setConfig;
+  final String id;
 
-  QRPage({this.tiles, this.addTile, this.scanConfig, this.setConfig});
+  QRPage({this.tiles, this.addTile, this.scanConfig, this.setConfig, this.id});
 
   Future scan() async {
     String scanRes = await scanner.scan();
@@ -78,9 +106,10 @@ class QRPage extends StatelessWidget{
                 children: <Widget>[
                   const SizedBox(height: 30),
                   QrImage(
-                    data: "1234567890987654321",
+                    data: "$id",
                     version: QrVersions.auto,
                     size: 300.0,
+                    foregroundColor: (id == null) ? Colors.white : Colors.black,
                   ),
                   const SizedBox(height: 20),
                   RaisedButton(
