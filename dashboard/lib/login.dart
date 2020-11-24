@@ -8,7 +8,7 @@ class LogIn extends StatelessWidget {
       key: key,
       home: Center(
       child: RaisedButton(
-        onPressed: () => key.currentState.pushNamed('/app'),
+        onPressed: (){},
         child: Text("Tap here to just access the app. Dev only."),
       ),
     ));
