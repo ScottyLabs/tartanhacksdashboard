@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'dart:math';
 import 'package:qrscan/qrscan.dart' as scanner;
 import 'dart:async';
 import 'package:http/http.dart' as http;
@@ -18,15 +17,31 @@ class QRHome extends StatefulWidget{
 }
 
 
+class HistoryItem{
+  String text1;
+  String text2;
+  String text3;
+  
+  HistoryItem(this.text1, this.text2, this.text3);
+}
+
+
 class _QRHomeState extends State<QRHome> {
 
-  List<Widget> tiles = new List<Widget>();
-  List<String> scanConfig = ["One", "One"];
+  List history = new List();
+  List scanConfig = ["One", "One", false];
   String id;
+  bool admin = false;
 
-  void addTile(text1, text2, text3){
+  void addHistory(text1, text2, text3){
     setState(() {
-      tiles.add(new InfoTile(text1: text1, text2: text2, text3: text3));
+      history.add(new HistoryItem(text1, text2, text3));
+    });
+  }
+
+  void delHistory(hItem){
+    setState(() {
+      history.remove(hItem);
     });
   }
 
@@ -36,9 +51,10 @@ class _QRHomeState extends State<QRHome> {
     });
   }
 
-  void setID(value){
+  void setID(thisID, thisAdmin){
     setState(() {
-      id = value;
+      id = thisID;
+      admin = thisAdmin;
     });
   }
 
@@ -51,7 +67,7 @@ class _QRHomeState extends State<QRHome> {
         }
     );
     Map data = json.decode(response.body);
-    setID(data["user"]["id"]);
+    setID(data["user"]["id"], data["user"]["admin"]);
   }
 
   @override
@@ -63,17 +79,23 @@ class _QRHomeState extends State<QRHome> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'QR Page',
+        title: 'QR Scanner',
         theme: ThemeData(
           canvasColor: Colors.white,
-          buttonColor: Colors.blue,
+          accentColor: Color(0xffcb1a1d),
+          buttonColor: Colors.black,
+          fontFamily: 'Lato',
           textTheme: TextTheme(
-            subtitle1: TextStyle(fontSize: 20),
+            headline1: TextStyle(fontSize: 35, fontWeight: FontWeight.bold,
+                color: Colors.white),
+            subtitle1: TextStyle(fontSize: 20, color: Colors.black,
+                fontWeight: FontWeight.normal),
             button: TextStyle(fontSize: 30, color: Colors.white)
           )
       ),
-        home: QRPage(tiles: tiles, addTile: addTile, scanConfig: scanConfig,
-            setConfig: setConfig, id: id)
+        home: QRPage(history: history, addHistory: addHistory,
+          delHistory: delHistory, scanConfig: scanConfig, setConfig: setConfig,
+          setID: setID, id: id, admin: admin,)
     );
   }
 }
@@ -81,24 +103,47 @@ class _QRHomeState extends State<QRHome> {
 
 class QRPage extends StatelessWidget{
 
-  final List<Widget> tiles;
-  final Function addTile;
-  final List<String> scanConfig;
+  final List history;
+  final Function addHistory;
+  final Function delHistory;
+  final List scanConfig;
   final Function setConfig;
+  final Function setID;
   final String id;
+  final bool admin;
 
-  QRPage({this.tiles, this.addTile, this.scanConfig, this.setConfig, this.id});
+  QRPage({this.history, this.addHistory, this.delHistory, this.scanConfig,
+    this.setConfig, this.setID, this.id, this.admin});
 
-  Future scan() async {
+  Future scan(BuildContext context) async {
     String scanRes = await scanner.scan();
-    addTile(scanRes, scanConfig[0], scanConfig[1]);
+    if(scanConfig[2] == true){
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) =>
+            HistoryPage(history:history, addHistory:addHistory,
+                delHistory: delHistory, editing: true)),
+      );
+    }else {
+      addHistory(scanRes, scanConfig[0], scanConfig[1]);
+    }
   }
 
   @override
   Widget build(BuildContext context){
     return Scaffold(
         appBar: AppBar(
-          title: Text('QR Page', style: TextStyle(fontSize: 30)),
+          title: Text('Your QR Code',
+              style: Theme.of(context).textTheme.headline1),
+          backgroundColor: Theme.of(context).accentColor,
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.admin_panel_settings, size: 30),
+              onPressed: () {
+                setID(id, !admin);
+              },
+            )
+          ],
           toolbarHeight: 70,
         ),
         body: Center(
@@ -117,25 +162,27 @@ class QRPage extends StatelessWidget{
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) =>
-                            HistoryPage(tiles:tiles, addTile:addTile)),
+                            HistoryPage(history:history, addHistory:addHistory,
+                                editing:false)),
                       );
                     },
                     padding: const EdgeInsets.only(top:10, bottom:10,
                         left:30, right:30),
                     child: Text('View Recent Activity',
-                        style:TextStyle(fontSize:30, color:Colors.white)),
+                        style: Theme.of(context).textTheme.button),
                   ),
+                  if(admin)
                   ButtonBar(
                       alignment: MainAxisAlignment.spaceEvenly,
                       children:<Widget>[
                         RaisedButton(
                           onPressed: () {
-                            scan();
+                            scan(context);
                           },
                           padding: const EdgeInsets.only(top:10, bottom:10,
                               left:30, right:30),
                           child: Text('To Scanner',
-                              style:TextStyle(fontSize:30, color:Colors.white)),
+                              style: Theme.of(context).textTheme.button),
                         ),
                         OutlineButton(
                           onPressed: () {
@@ -161,11 +208,11 @@ class QRPage extends StatelessWidget{
 
 
 class InfoTile extends StatelessWidget{
-  final String text1;
-  final String text2;
-  final String text3;
+  final HistoryItem info;
+  final bool editing;
+  final Function delHistory;
 
-  InfoTile({this.text1, this.text2, this.text3});
+  InfoTile({this.info, this.editing, this.delHistory});
 
   @override
   Widget build(BuildContext context){
@@ -173,33 +220,50 @@ class InfoTile extends StatelessWidget{
         margin: const EdgeInsets.all(12),
         child: Padding(
             padding: const EdgeInsets.all(24),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                      '$text1',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+            child: Row(
+              children: [
+                if(editing)
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                          icon: Icon(Icons.delete),
+                          onPressed: () {
+                            delHistory(info);
+                          }
                       )
+                    ],
                   ),
-                  const SizedBox(height: 8),
-                  Text(
-                      '$text2',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey[500],
-                      )
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                      '$text3',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey[500],
-                      )
-                  ),
-                ]
+                  const SizedBox(width: 20),
+                Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                          '${info.text1}',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          )
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                          '${info.text2}',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey[500],
+                          )
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                          '${info.text3}',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey[500],
+                          )
+                      ),
+                    ]
+                )
+              ]
             )
         )
     );
@@ -209,31 +273,30 @@ class InfoTile extends StatelessWidget{
 
 class HistoryPage extends StatelessWidget{
 
-  final List<Widget> tiles;
-  final Function addTile;
-  final rng = new Random();
+  final List history;
+  final Function addHistory;
+  final Function delHistory;
+  final bool editing;
 
-  HistoryPage({this.tiles, this.addTile});
-
-  void handleChange(){
-    addTile(rng.nextInt(1000000000).toString(),
-        rng.nextInt(1000000000).toString());
-  }
+  HistoryPage({this.history, this.addHistory, this.delHistory, this.editing});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('History Page', style: TextStyle(fontSize: 30)),
+          title: Text('Scan History',
+              style: Theme.of(context).textTheme.headline1),
+          backgroundColor: Theme.of(context).accentColor,
           toolbarHeight: 70,
         ),
         body: Column(
             children: <Widget>[
               Expanded(
                 child:  ListView.builder(
-                  itemCount: tiles.length,
+                  itemCount: history.length,
                   itemBuilder: (BuildContext context, int index){
-                    return tiles[index];
+                    return InfoTile(info: history[index],
+                        editing: editing, delHistory: delHistory,);
                   },
                 ),
               ),
@@ -246,7 +309,7 @@ class HistoryPage extends StatelessWidget{
 
 class ConfigPage extends StatelessWidget {
 
-  final List<String> scanConfig;
+  final List scanConfig;
   final Function setConfig;
 
   ConfigPage({this.scanConfig, this.setConfig});
@@ -255,7 +318,9 @@ class ConfigPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Scan Config', style: TextStyle(fontSize: 30)),
+          title: Text('Scan Config',
+              style: Theme.of(context).textTheme.headline1),
+          backgroundColor: Theme.of(context).accentColor,
           toolbarHeight: 70,
         ),
         body:Padding(
@@ -265,8 +330,11 @@ class ConfigPage extends StatelessWidget {
                 children: [
                   Row(
                       children: [
-                        Text("Option A",
-                            style: Theme.of(context).textTheme.subtitle1),
+                        Container(
+                          child: Text("Option A",
+                              style: Theme.of(context).textTheme.subtitle1),
+                          width: 100,
+                        ),
                         const SizedBox(width: 50),
                         DropdownButton<String>(
                             value: scanConfig[0],
@@ -274,19 +342,30 @@ class ConfigPage extends StatelessWidget {
                                 .map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
-                                child: Text(value),
+                                child: Container(
+                                    child: Text(value),
+                                    width: 100
+                                )
                               );
                             }).toList(),
-                            onChanged: (String newValue) {
+                            disabledHint: Text(scanConfig[0]),
+                            underline: Container(
+                                height: 2,
+                                color: Theme.of(context).accentColor
+                            ),
+                            onChanged: (!scanConfig[2]) ? (String newValue) {
                               setConfig(newValue, 0);
-                            }
+                            } : null
                         ),
                       ]
                   ),
                   Row(
                       children:[
-                        Text("Option B",
-                            style: Theme.of(context).textTheme.subtitle1),
+                        Container(
+                          child: Text("Option A",
+                              style: Theme.of(context).textTheme.subtitle1),
+                          width: 100,
+                        ),
                         const SizedBox(width: 50),
                         DropdownButton<String>(
                             value: scanConfig[1],
@@ -294,14 +373,30 @@ class ConfigPage extends StatelessWidget {
                                 .map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
-                                child: Text(value),
+                                child: Container(
+                                  child: Text(value),
+                                  width: 100
+                                )
                               );
                             }).toList(),
-                            onChanged: (String newValue) {
+                            disabledHint: Text(scanConfig[1]),
+                            underline: Container(
+                              height: 2,
+                              color: Theme.of(context).accentColor
+                            ),
+                            onChanged: (!scanConfig[2]) ? (String newValue) {
                               setConfig(newValue, 1);
-                            }
+                            } : null
                         )
                       ]
+                  ),
+                  const SizedBox(height:20),
+                  CheckboxListTile(
+                    title: Text("Edit Mode"),
+                    value: scanConfig[2],
+                    onChanged: (bool newValue) {
+                      setConfig(newValue, 2);
+                    }
                   )
                 ]
             )
