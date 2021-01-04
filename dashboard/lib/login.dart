@@ -27,7 +27,8 @@ class LogIn extends StatelessWidget {
               Container(
                 width: width,
                 height: height*0.45,
-                child: Image.asset('assets/yoga.png',fit: BoxFit.fill,),
+                child: Image.asset('assets/tartanhackslogo.png',fit: BoxFit.fill,),
+                // do not have the asset yet, this is for the signup page
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -125,7 +126,8 @@ class _SecondState extends State<Second> {
               Container(
                 width: width,
                 height: height*0.45,
-                child: Image.asset('assets/play.png',fit: BoxFit.fill,),
+                child: Image.asset('assets/tartanhackslogo.png',fit: BoxFit.fill,), 
+                // do not have the asset yet! - this is for log in page
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
