@@ -19,6 +19,7 @@ class LogIn extends StatelessWidget {
     return Scaffold(
       body: Container(
         // decoration: new BoxDecoration(color: Colors.black), - black background
+        padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.05),
         height: height,
         width: width,
         child: SingleChildScrollView(
@@ -71,7 +72,7 @@ class LogIn extends StatelessWidget {
                     RaisedButton(
                       child: Text('Login'),
                       color: Color(0xffE21031),
-                      onPressed: (){},
+                      onPressed: () {},
                     ),
                   ],
                 ),
@@ -83,7 +84,7 @@ class LogIn extends StatelessWidget {
                 },
                 child: Text.rich(
                   TextSpan(
-                    text: 'Don\'t have an account\t',
+                    text: 'Don\'t have an account?\t',
                     children: [
                       TextSpan(
                         text: 'Signup',
