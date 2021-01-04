@@ -18,6 +18,7 @@ class LogIn extends StatelessWidget {
     double height=MediaQuery.of(context).size.height;
     return Scaffold(
       body: Container(
+        // decoration: new BoxDecoration(color: Colors.black), - black background
         height: height,
         width: width,
         child: SingleChildScrollView(
@@ -69,7 +70,7 @@ class LogIn extends StatelessWidget {
                     Text('Forget password?',style: TextStyle(fontSize: 12.0),),
                     RaisedButton(
                       child: Text('Login'),
-                      color: Color(0xffEE7B23),
+                      color: Color(0xffE21031),
                       onPressed: (){},
                     ),
                   ],
@@ -82,12 +83,12 @@ class LogIn extends StatelessWidget {
                 },
                 child: Text.rich(
                   TextSpan(
-                    text: 'Don\'t have an account',
+                    text: 'Don\'t have an account\t',
                     children: [
                       TextSpan(
                         text: 'Signup',
                         style: TextStyle(
-                          color: Color(0xffEE7B23)
+                          color: Color(0xffE21031)
                         ),
                       ),
                     ]
@@ -117,6 +118,7 @@ class _SecondState extends State<Second> {
     double height=MediaQuery.of(context).size.height;
     return Scaffold(
       body: Container(
+        // decoration: new BoxDecoration(color: Colors.black), - black background
         height: height,
         width: width,
         child: SingleChildScrollView(
@@ -168,7 +170,7 @@ class _SecondState extends State<Second> {
                     Text('Forget password?',style: TextStyle(fontSize: 12.0),),
                     RaisedButton(
                       child: Text('Signup'),
-                      color: Color(0xffEE7B23),
+                      color: Color(0xffE21031),
                       onPressed: (){},
                     ),
                   ],
@@ -181,12 +183,12 @@ class _SecondState extends State<Second> {
                 },
                 child: Text.rich(
                   TextSpan(
-                      text: 'Already have an account',
+                      text: 'Already have an account\t',
                       children: [
                         TextSpan(
                           text: 'Signin',
                           style: TextStyle(
-                              color: Color(0xffEE7B23)
+                              color: Color(0xffE21031)
                           ),
                         ),
                       ]
