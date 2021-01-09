@@ -14,12 +14,13 @@ class LogIn extends StatelessWidget {
     ));
   }*/
   Widget build(BuildContext context) {
-    double width=MediaQuery.of(context).size.width;
-    double height=MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Container(
         // decoration: new BoxDecoration(color: Colors.black), - black background
-        padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.05),
+        padding: EdgeInsets.symmetric(
+            horizontal: MediaQuery.of(context).size.width * 0.05),
         height: height,
         width: width,
         child: SingleChildScrollView(
@@ -28,8 +29,11 @@ class LogIn extends StatelessWidget {
             children: [
               Container(
                 width: width,
-                height: height*0.45,
-                child: Image.asset('assets/tartanhackslogo.png',fit: BoxFit.fill,),
+                height: height * 0.45,
+                child: Image.asset(
+                  'assets/tartanhackslogo.png',
+                  fit: BoxFit.fill,
+                ),
                 // do not have the asset yet, this is for the signup page
               ),
               Padding(
@@ -37,11 +41,17 @@ class LogIn extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text('Login',style: TextStyle(fontSize: 25.0,fontWeight: FontWeight.bold),),
+                    Text(
+                      'Login',
+                      style: TextStyle(
+                          fontSize: 25.0, fontWeight: FontWeight.bold),
+                    ),
                   ],
                 ),
               ),
-              SizedBox(height: 30.0,),
+              SizedBox(
+                height: 30.0,
+              ),
               TextField(
                 decoration: InputDecoration(
                   hintText: 'Email',
@@ -51,7 +61,9 @@ class LogIn extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 20.0,),
+              SizedBox(
+                height: 20.0,
+              ),
               TextField(
                 obscureText: true,
                 decoration: InputDecoration(
@@ -62,13 +74,18 @@ class LogIn extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 30.0,),
+              SizedBox(
+                height: 30.0,
+              ),
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Forget password?',style: TextStyle(fontSize: 12.0),),
+                    Text(
+                      'Forget password?',
+                      style: TextStyle(fontSize: 12.0),
+                    ),
                     RaisedButton(
                       child: Text('Login'),
                       color: Color(0xffE21031),
@@ -77,34 +94,27 @@ class LogIn extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height:20.0),
+              SizedBox(height: 20.0),
               GestureDetector(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>Second()));
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Second()));
                 },
                 child: Text.rich(
-                  TextSpan(
-                    text: 'Don\'t have an account?\t',
-                    children: [
-                      TextSpan(
-                        text: 'Signup',
-                        style: TextStyle(
-                          color: Color(0xffE21031)
-                        ),
-                      ),
-                    ]
-                  ),
+                  TextSpan(text: 'Don\'t have an account?\t', children: [
+                    TextSpan(
+                      text: 'Signup',
+                      style: TextStyle(color: Color(0xffE21031)),
+                    ),
+                  ]),
                 ),
               ),
-
-
             ],
           ),
         ),
       ),
     );
   }
-
 }
 
 class Second extends StatefulWidget {
@@ -115,11 +125,13 @@ class Second extends StatefulWidget {
 class _SecondState extends State<Second> {
   @override
   Widget build(BuildContext context) {
-    double width=MediaQuery.of(context).size.width;
-    double height=MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Container(
         // decoration: new BoxDecoration(color: Colors.black), - black background
+        padding: EdgeInsets.symmetric(
+            horizontal: MediaQuery.of(context).size.width * 0.05),
         height: height,
         width: width,
         child: SingleChildScrollView(
@@ -128,8 +140,11 @@ class _SecondState extends State<Second> {
             children: [
               Container(
                 width: width,
-                height: height*0.45,
-                child: Image.asset('assets/tartanhackslogo.png',fit: BoxFit.fill,), 
+                height: height * 0.45,
+                child: Image.asset(
+                  'assets/tartanhackslogo.png',
+                  fit: BoxFit.fill,
+                ),
                 // do not have the asset yet! - this is for log in page
               ),
               Padding(
@@ -137,11 +152,17 @@ class _SecondState extends State<Second> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text('Signup',style: TextStyle(fontSize: 25.0,fontWeight: FontWeight.bold),),
+                    Text(
+                      'Signup',
+                      style: TextStyle(
+                          fontSize: 25.0, fontWeight: FontWeight.bold),
+                    ),
                   ],
                 ),
               ),
-              SizedBox(height: 30.0,),
+              SizedBox(
+                height: 30.0,
+              ),
               TextField(
                 decoration: InputDecoration(
                   hintText: 'Email',
@@ -151,7 +172,9 @@ class _SecondState extends State<Second> {
                   ),
                 ),
               ),
-              SizedBox(height: 20.0,),
+              SizedBox(
+                height: 20.0,
+              ),
               TextField(
                 obscureText: true,
                 decoration: InputDecoration(
@@ -162,42 +185,41 @@ class _SecondState extends State<Second> {
                   ),
                 ),
               ),
-              SizedBox(height: 30.0,),
+              SizedBox(
+                height: 30.0,
+              ),
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Forget password?',style: TextStyle(fontSize: 12.0),),
+                    Text(
+                      'Forget password?',
+                      style: TextStyle(fontSize: 12.0),
+                    ),
                     RaisedButton(
                       child: Text('Signup'),
                       color: Color(0xffE21031),
-                      onPressed: (){},
+                      onPressed: () {},
                     ),
                   ],
                 ),
               ),
-              SizedBox(height:20.0),
+              SizedBox(height: 20.0),
               GestureDetector(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>LogIn()));
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LogIn()));
                 },
                 child: Text.rich(
-                  TextSpan(
-                      text: 'Already have an account\t',
-                      children: [
-                        TextSpan(
-                          text: 'Signin',
-                          style: TextStyle(
-                              color: Color(0xffE21031)
-                          ),
-                        ),
-                      ]
-                  ),
+                  TextSpan(text: 'Already have an account\t', children: [
+                    TextSpan(
+                      text: 'Signin',
+                      style: TextStyle(color: Color(0xffE21031)),
+                    ),
+                  ]),
                 ),
               ),
-
-
             ],
           ),
         ),
