@@ -2,6 +2,16 @@ import 'package:flutter/material.dart';
 import 'main.dart';
 
 class LogIn extends StatelessWidget {
+  final emailController = new TextEditingController();
+  final passwordController = new TextEditingController();
+  //@override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    emailController.dispose();
+    passwordController.dispose();
+    //super.dispose();
+  }
+
   @override
   /*Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,6 +26,16 @@ class LogIn extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+    emailTextValue() {
+      print("title text field: ${emailController.text}");
+      return emailController.text;
+    }
+
+    passwordTextValue() {
+      print("title text field: ${passwordController.text}");
+      return passwordController.text;
+    }
+
     return Scaffold(
       body: Container(
         // decoration: new BoxDecoration(color: Colors.black), - black background
@@ -53,6 +73,7 @@ class LogIn extends StatelessWidget {
                 height: 30.0,
               ),
               TextField(
+                controller: emailController,
                 decoration: InputDecoration(
                   hintText: 'Email',
                   suffixIcon: Icon(Icons.email),
@@ -65,6 +86,7 @@ class LogIn extends StatelessWidget {
                 height: 20.0,
               ),
               TextField(
+                controller: passwordController,
                 obscureText: true,
                 decoration: InputDecoration(
                   hintText: 'Password',
@@ -74,6 +96,8 @@ class LogIn extends StatelessWidget {
                   ),
                 ),
               ),
+              //email.set("emailValue", emailTextValue),
+              //password.set("passwordValue", passwordTextValue), //THIS ISN'T WORKING!
               SizedBox(
                 height: 30.0,
               ),
@@ -89,7 +113,13 @@ class LogIn extends StatelessWidget {
                     RaisedButton(
                       child: Text('Login'),
                       color: Color(0xffE21031),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => TemporaryOutputs()),
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -200,7 +230,13 @@ class _SecondState extends State<Second> {
                     RaisedButton(
                       child: Text('Signup'),
                       color: Color(0xffE21031),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => TemporaryOutputs()),
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -227,3 +263,34 @@ class _SecondState extends State<Second> {
     );
   }
 }
+
+class TemporaryOutputs extends StatefulWidget {
+  @override
+  _TemporaryOutputsState createState() => _TemporaryOutputsState();
+}
+
+class _TemporaryOutputsState extends State<TemporaryOutputs> {
+  @override
+  Widget build(BuildContext context) {
+    //double width = MediaQuery.of(context).size.width;
+    //double height = MediaQuery.of(context).size.height;
+    //var evalue = email.get("emailValue");
+    //var pvalue = password.get("passwordValue");
+    //print(evalue);
+    //print(pvalue);
+    return Scaffold();
+  }
+}
+
+class GlobalState {
+  final Map<dynamic, dynamic> _data = <dynamic, dynamic>{};
+
+  static GlobalState instance = GlobalState._();
+  GlobalState._();
+
+  set(dynamic key, dynamic value) => _data[key] = value;
+  get(dynamic key) => _data[key];
+}
+
+final GlobalState email = GlobalState.instance;
+final GlobalState password = GlobalState.instance;
