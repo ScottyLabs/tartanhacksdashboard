@@ -4,7 +4,9 @@ class HackHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Center(
+      child: Text("Tap here to just access the app. Dev only."),
+    );
   }
   
 }
