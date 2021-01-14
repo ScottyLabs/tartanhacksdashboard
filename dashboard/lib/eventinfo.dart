@@ -6,35 +6,35 @@ class EventInfo {
   static final getData = [
     {
       'name': 'Hacking Begins!',
-      'description': 'start hacking!',
+      'description': 'TartanHacks has officially started! Come up with ideas with your team, and start hacking!',
       'time': '9:00 AM',
       'day': 'March 5',
       'link': 'https://www.google.com/',
-      'color': 'red',
+      'category': 1,
     },
     {
       'name': 'Flutter Workshop!',
-      'description': 'learn flutter!',
+      'description': 'Learn how to use the Flutter SDK made by Google to develop cross-platform applications!',
       'time': '2:00 PM',
       'day': 'March 6',
       'link': 'https://www.google.com/',
-      'color': 'blue',
+      'category': 2,
     },
     {
       'name': 'Dart Workshop!',
-      'description': 'learn dart!',
+      'description': 'Learn how to code in Dart to build applications in conjunction with Flutter!',
       'time': '4:00 PM',
       'day': 'March 6',
       'link': 'https://www.google.com/',
-      'color': 'blue',
+      'category': 3,
     },
     {
       'name': 'Hacking Ends!',
-      'description': 'submit your projects!',
+      'description': 'Hacking is over! Submit your projects before the deadline to be judged!',
       'time': '9:00 PM',
       'day': 'March 7',
       'link': 'https://www.google.com/',
-      'color': 'red',
+      'category': 4,
     },
   ];
 }

@@ -31,6 +31,8 @@ class _MyHomePageState extends State<MyHomePage> {
     bool _isFavorited = true;
     var eventData = EventInfo.getData;
 
+    // create a favorites system for the user to add an event to a favorites
+    // list so they can refer back to it or receive notifications for the event
     void _toggleFavorite() {
         setState(() {
             if (_isFavorited) {
@@ -41,6 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
         });
     }
 
+    // switch case for the filtration for categories
     void handleClick(String value) {
       switch (value) {
         case 'Hacker':
@@ -54,8 +57,15 @@ class _MyHomePageState extends State<MyHomePage> {
       }
     }
 
+    // assigns colors for the categories for filtration of events
+    Color getColor(categoryNum){
+      List<Color> colorsList = [Colors.red, Colors.yellow, Colors.green, Colors.blue];
+      final colorsMap = colorsList.asMap();
+      return colorsMap[categoryNum - 1];
+    }
+
+    // symbol and color for each event based on category
     Widget eventIcon(data) {
-        // var categorycolor = '${data['color']}';
         return Padding(
             padding: const EdgeInsets.only(left: 1.0),
             child: Align(
@@ -65,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     IconButton(
                         icon: Icon(
                             Icons.star_border,
-                            color: Colors.red,
+                            color: Colors.white,
                             size: 35,
                         ),
                         tooltip: 'Tap to favorite this event!',
@@ -81,6 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
         );
     }
 
+    // name of the event
     Widget eventName(data) {
         return Align(
             alignment: Alignment.centerLeft,
@@ -98,38 +109,42 @@ class _MyHomePageState extends State<MyHomePage> {
         );
     }
 
+    // description for the event
     Widget eventDescription(data) {
         return Align(
             alignment: Alignment.centerLeft,
-            child: RichText(
+            child: Container(
+              width: MediaQuery.of(context).size.width*0.60,
+              child: RichText(
                   text: TextSpan(
-                      text: '\n${data['description']}',
-                      style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold
-                      ),
+                    text: '\n${data['description']}',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 15,
+                    ),
                   )
+              )
             )
         );
     }
 
+    // date and time of the event
     Widget eventTime(data) {
         return Align(
-            alignment: Alignment.centerRight,
+            alignment: Alignment.center,
             child: RichText(
                 text: TextSpan(
                     text: '${data['time']}',
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Colors.green,
+                        color: Colors.white,
                         fontSize: 20,
                     ),
                     children: <TextSpan> [
                         TextSpan(
                             text: '\n${data['day']}',
                             style: TextStyle(
-                                color: Colors.green,
+                                color: Colors.white,
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold,
                             )
@@ -140,6 +155,7 @@ class _MyHomePageState extends State<MyHomePage> {
         );
     }
 
+    // hyperlinked button for the event
     Widget eventLink(data) {
       return InkWell(
           child: new RichText(
@@ -160,7 +176,6 @@ class _MyHomePageState extends State<MyHomePage> {
     Widget build(BuildContext context) {
         // find a way to pull the event information from the database
         // add them to the lists below: event name, event category, event time, event description
-
         return MaterialApp(
             home: Scaffold(
                 appBar: AppBar(
@@ -194,14 +209,26 @@ class _MyHomePageState extends State<MyHomePage> {
                                             width: double.maxFinite,
                                             child: Card(
                                                 elevation: 5,
+                                                color: getColor(eventData[index]['category']),
                                                 child: Padding(
                                                     padding: EdgeInsets.all(7),
                                                     child: Stack(
                                                         children: <Widget> [
                                                             Align(
-                                                                alignment: Alignment.centerRight,
+                                                                alignment: Alignment.center,
                                                                 child: Stack(
                                                                     children: <Widget> [
+                                                                        Align(
+                                                                            alignment: Alignment.centerRight,
+                                                                            child:
+                                                                            Container(
+                                                                                width: 100,
+                                                                                height: 220,
+                                                                                color: Colors.grey,
+                                                                                child: eventTime(eventData[index]),
+                                                                            ),
+                                                                        ),
+
                                                                         Padding(
                                                                             padding: const EdgeInsets.only(left:10, top: 5),
                                                                             child: Column(
@@ -218,7 +245,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                                                             ),
                                                                                             Container(
                                                                                                 alignment: Alignment.centerRight,
-                                                                                                child: eventTime(eventData[index]),
+                                                                                                //child: eventTime(eventData[index]),
                                                                                             ),
                                                                                             SizedBox(
                                                                                                 height: 10,
@@ -227,23 +254,29 @@ class _MyHomePageState extends State<MyHomePage> {
                                                                                     ),
                                                                                     Row(
                                                                                       children: <Widget> [
+                                                                                        SizedBox(
+                                                                                          width: 10,
+                                                                                        ),
                                                                                         eventDescription(eventData[index]),
                                                                                       ]
                                                                                     ),
                                                                                     SizedBox(
-                                                                                      height: 30
+                                                                                      height: 10,
                                                                                     ),
-                                                                                    Container(
-                                                                                      child: Center(
-                                                                                        child: RaisedButton(
-                                                                                          child: eventLink(eventData[index]),
-                                                                                          color: Colors.red,
-                                                                                        ),
-                                                                                      )
+                                                                                    Align(
+                                                                                      alignment: Alignment.centerLeft,
+                                                                                        child: Container(
+                                                                                            child: Center(
+                                                                                              child: RaisedButton(
+                                                                                                child: eventLink(eventData[index]),
+                                                                                              ),
+                                                                                            )
+                                                                                        )
                                                                                     )
+
                                                                                 ]
                                                                             )
-                                                                        )
+                                                                        ),
                                                                     ]
                                                                 )
                                                             )
