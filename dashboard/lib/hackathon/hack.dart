@@ -27,7 +27,7 @@ class FormScreenState extends State<HackHome> {
     );
   }
 
-  Widget _builURL() {
+  Widget _buildURL() {
     return TextFormField(
       decoration: InputDecoration(labelText: 'Project Url'),
       keyboardType: TextInputType.url,
@@ -44,6 +44,76 @@ class FormScreenState extends State<HackHome> {
     );
   }
 
+  bool valuenone = false;  
+  bool value1 = false;
+  bool value2 = false; 
+  bool value3 = false; 
+  bool value4 = false; 
+
+
+  Widget _buildPrizes(){
+    return Container(  
+            padding: new EdgeInsets.all(10.0),  
+            child: Column(  
+              children: <Widget>[  
+                SizedBox(width: 20,),  
+                Text('Prizes',textAlign: TextAlign.left, style: TextStyle(fontSize: 20.0), ),
+                Text('Select which prizes you are submitting your project to. All projects are automatically submitted to the ScottyLabs Grand Prize.',textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0), ),  
+                CheckboxListTile(
+                  controlAffinity: ListTileControlAffinity.leading,
+                  title: const Text('None'),  
+                  value: this.valuenone,  
+                  onChanged: (bool value) {  
+                    setState(() {  
+                      this.valuenone = value;  
+                    });  
+                  },  
+                ),  
+                CheckboxListTile(
+                  controlAffinity: ListTileControlAffinity.leading,
+                  title: const Text('Prize 1'),  
+                  value: this.value1,  
+                  onChanged: (bool value) {  
+                    setState(() {  
+                      this.value1 = value;  
+                    });  
+                  },  
+                ),  
+                CheckboxListTile(  
+                  controlAffinity: ListTileControlAffinity.leading,  
+                  title: const Text('Prize 2'),  
+                  value: this.value2,  
+                  onChanged: (bool value) {  
+                    setState(() {  
+                      this.value2 = value;  
+                    });  
+                  },  
+                ),  
+                CheckboxListTile(
+                  controlAffinity: ListTileControlAffinity.leading,
+                  title: const Text('Prize 3'),  
+                  value: this.value3,  
+                  onChanged: (bool value) {  
+                    setState(() {  
+                      this.value3 = value;  
+                    });  
+                  },  
+                ),  
+                CheckboxListTile(
+                  controlAffinity: ListTileControlAffinity.leading,
+                  title: const Text('Prize 4'),  
+                  value: this.value4,  
+                  onChanged: (bool value) {  
+                    setState(() {  
+                      this.value4 = value;  
+                    });  
+                  },  
+                ),  
+
+              ],  
+            )  
+        ); 
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +127,8 @@ class FormScreenState extends State<HackHome> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 _buildName(),
-                _builURL(),
+                _buildURL(),
+                _buildPrizes(),
                 SizedBox(height: 100),
                 RaisedButton(
                   child: Text(
@@ -74,6 +145,7 @@ class FormScreenState extends State<HackHome> {
                     print(_teamName);
                     print(_url);
 
+                    //Send to API
                   },
                 )
               ],
