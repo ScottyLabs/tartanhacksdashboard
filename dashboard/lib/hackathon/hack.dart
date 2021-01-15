@@ -48,7 +48,8 @@ class FormScreenState extends State<HackHome> {
   bool value1 = false;
   bool value2 = false; 
   bool value3 = false; 
-  bool value4 = false; 
+  bool value4 = false;
+  bool value5 = false; 
 
 
   Widget _buildPrizes(){
@@ -109,6 +110,16 @@ class FormScreenState extends State<HackHome> {
                     });  
                   },  
                 ),  
+                CheckboxListTile(
+                  controlAffinity: ListTileControlAffinity.leading,
+                  title: const Text('Prize 5'),  
+                  value: this.value5,  
+                  onChanged: (bool value) {  
+                    setState(() {  
+                      this.value5 = value;  
+                    });  
+                  },  
+                ),  
 
               ],  
             )  
@@ -118,37 +129,44 @@ class FormScreenState extends State<HackHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(backgroundColor: Colors.red, title: Text("Project Submission Form")),
-      body: SingleChildScrollView(
-        child: Container(
-          margin: EdgeInsets.all(24),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                _buildName(),
-                _buildURL(),
-                _buildPrizes(),
-                SizedBox(height: 100),
-                RaisedButton(
-                  child: Text(
-                    'Send',
-                    style: TextStyle(color: Colors.red, fontSize: 16),
-                  ),
-                  onPressed: () {
-                    if (!_formKey.currentState.validate()) {
-                      return;
-                    }
+      body: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(24),
+          child: Center(
+            
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  _buildName(),
+                  _buildURL(),
+                  _buildPrizes(),
+                  SizedBox(height: 10),
+                  RaisedButton(
+                    child: Text(
+                      'Send',
+                      style: TextStyle(color: Colors.red, fontSize: 16),
+                    ),
+                    onPressed: () {
+                      if (!_formKey.currentState.validate()) {
+                        return;
+                      }
 
-                    _formKey.currentState.save();
+                      _formKey.currentState.save();
 
-                    print(_teamName);
-                    print(_url);
-
-                    //Send to API
-                  },
-                )
-              ],
+                      print(_teamName);
+                      print(_url);
+                      print("Prize 1: $value1 ");
+                      print("Prize 2: $value2 ");
+                      print("Prize 3: $value3 ");
+                      print("Prize 4: $value4 ");
+                      print("Prize 5: $value5 ");
+                      //Send to API
+                    },
+                  )
+                ],
+              ),
             ),
           ),
         ),
@@ -157,4 +175,3 @@ class FormScreenState extends State<HackHome> {
   }
   
 }
-
