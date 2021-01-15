@@ -224,11 +224,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                                                             Container(
                                                                                 width: 100,
                                                                                 height: 220,
-                                                                                color: Colors.grey,
+                                                                                color: Color.fromRGBO(0, 0, 0, 0.5),
                                                                                 child: eventTime(eventData[index]),
                                                                             ),
                                                                         ),
-
                                                                         Padding(
                                                                             padding: const EdgeInsets.only(left:10, top: 5),
                                                                             child: Column(
@@ -242,10 +241,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                                                                             eventName(eventData[index]),
                                                                                             SizedBox(
                                                                                               width: 30,
-                                                                                            ),
-                                                                                            Container(
-                                                                                                alignment: Alignment.centerRight,
-                                                                                                //child: eventTime(eventData[index]),
                                                                                             ),
                                                                                             SizedBox(
                                                                                                 height: 10,
@@ -266,14 +261,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                                                                     Align(
                                                                                       alignment: Alignment.centerLeft,
                                                                                         child: Container(
-                                                                                            child: Center(
                                                                                               child: RaisedButton(
                                                                                                 child: eventLink(eventData[index]),
                                                                                               ),
                                                                                             )
                                                                                         )
-                                                                                    )
-
                                                                                 ]
                                                                             )
                                                                         ),
