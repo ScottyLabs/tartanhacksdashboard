@@ -239,19 +239,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                                                                                 width: 10,
                                                                                             ),
                                                                                             eventName(eventData[index]),
-                                                                                            SizedBox(
-                                                                                              width: 30,
-                                                                                            ),
-                                                                                            SizedBox(
-                                                                                                height: 10,
-                                                                                            ),
                                                                                         ]
                                                                                     ),
                                                                                     Row(
                                                                                       children: <Widget> [
-                                                                                        SizedBox(
-                                                                                          width: 10,
-                                                                                        ),
                                                                                         eventDescription(eventData[index]),
                                                                                       ]
                                                                                     ),
