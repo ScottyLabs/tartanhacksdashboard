@@ -2,11 +2,36 @@ import 'package:flutter/material.dart';
 
 class HackHome extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() {
-    return FormScreenState();
+  _HackHomeState createState() => _HackHomeState();
+}
+class FormScreen extends StatefulWidget{
+  @override
+  _FormScreenState createState() => _FormScreenState();
+}
+class _HackHomeState extends State<HackHome>{
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(backgroundColor: Colors.red, 
+        title: Text('Hackathon'),
+      ),
+      body: Center(
+        child: RaisedButton(
+          child: Text('Project Submission Form', 
+          style: TextStyle(color: Colors.red, fontSize: 16),),
+          
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => FormScreen()),
+            );
+          },
+        ),
+      ),
+    );
   }
 }
-class FormScreenState extends State<HackHome> {
+class _FormScreenState extends State<FormScreen> {
 
   String _teamName;
   String _url;
@@ -119,7 +144,7 @@ class FormScreenState extends State<HackHome> {
                       this.value5 = value;  
                     });  
                   },  
-                ),  
+                ), 
 
               ],  
             )  
