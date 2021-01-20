@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'app.dart';
 import 'main.dart';
 
 class LogIn extends StatelessWidget {
@@ -13,27 +14,10 @@ class LogIn extends StatelessWidget {
   }
 
   @override
-  /*Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Center(
-      child: RaisedButton(
-        onPressed: (){},
-        child: Text("Tap here to just access the app. Dev only."),
-      ),
-    ));
-  }*/
+
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    emailTextValue() {
-      print("title text field: ${emailController.text}");
-      return emailController.text;
-    }
-
-    passwordTextValue() {
-      print("title text field: ${passwordController.text}");
-      return passwordController.text;
-    }
 
     return Scaffold(
       body: Container(
@@ -116,7 +100,7 @@ class LogIn extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => TemporaryOutputs()),
+                              builder: (context) => App()),
                         );
                       },
                     ),
@@ -233,7 +217,7 @@ class _SecondState extends State<Second> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => TemporaryOutputs()),
+                              builder: (context) => App()),
                         );
                       },
                     ),
@@ -263,33 +247,4 @@ class _SecondState extends State<Second> {
   }
 }
 
-class TemporaryOutputs extends StatefulWidget {
-  @override
-  _TemporaryOutputsState createState() => _TemporaryOutputsState();
-}
 
-class _TemporaryOutputsState extends State<TemporaryOutputs> {
-  @override
-  Widget build(BuildContext context) {
-    //double width = MediaQuery.of(context).size.width;
-    //double height = MediaQuery.of(context).size.height;
-    //var evalue = email.get("emailValue");
-    //var pvalue = password.get("passwordValue");
-    //print(evalue);
-    //print(pvalue);
-    return Scaffold();
-  }
-}
-
-class GlobalState {
-  final Map<dynamic, dynamic> _data = <dynamic, dynamic>{};
-
-  static GlobalState instance = GlobalState._();
-  GlobalState._();
-
-  set(dynamic key, dynamic value) => _data[key] = value;
-  get(dynamic key) => _data[key];
-}
-
-final GlobalState email = GlobalState.instance;
-final GlobalState password = GlobalState.instance;
