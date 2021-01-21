@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
             title: 'Flutter Demo',
             theme: ThemeData(
-                primarySwatch: Colors.blue,
+                primarySwatch: Colors.red,
             ),
             home: MyHomePage(title: 'Events and Scheduling'),
         );
@@ -59,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     // assigns colors for the categories for filtration of events
     Color getColor(categoryNum){
-      List<Color> colorsList = [Colors.red, Colors.yellow, Colors.green, Colors.blue];
+      List<Color> colorsList = [Colors.redAccent[100], Colors.redAccent, Colors.redAccent[400], Colors.redAccent[700]];
       final colorsMap = colorsList.asMap();
       return colorsMap[categoryNum - 1];
     }
@@ -103,7 +103,6 @@ class _MyHomePageState extends State<MyHomePage> {
                         color: Colors.black,
                         fontSize: 20,
                     ),
-
                 )
             )
         );
@@ -168,14 +167,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               )
           ),
-          onTap: () => launch('${data['link']}')
+          onTap: () => launch('${data['zoom_link']}')
       );
     }
 
     @override
     Widget build(BuildContext context) {
-        // find a way to pull the event information from the database
-        // add them to the lists below: event name, event category, event time, event description
         return MaterialApp(
             home: Scaffold(
                 appBar: AppBar(
