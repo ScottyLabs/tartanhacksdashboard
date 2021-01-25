@@ -20,7 +20,9 @@ Future<EventsList> fetchEvents() async {
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
     // then parse the JSON.
-    print(jsonDecode(response.body));
+    //print('The response body is: ${jsonDecode(response.body)}');
+    print(EventsList.fromJson(jsonDecode(response.body)));
+    //return (jsonDecode(response.body));
     return EventsList.fromJson(jsonDecode(response.body));
   } else {
     // If the server did not return a 200 OK response,
@@ -75,7 +77,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   Future<EventsList> futureEventsList;
-  EventsList regularEventsList;
+  //EventsList regularEventsList;
   bool _isFavorited = true;
 
   @override
@@ -92,7 +94,9 @@ class _MyAppState extends State<MyApp> {
 
   void initState() {
     super.initState();
-    fetchEvents().then( (EventsList regularEventsList) => regularEventsList );
+    futureEventsList = fetchEvents();
+    //fetchEvents().then( (EventsList regularEventsList2) => regularEventsList );
+    //print('regularEventsList:  ${regularEventsList}');
   }
 
   Color getColor(categoryNum){
@@ -134,7 +138,7 @@ class _MyAppState extends State<MyApp> {
         alignment: Alignment.centerLeft,
         child: RichText(
             text: TextSpan(
-              text: '${data['name']}',
+              text: '${data.name}',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
@@ -154,7 +158,7 @@ class _MyAppState extends State<MyApp> {
             width: MediaQuery.of(context).size.width*0.60,
             child: RichText(
                 text: TextSpan(
-                  text: '\n${data['description']}',
+                  text: '\n${data.description}',
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 15,
@@ -171,7 +175,7 @@ class _MyAppState extends State<MyApp> {
         alignment: Alignment.center,
         child: RichText(
             text: TextSpan(
-                text: '${data['timestamp']}',
+                text: '${data.timestamp}',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
@@ -179,7 +183,7 @@ class _MyAppState extends State<MyApp> {
                 ),
                 children: <TextSpan> [
                   TextSpan(
-                      text: '\n${data['timestamp']}',
+                      text: '\n${data.timestamp}',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 15,
@@ -205,7 +209,7 @@ class _MyAppState extends State<MyApp> {
               ),
             )
         ),
-        onTap: () => launch('${data['zoom_link']}')
+        onTap: () => launch('${data.zoom_link}')
     );
   }
 
@@ -224,8 +228,9 @@ class _MyAppState extends State<MyApp> {
           child: FutureBuilder<EventsList>(
             future: futureEventsList,
             builder: (context, snapshot) {
-              print('project snapshot data is: ${snapshot.data}'); // this is currently null, even though the response goes through on main2.dart and it's printable, we need to check to make sure the types are right, etc.
+              print('project snapshot data is: ${snapshot.data}'); // this is currently null, even though the response goes through & it's printable
               if (snapshot.hasData) {
+                print('snapshot.data.events: ${snapshot.data.events}');
                 return Container(
                     child: Column(
                         mainAxisSize: MainAxisSize.max,
@@ -233,8 +238,7 @@ class _MyAppState extends State<MyApp> {
                         children: <Widget> [
                           Expanded(
                               child: ListView.builder(
-                                  // todo - FIND OUT HOW TO GET FUTUREVENTSLIST LENGTH
-                                  itemCount: regularEventsList.events.length,
+                                  itemCount: snapshot.data.events.length,
                                   itemBuilder: (context, index) {
                                     return Container(
                                         padding: EdgeInsets.fromLTRB(10,10,10,0),
@@ -258,7 +262,7 @@ class _MyAppState extends State<MyApp> {
                                                                   width: 100,
                                                                   height: 220,
                                                                   color: Color.fromRGBO(0, 0, 0, 0.5),
-                                                                  child: eventTime(regularEventsList.events[index]),
+                                                                  child: eventTime(snapshot.data.events[index]),
                                                                 ),
                                                               ),
                                                               Padding(
@@ -267,16 +271,16 @@ class _MyAppState extends State<MyApp> {
                                                                       children: <Widget> [
                                                                         Row(
                                                                             children: <Widget> [
-                                                                              eventIcon(regularEventsList.events[index]),
+                                                                              eventIcon(snapshot.data.events[index]),
                                                                               SizedBox(
                                                                                 width: 10,
                                                                               ),
-                                                                              eventName(regularEventsList.events[index]),
+                                                                              eventName(snapshot.data.events[index]),
                                                                             ]
                                                                         ),
                                                                         Row(
                                                                             children: <Widget> [
-                                                                              eventDescription(regularEventsList.events[index]),
+                                                                              eventDescription(snapshot.data.events[index]),
                                                                             ]
                                                                         ),
                                                                         SizedBox(
@@ -286,7 +290,7 @@ class _MyAppState extends State<MyApp> {
                                                                             alignment: Alignment.centerLeft,
                                                                             child: Container(
                                                                               child: RaisedButton(
-                                                                                child: eventLink(regularEventsList.events[index]),
+                                                                                child: eventLink(snapshot.data.events[index]),
                                                                               ),
                                                                             )
                                                                         )
