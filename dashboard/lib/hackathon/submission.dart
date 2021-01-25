@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-class HackHome extends StatefulWidget {
+class Submission extends StatefulWidget {
   @override
-  _HackHomeState createState() => _HackHomeState();
+  _SubmissionState createState() => _SubmissionState();
 }
 class FormScreen extends StatefulWidget{
   @override
   _FormScreenState createState() => _FormScreenState();
 }
-class _HackHomeState extends State<HackHome>{
+class _SubmissionState extends State<Submission>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
