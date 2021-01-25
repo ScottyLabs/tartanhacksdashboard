@@ -50,9 +50,9 @@ Future<Map<String, dynamic>> getEventDetails() async {
 class EventInfo {
   // this is test data, the optimal solution is to obtain a JSON of the events table in the MongoDB
 
-  static final getData = [getEventDetails()];
+  static final getData2 = [getEventDetails()];
 
-  static final getData2 = [
+  static final getData = [
     {
       'name': 'Hacking Begins!',
       'description': 'Come up with ideas with your team, and start hacking!',
