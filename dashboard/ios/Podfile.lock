@@ -1,0 +1,22 @@
+PODS:
+  - Flutter (1.0.0)
+  - qrscan (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - qrscan (from `.symlinks/plugins/qrscan/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  qrscan:
+    :path: ".symlinks/plugins/qrscan/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  qrscan: 42f49ba37d3c423a3b140434003e821135cfc4c3
+
+PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
+
+COCOAPODS: 1.8.4
