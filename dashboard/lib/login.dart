@@ -113,11 +113,13 @@ class LogIn extends StatelessWidget {
                       child: Text('Login'),
                       color: Color(0xffE21031),
                       onPressed: () {
-                        Navigator.push(
+                        print("email: ${emailController.text}");
+                        print("password: ${passwordController.text}");
+                        /*Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => TemporaryOutputs()),
-                        );
+                        );*/
                       },
                     ),
                   ],
@@ -152,6 +154,16 @@ class Second extends StatefulWidget {
 }
 
 class _SecondState extends State<Second> {
+  final emailController = new TextEditingController();
+  final passwordController = new TextEditingController();
+  //@override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    emailController.dispose();
+    passwordController.dispose();
+    //super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -193,6 +205,7 @@ class _SecondState extends State<Second> {
                 height: 30.0,
               ),
               TextField(
+                controller: emailController,
                 decoration: InputDecoration(
                   hintText: 'Email',
                   suffixIcon: Icon(Icons.email),
@@ -205,6 +218,7 @@ class _SecondState extends State<Second> {
                 height: 20.0,
               ),
               TextField(
+                controller: passwordController,
                 obscureText: true,
                 decoration: InputDecoration(
                   hintText: 'Password',
@@ -230,11 +244,13 @@ class _SecondState extends State<Second> {
                       child: Text('Signup'),
                       color: Color(0xffE21031),
                       onPressed: () {
-                        Navigator.push(
+                        print("title text field: ${emailController.text}");
+                        print("title text field: ${passwordController.text}");
+                        /*Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => TemporaryOutputs()),
-                        );
+                        );*/
                       },
                     ),
                   ],
