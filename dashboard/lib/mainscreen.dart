@@ -1,7 +1,6 @@
 import 'package:dashboard/hackathon/hack.dart';
 import 'package:dashboard/info/info.dart';
 import 'package:flutter/material.dart';
-import 'main2.dart';
 
 import 'package:dashboard/account/acc.dart';
 
