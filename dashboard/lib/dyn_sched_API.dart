@@ -21,7 +21,7 @@ Future<EventsList> fetchEvents() async {
     // If the server did return a 200 OK response,
     // then parse the JSON.
     //print('The response body is: ${jsonDecode(response.body)}');
-    print(EventsList.fromJson(jsonDecode(response.body)));
+    print(jsonDecode(response.body));
     //return (jsonDecode(response.body));
     return EventsList.fromJson(jsonDecode(response.body));
   } else {
