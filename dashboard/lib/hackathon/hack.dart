@@ -70,11 +70,16 @@ class _FormScreenState extends State<FormScreen> {
   }
 
   bool valuenone = false;  
-  bool value1 = false;
-  bool value2 = false; 
-  bool value3 = false; 
-  bool value4 = false;
+  bool valueEchoAR = false;
+  bool valueGoogle = false; 
+  bool valueMicrosoft = false; 
+  bool valueFacebook = false;
   bool value5 = false; 
+  bool value6 = false; 
+  bool value7 = false; 
+  bool value8 = false; 
+  bool value9 = false; 
+  bool value10 = false; 
 
 
   Widget _buildPrizes(){
@@ -97,41 +102,41 @@ class _FormScreenState extends State<FormScreen> {
                 ),  
                 CheckboxListTile(
                   controlAffinity: ListTileControlAffinity.leading,
-                  title: const Text('Prize 1'),  
-                  value: this.value1,  
+                  title: const Text('EchoAR Prize: 3 month business plan'),  
+                  value: this.valueEchoAR,  
                   onChanged: (bool value) {  
                     setState(() {  
-                      this.value1 = value;  
+                      this.valueEchoAR = value;  
                     });  
                   },  
                 ),  
                 CheckboxListTile(  
                   controlAffinity: ListTileControlAffinity.leading,  
-                  title: const Text('Prize 2'),  
-                  value: this.value2,  
+                  title: const Text('Google Prize'),  
+                  value: this.valueGoogle,  
                   onChanged: (bool value) {  
                     setState(() {  
-                      this.value2 = value;  
+                      this.valueGoogle = value;  
                     });  
                   },  
                 ),  
                 CheckboxListTile(
                   controlAffinity: ListTileControlAffinity.leading,
-                  title: const Text('Prize 3'),  
-                  value: this.value3,  
+                  title: const Text('Microsoft Prize'),  
+                  value: this.valueMicrosoft,  
                   onChanged: (bool value) {  
                     setState(() {  
-                      this.value3 = value;  
+                      this.valueMicrosoft = value;  
                     });  
                   },  
                 ),  
                 CheckboxListTile(
                   controlAffinity: ListTileControlAffinity.leading,
-                  title: const Text('Prize 4'),  
-                  value: this.value4,  
+                  title: const Text('Facebook Prize'),  
+                  value: this.valueFacebook,  
                   onChanged: (bool value) {  
                     setState(() {  
-                      this.value4 = value;  
+                      this.valueFacebook = value;  
                     });  
                   },  
                 ),  
@@ -142,6 +147,61 @@ class _FormScreenState extends State<FormScreen> {
                   onChanged: (bool value) {  
                     setState(() {  
                       this.value5 = value;  
+                    });  
+                  },  
+                ), 
+
+                CheckboxListTile(
+                  controlAffinity: ListTileControlAffinity.leading,
+                  title: const Text('Prize 6'),  
+                  value: this.value6,  
+                  onChanged: (bool value) {  
+                    setState(() {  
+                      this.value6 = value;  
+                    });  
+                  },  
+                ), 
+
+                CheckboxListTile(
+                  controlAffinity: ListTileControlAffinity.leading,
+                  title: const Text('Prize 7'),  
+                  value: this.value7,  
+                  onChanged: (bool value) {  
+                    setState(() {  
+                      this.value7 = value;  
+                    });  
+                  },  
+                ), 
+
+                CheckboxListTile(
+                  controlAffinity: ListTileControlAffinity.leading,
+                  title: const Text('Prize 8'),  
+                  value: this.value8,  
+                  onChanged: (bool value) {  
+                    setState(() {  
+                      this.value8 = value;  
+                    });  
+                  },  
+                ), 
+
+                CheckboxListTile(
+                  controlAffinity: ListTileControlAffinity.leading,
+                  title: const Text('Prize 9'),  
+                  value: this.value9,  
+                  onChanged: (bool value) {  
+                    setState(() {  
+                      this.value9 = value;  
+                    });  
+                  },  
+                ), 
+
+                CheckboxListTile(
+                  controlAffinity: ListTileControlAffinity.leading,
+                  title: const Text('Prize 10'),  
+                  value: this.value10,  
+                  onChanged: (bool value) {  
+                    setState(() {  
+                      this.value10 = value;  
                     });  
                   },  
                 ), 
@@ -182,12 +242,17 @@ class _FormScreenState extends State<FormScreen> {
 
                       print(_teamName);
                       print(_url);
-                      print("Prize 1: $value1 ");
-                      print("Prize 2: $value2 ");
-                      print("Prize 3: $value3 ");
-                      print("Prize 4: $value4 ");
+                      print("EchoAR: $valueEchoAR ");
+                      print("Google: $valueGoogle ");
+                      print("Microsoft: $valueMicrosoft ");
+                      print("Facebook: $valueFacebook ");
                       print("Prize 5: $value5 ");
-                      //Send to where it needs to be sent
+                      print("Prize 6: $value6 ");
+                      print("Prize 7: $value7 ");
+                      print("Prize 8: $value8 ");
+                      print("Prize 9: $value9 ");
+                      print("Prize 10: $value10 ");
+                      //Send to API
                     },
                   )
                 ],
