@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 //import 'eventinfo.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'eventmodel.dart';
 import 'apicall.dart';
+import 'package:intl/intl.dart';
 
 void main() => runApp(MyApp());
 
@@ -39,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
     getData();
   }
 
-  getData() async{
+  getData() async {
     eventData = await getEvents();
     print(eventData);
     setState(() {});
@@ -72,8 +74,13 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   // assigns colors for the categories for filtration of events
-  Color getColor(categoryNum){
-    List<Color> colorsList = [Colors.redAccent[100], Colors.redAccent, Colors.redAccent[400], Colors.redAccent[700]];
+  Color getColor(categoryNum) {
+    List<Color> colorsList = [
+      Colors.redAccent[100],
+      Colors.redAccent,
+      Colors.redAccent[400],
+      Colors.redAccent[700]
+    ];
     final colorsMap = colorsList.asMap();
     return colorsMap[categoryNum - 1];
   }
@@ -85,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Align(
             alignment: Alignment.centerLeft,
             child: Column(
-              children: <Widget> [
+              children: <Widget>[
                 IconButton(
                     icon: Icon(
                       Icons.star_border,
@@ -97,12 +104,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       setState(() {
                         _toggleFavorite();
                       });
-                    }
-                )
+                    })
               ],
-            )
-        )
-    );
+            )));
   }
 
   // name of the event
@@ -111,15 +115,13 @@ class _MyHomePageState extends State<MyHomePage> {
         alignment: Alignment.centerLeft,
         child: RichText(
             text: TextSpan(
-              text: '${data.name}',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-                fontSize: 20,
-              ),
-            )
-        )
-    );
+          text: '${data.name}',
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+              fontSize: 20,
+              fontFamily: 'TerminalGrotesque'),
+        )));
   }
 
   // description for the event
@@ -127,45 +129,80 @@ class _MyHomePageState extends State<MyHomePage> {
     return Align(
         alignment: Alignment.centerLeft,
         child: Container(
-            width: MediaQuery.of(context).size.width*0.60,
+            width: MediaQuery.of(context).size.width * 0.60,
             child: RichText(
                 text: TextSpan(
-                  text: '\n${data.description}',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 15,
-                  ),
-                )
-            )
-        )
-    );
+              text: '\n${data.description}',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 15,
+              ),
+            ))));
+  }
+
+  String formatDate(String unixDate) {
+    var date =
+        new DateTime.fromMillisecondsSinceEpoch(int.parse(unixDate) * 1000);
+    date = date.toLocal();
+    String formattedDate = DateFormat('EEE dd MMM').format(date);
+    return formattedDate.toUpperCase();
+  }
+
+  String getTime(String unixDate) {
+    var date =
+        new DateTime.fromMillisecondsSinceEpoch(int.parse(unixDate) * 1000);
+    date = date.toLocal();
+    String formattedDate = DateFormat('hh:mm a').format(date);
+    return formattedDate;
   }
 
   // date and time of the event
-  Widget eventTime(data) {
+  Widget eventTime2(data) {
     return Align(
         alignment: Alignment.center,
         child: RichText(
             text: TextSpan(
-                text: '${data.timestamp}',
+                text: '${getTime(data.timestamp)}',
                 style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  fontSize: 20,
-                ),
-                children: <TextSpan> [
-                  TextSpan(
-                      text: '\n${data.timestamp}',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      )
-                  )
-                ]
-            )
-        )
-    );
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontFamily: 'TerminalGrotesque'),
+                children: <TextSpan>[
+              TextSpan(
+                  text: '\n${formatDate(data.timestamp)}',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'TerminalGrotesque'))
+            ])));
+  }
+
+  Widget eventTime(data) {
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            '${getTime(data.timestamp)}',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+                fontSize: 20,
+                fontFamily: 'TerminalGrotesque'),
+          ),
+          Text(
+            '${formatDate(data.timestamp)}',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+                fontSize: 16.5,
+                fontFamily: 'TerminalGrotesque'),
+          ),
+        ]);
   }
 
   // hyperlinked button for the event
@@ -173,30 +210,30 @@ class _MyHomePageState extends State<MyHomePage> {
     return InkWell(
         child: new RichText(
             text: TextSpan(
-              text: 'Link to Event',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-                fontSize: 20,
-              ),
-            )
-        ),
-        onTap: () => launch('${data.zoom_link}')
-    );
+          text: 'Link to Event',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+            fontSize: 20,
+          ),
+        )),
+        onTap: () => launch('${data.zoom_link}'));
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(fontFamily: 'TerminalGrotesque'),
       home: Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
-          backgroundColor: Colors.red,
+          backgroundColor: Color.fromARGB(255, 37, 130, 242),
           actions: <Widget>[
             PopupMenuButton<String>(
               onSelected: handleClick,
               itemBuilder: (BuildContext context) {
-                return {'Hacker', 'Sponsor', 'Mentor', 'General'}.map((String choice) {
+                return {'Hacker', 'Sponsor', 'Mentor', 'General'}
+                    .map((String choice) {
                   return PopupMenuItem<String>(
                     value: choice,
                     child: Text(choice),
@@ -206,86 +243,71 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ),
+        backgroundColor: Color.fromARGB(240, 255, 255, 255),
         body: Container(
             child: Column(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget> [
-                  Expanded(
-                      child: ListView.builder(
-                          itemCount: eventData.length,
-                          itemBuilder: (context, index) {
-                            return Container(
-                                padding: EdgeInsets.fromLTRB(10,10,10,0),
-                                height: 220,
-                                width: double.maxFinite,
-                                child: Card(
-                                  elevation: 5,
-                                  color: getColor(eventData[index].access_code),
-                                  child: Padding(
-                                      padding: EdgeInsets.all(7),
-                                      child: Stack(
-                                          children: <Widget> [
-                                            Align(
-                                                alignment: Alignment.center,
-                                                child: Stack(
-                                                    children: <Widget> [
-                                                      Align(
-                                                        alignment: Alignment.centerRight,
-                                                        child:
-                                                        Container(
-                                                          width: 100,
-                                                          height: 220,
-                                                          color: Color.fromRGBO(0, 0, 0, 0.5),
-                                                          child: eventTime(eventData[index]),
-                                                        ),
+                children: <Widget>[
+              Expanded(
+                  child: ListView.builder(
+                      itemCount: eventData.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                            padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                            height: 220,
+                            width: double.maxFinite,
+                            child: Card(
+                              elevation: 5,
+                              //color: getColor(eventData[index].access_code),
+                              child: Padding(
+                                  padding: EdgeInsets.all(7),
+                                  child: Stack(children: <Widget>[
+                                    Align(
+                                        alignment: Alignment.center,
+                                        child: Stack(children: <Widget>[
+                                          Align(
+                                            alignment: Alignment.centerRight,
+                                            child: Container(
+                                                width: 100,
+                                                height: 220,
+                                                color: Color.fromARGB(
+                                                    255, 37, 130, 242),
+                                                child: Align(
+                                                    alignment: Alignment.center,
+                                                    child: eventTime(
+                                                        eventData[index]))),
+                                          ),
+                                          Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 10, top: 5),
+                                              child: Column(children: <Widget>[
+                                                Row(children: <Widget>[
+                                                  //eventIcon(eventData[index]),
+                                                  eventName(eventData[index]),
+                                                ]),
+                                                Row(children: <Widget>[
+                                                  eventDescription(
+                                                      eventData[index]),
+                                                ]),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Align(
+                                                    alignment:
+                                                        Alignment.centerLeft,
+                                                    child: Container(
+                                                      child: RaisedButton(
+                                                        child: eventLink(
+                                                            eventData[index]),
                                                       ),
-                                                      Padding(
-                                                          padding: const EdgeInsets.only(left:10, top: 5),
-                                                          child: Column(
-                                                              children: <Widget> [
-                                                                Row(
-                                                                    children: <Widget> [
-                                                                      eventIcon(eventData[index]),
-                                                                      SizedBox(
-                                                                        width: 10,
-                                                                      ),
-                                                                      eventName(eventData[index]),
-                                                                    ]
-                                                                ),
-                                                                Row(
-                                                                    children: <Widget> [
-                                                                      eventDescription(eventData[index]),
-                                                                    ]
-                                                                ),
-                                                                SizedBox(
-                                                                  height: 10,
-                                                                ),
-                                                                Align(
-                                                                    alignment: Alignment.centerLeft,
-                                                                    child: Container(
-                                                                      child: RaisedButton(
-                                                                        child: eventLink(eventData[index]),
-                                                                      ),
-                                                                    )
-                                                                )
-                                                              ]
-                                                          )
-                                                      ),
-                                                    ]
-                                                )
-                                            )
-                                          ]
-                                      )
-                                  ),
-                                )
-                            );
-                          }
-                      )
-                  )
-                ]
-            )
-        ),
+                                                    ))
+                                              ])),
+                                        ]))
+                                  ])),
+                            ));
+                      }))
+            ])),
       ),
     );
   }
