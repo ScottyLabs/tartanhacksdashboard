@@ -206,19 +206,47 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   // hyperlinked button for the event
-  Widget eventLink(data) {
+  Widget eventLink2(data) {
     return InkWell(
-        child: new RichText(
-            text: TextSpan(
-          text: 'Link to Event',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-            fontSize: 20,
-          ),
-        )),
+        child: IconButton(
+            icon: Icon(
+              Icons.videocam,
+              color: Colors.white,
+              size: 35,
+            ),
+            tooltip: 'Zoom Link!',
+
+            ),
         onTap: () => launch('${data.zoom_link}'));
   }
+
+  Widget zoomLink(data) {
+    return IconButton(
+          icon: Icon(
+            Icons.videocam,
+            color: Colors.white,
+            size: 30,
+          ),
+          tooltip: 'Zoom Link!',
+      color: Color.fromARGB(255, 37, 130, 242),
+      onPressed: () => launch('${data.zoom_link}')
+        );
+  }
+
+  Widget calLink(data) {
+    return IconButton(
+        icon: Icon(
+          Icons.calendar_today_outlined,
+          color: Colors.white,
+          size: 30,
+        ),
+        tooltip: 'Calendar Link!',
+        color: Color.fromARGB(255, 37, 130, 242),
+        onPressed: () => launch('${data.zoom_link}')
+    );
+  }
+
+  bool isSwitched = false;
 
   @override
   Widget build(BuildContext context) {
@@ -227,23 +255,22 @@ class _MyHomePageState extends State<MyHomePage> {
       home: Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
-          backgroundColor: Color.fromARGB(255, 37, 130, 242),
+          backgroundColor: Color.fromARGB(255, 37, 130, 242), //blue
           actions: <Widget>[
-            PopupMenuButton<String>(
-              onSelected: handleClick,
-              itemBuilder: (BuildContext context) {
-                return {'Hacker', 'Sponsor', 'Mentor', 'General'}
-                    .map((String choice) {
-                  return PopupMenuItem<String>(
-                    value: choice,
-                    child: Text(choice),
-                  );
-                }).toList();
+            Switch(
+              value: isSwitched,
+              onChanged: (value) {
+                setState(() {
+                  isSwitched=value;
+                  print(isSwitched);
+                });
               },
+              activeTrackColor: Color.fromARGB(120, 33, 42, 54),
+              activeColor: Color.fromARGB(150, 33, 42, 54),
             ),
           ],
         ),
-        backgroundColor: Color.fromARGB(240, 255, 255, 255),
+        backgroundColor: Color.fromARGB(240, 255, 255, 255), //gray
         body: Container(
             child: Column(
                 mainAxisSize: MainAxisSize.max,
@@ -293,15 +320,27 @@ class _MyHomePageState extends State<MyHomePage> {
                                                 SizedBox(
                                                   height: 10,
                                                 ),
-                                                Align(
-                                                    alignment:
-                                                        Alignment.centerLeft,
-                                                    child: Container(
-                                                      child: RaisedButton(
-                                                        child: eventLink(
-                                                            eventData[index]),
+                                                Row(
+                                                    children: <Widget>[
+                                                      Container(
+                                                        child: RaisedButton(
+                                                          color: Color.fromARGB(255, 37, 130, 242),
+                                                          child: zoomLink(
+                                                              eventData[index]),
+                                                        ),
                                                       ),
-                                                    ))
+                                                      SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Container(
+                                                        child: RaisedButton(
+                                                          color: Color.fromARGB(255, 37, 130, 242),
+                                                          child: calLink(
+                                                              eventData[index]),
+                                                        ),
+                                                      ),
+                                                    ]
+                                                ),
                                               ])),
                                         ]))
                                   ])),
