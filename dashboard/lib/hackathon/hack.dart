@@ -12,13 +12,14 @@ class _HackHomeState extends State<HackHome>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.red, 
+      appBar: AppBar(backgroundColor: Color.fromARGB(0xFF, 0x25, 0x82, 0xF2), 
         title: Text('Hackathon'),
       ),
       body: Center(
         child: RaisedButton(
+          color: Color.fromARGB(0xFF, 0x5D, 0x5F, 0x61),
           child: Text('Project Submission Form', 
-          style: TextStyle(color: Colors.red, fontSize: 16),),
+          style: TextStyle(color: Colors.white, fontSize: 16),),
           
           onPressed: () {
             Navigator.push(
@@ -213,7 +214,7 @@ class _FormScreenState extends State<FormScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.red, title: Text("Project Submission Form")),
+      appBar: AppBar(backgroundColor: Color.fromARGB(0xFF, 0x25, 0x82, 0xF2), title: Text("Project Submission Form")),
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
@@ -229,9 +230,10 @@ class _FormScreenState extends State<FormScreen> {
                   _buildPrizes(),
                   SizedBox(height: 10),
                   RaisedButton(
+                    color: Color.fromARGB(0xFF, 0x5D, 0x5F, 0x61),
                     child: Text(
                       'Send',
-                      style: TextStyle(color: Colors.red, fontSize: 16),
+                      style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                     onPressed: () {
                       if (!_formKey.currentState.validate()) {
