@@ -6,6 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'eventmodel.dart';
 import 'apicall.dart';
 import 'package:intl/intl.dart';
+import 'package:share/share.dart';
 
 void main() => runApp(MyApp());
 
@@ -156,29 +157,6 @@ class _MyHomePageState extends State<MyHomePage> {
     return formattedDate;
   }
 
-  // date and time of the event
-  Widget eventTime2(data) {
-    return Align(
-        alignment: Alignment.center,
-        child: RichText(
-            text: TextSpan(
-                text: '${getTime(data.timestamp)}',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontFamily: 'TerminalGrotesque'),
-                children: <TextSpan>[
-              TextSpan(
-                  text: '\n${formatDate(data.timestamp)}',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'TerminalGrotesque'))
-            ])));
-  }
-
   Widget eventTime(data) {
     return Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -206,26 +184,12 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   // hyperlinked button for the event
-  Widget eventLink2(data) {
-    return InkWell(
-        child: IconButton(
-            icon: Icon(
-              Icons.videocam,
-              color: Colors.white,
-              size: 35,
-            ),
-            tooltip: 'Zoom Link!',
-
-            ),
-        onTap: () => launch('${data.zoom_link}'));
-  }
-
   Widget zoomLink(data) {
     return IconButton(
           icon: Icon(
             Icons.videocam,
             color: Colors.white,
-            size: 30,
+            size: 25,
           ),
           tooltip: 'Zoom Link!',
       color: Color.fromARGB(255, 37, 130, 242),
@@ -238,11 +202,32 @@ class _MyHomePageState extends State<MyHomePage> {
         icon: Icon(
           Icons.calendar_today_outlined,
           color: Colors.white,
-          size: 30,
+          size: 25,
         ),
         tooltip: 'Calendar Link!',
         color: Color.fromARGB(255, 37, 130, 242),
-        onPressed: () => launch('${data.zoom_link}')
+        onPressed: () => launch('${data.gcal_event_url}')
+    );
+  }
+
+  Widget shareLink(data) {
+    return IconButton(
+        icon: Icon(
+          Icons.ios_share,
+          color: Colors.white,
+          size: 25,
+        ),
+        tooltip: 'Share Link!',
+        color: Color.fromARGB(255, 37, 130, 242),
+      onPressed: ()
+      {
+        String text = 'Join ${data.name} at ' + '${data.zoom_link}';
+        final RenderBox box = context.findRenderObject();
+        Share.share(text,
+            sharePositionOrigin:
+            box.localToGlobal(Offset.zero) &
+            box.size);
+      },
     );
   }
 
@@ -250,6 +235,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // if statement (if participant, return this... if admin, return with admin privileges)
     return MaterialApp(
       theme: ThemeData(fontFamily: 'TerminalGrotesque'),
       home: Scaffold(
@@ -323,22 +309,26 @@ class _MyHomePageState extends State<MyHomePage> {
                                                 Row(
                                                     children: <Widget>[
                                                       Container(
-                                                        child: RaisedButton(
-                                                          color: Color.fromARGB(255, 37, 130, 242),
-                                                          child: zoomLink(
+                                                        color: Color.fromARGB(255, 37, 130, 242),
+                                                        child: zoomLink(
                                                               eventData[index]),
                                                         ),
-                                                      ),
                                                       SizedBox(
                                                         width: 10,
                                                       ),
                                                       Container(
-                                                        child: RaisedButton(
-                                                          color: Color.fromARGB(255, 37, 130, 242),
-                                                          child: calLink(
+                                                        color: Color.fromARGB(255, 37, 130, 242),
+                                                        child: shareLink(
                                                               eventData[index]),
                                                         ),
+                                                      SizedBox(
+                                                        width: 10,
                                                       ),
+                                                      Container(
+                                                        color: Color.fromARGB(255, 37, 130, 242),
+                                                        child: calLink(
+                                                              eventData[index]),
+                                                        ),
                                                     ]
                                                 ),
                                               ])),

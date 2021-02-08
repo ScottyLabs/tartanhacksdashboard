@@ -26,6 +26,7 @@ dependencies:
   url_launcher: ^5.7.6
   http: ^0.12.2
   intl: ^0.16.1
+  share: ^0.6.5+4
 
 
   # The following adds the Cupertino Icons font to your application.
