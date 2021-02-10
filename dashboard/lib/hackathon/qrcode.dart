@@ -21,6 +21,11 @@ class QRHome extends StatefulWidget{
 
 @JsonSerializable()
 class CheckinItem{
+  @JsonKey(defaultValue: false)
+  bool has_checked_in; // ignore: non_constant_identifier_names
+  int checkin_limit; // ignore: non_constant_identifier_names
+  bool self_checkin_enabled; // ignore: non_constant_identifier_names
+  int points;
   @JsonKey(name: '_id')
   String id;
   String name;
@@ -29,12 +34,13 @@ class CheckinItem{
   int lat;
   int long;
   int units;
-  int checkin_limit; // ignore: non_constant_identifier_names
   int access_code; // ignore: non_constant_identifier_names
   int active_status; // ignore: non_constant_identifier_names
 
-  CheckinItem(this.id, this.name, this.desc, this.date, this.lat, this.long,
-      this.units, this.checkin_limit, this.access_code, this.active_status);
+  CheckinItem(this.has_checked_in, this.checkin_limit,
+      this.self_checkin_enabled, this.points,
+      this.id, this.name, this.desc, this.date, this.lat, this.long,
+      this.units, this.access_code, this.active_status);
 
 
   factory CheckinItem.fromJson(Map<String, dynamic> json) =>
@@ -64,7 +70,7 @@ class CheckinEvent{
 class _QRHomeState extends State<QRHome> {
 
   List history;
-  List scanConfig = ["", "", false];
+  List scanConfig = ["", "", false, false];
   String id;
   bool admin = false;
   String token;
@@ -109,7 +115,8 @@ class _QRHomeState extends State<QRHome> {
     List data = json.decode(response.body);
     setState(() {
       checkinItems = data.map((element) =>
-          CheckinItem.fromJson(element)).toList();
+          CheckinItem.fromJson(element))
+          .where((element) => element.self_checkin_enabled == false).toList();
       scanConfig[0] = checkinItems[0].id;
     });
   }
@@ -202,13 +209,13 @@ class QRPage extends StatelessWidget{
     );
   }
 
-  Future checkinUser(user, context) async{
+  Future checkinUser(user, item, context) async{
     var response = await http.post(
       Uri.encodeFull("https://thd-api.herokuapp.com/checkin/user"),
       headers:{"token": token},
       body:{
         "user_id": user,
-        "checkin_item_id": scanConfig[0],
+        "checkin_item_id": item,
       }
     );
     if(response.statusCode != 200) {
@@ -219,15 +226,17 @@ class QRPage extends StatelessWidget{
 
   Future scan(BuildContext context) async {
     String scanRes = await scanner.scan();
-    if(scanConfig[2] == true){
+    if(scanConfig[2] == true) {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) =>
             HistoryPage(id: scanRes, token: token,
                 delHistory: delHistory, editing: true)),
       );
-    }else {
-      checkinUser(scanRes, context);
+    }else if(!admin || scanConfig[3]){
+      checkinUser(id, scanRes, context);
+    }else{
+      checkinUser(scanRes, scanConfig[0], context);
     }
   }
 
@@ -291,7 +300,6 @@ class QRPage extends StatelessWidget{
                     child: Text('View Recent Activity',
                         style: Theme.of(context).textTheme.button),
                   ),
-                  if(admin)
                   ButtonBar(
                       alignment: MainAxisAlignment.spaceEvenly,
                       children:<Widget>[
@@ -304,6 +312,7 @@ class QRPage extends StatelessWidget{
                           child: Text('To Scanner',
                               style: Theme.of(context).textTheme.button),
                         ),
+                        if(admin)
                         OutlineButton(
                           onPressed: () {
                             Navigator.push(
@@ -329,7 +338,7 @@ class QRPage extends StatelessWidget{
 
 
 class InfoTile extends StatelessWidget{
-  final CheckinEvent info;
+  final CheckinItem info;
   final bool editing;
   final Function delHistory;
 
@@ -346,7 +355,7 @@ class InfoTile extends StatelessWidget{
               builder: (BuildContext context) {
                 return AlertDialog(
                   title: Text(
-                      '${info.checkin_item.name}',
+                      '${info.name}',
                       style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
@@ -358,7 +367,7 @@ class InfoTile extends StatelessWidget{
                         Text(
                             '${DateFormat.jm().add_yMd().format(
                                 new DateTime.fromMillisecondsSinceEpoch(
-                                    int.parse(info.timestamp)*1000,
+                                    int.parse(info.date)*1000,
                                     ).toLocal()
                             )}',
                             style: TextStyle(
@@ -376,7 +385,7 @@ class InfoTile extends StatelessWidget{
                         ),
                         const SizedBox(height: 14),
                         Text(
-                          '${info.checkin_item.desc}',
+                          '${info.desc}',
                             style: TextStyle(
                               fontSize: 16,
                               color: Colors.grey[500],
@@ -401,16 +410,20 @@ class InfoTile extends StatelessWidget{
                 padding: const EdgeInsets.all(24),
                 child: Row(
                     children: [
-                      if(editing)
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            IconButton(
-                                icon: Icon(Icons.delete),
-                                onPressed: () {
-                                  delHistory(info);
-                                }
-                            )
+                            if(editing)
+                              IconButton(
+                                  icon: Icon(Icons.delete),
+                                  onPressed: () {
+                                    delHistory(info);
+                                  }
+                              )
+                            else
+                              info.has_checked_in ?
+                                  Icon(Icons.check_box)
+                                : Icon(Icons.check_box_outline_blank)
                           ],
                         ),
                       const SizedBox(width: 20),
@@ -418,7 +431,7 @@ class InfoTile extends StatelessWidget{
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                                '${info.checkin_item.name}',
+                                '${info.name}',
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -428,7 +441,7 @@ class InfoTile extends StatelessWidget{
                             Text(
                                 '${DateFormat.jm().add_yMd().format(
                                     new DateTime.fromMillisecondsSinceEpoch(
-                                      int.parse(info.timestamp)*1000,
+                                      int.parse(info.date)*1000,
                                     ).toLocal()
                                 )}',
                                 style: TextStyle(
@@ -485,7 +498,7 @@ class _HistoryPageState extends State<HistoryPage>{
     Map data = json.decode(response.body);
     List raw = data["checkin_history"];
     raw = raw.map((element) =>
-        CheckinEvent.fromJson(Map<String, dynamic>.from(element))).toList();
+        CheckinItem.fromJson(Map<String, dynamic>.from(element))).toList();
     if(this.mounted){
       setState(() {
         name = data["user"]["name"];
@@ -615,8 +628,6 @@ class _ConfigPageState extends State<ConfigPage> {
                                 isExpanded: true,
                                 value: widget.scanConfig[0],
                                 items: widget.checkinItems
-                                    .where((element) => 
-                                      element.active_status == 2)
                                     .map<DropdownMenuItem<String>>((value) {
                                   return DropdownMenuItem<String>(
                                       value: value.id,
@@ -664,6 +675,19 @@ class _ConfigPageState extends State<ConfigPage> {
                         }
                         widget.setConfig(newValue, 2);
                       }
+                    ),
+                    const SizedBox(height:20),
+                    CheckboxListTile(
+                        title: Text("Self-checkin"),
+                        value: widget.scanConfig[3],
+                        onChanged: (bool newValue) {
+                          if(newValue){
+                            commentControl.clear();
+                          }else{
+                            commentControl.text = widget.scanConfig[1];
+                          }
+                          widget.setConfig(newValue, 3);
+                        }
                     ),
                     const SizedBox(height:20),
                     RaisedButton(

@@ -8,6 +8,10 @@ part of 'qrcode.dart';
 
 CheckinItem _$CheckinItemFromJson(Map<String, dynamic> json) {
   return CheckinItem(
+    json['has_checked_in'] as bool ?? false,
+    json['checkin_limit'] as int,
+    json['self_checkin_enabled'] as bool,
+    json['points'] as int,
     json['_id'] as String,
     json['name'] as String,
     json['desc'] as String,
@@ -15,7 +19,6 @@ CheckinItem _$CheckinItemFromJson(Map<String, dynamic> json) {
     json['lat'] as int,
     json['long'] as int,
     json['units'] as int,
-    json['checkin_limit'] as int,
     json['access_code'] as int,
     json['active_status'] as int,
   );
@@ -23,6 +26,10 @@ CheckinItem _$CheckinItemFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$CheckinItemToJson(CheckinItem instance) =>
     <String, dynamic>{
+      'has_checked_in': instance.has_checked_in,
+      'checkin_limit': instance.checkin_limit,
+      'self_checkin_enabled': instance.self_checkin_enabled,
+      'points': instance.points,
       '_id': instance.id,
       'name': instance.name,
       'desc': instance.desc,
@@ -30,7 +37,6 @@ Map<String, dynamic> _$CheckinItemToJson(CheckinItem instance) =>
       'lat': instance.lat,
       'long': instance.long,
       'units': instance.units,
-      'checkin_limit': instance.checkin_limit,
       'access_code': instance.access_code,
       'active_status': instance.active_status,
     };
