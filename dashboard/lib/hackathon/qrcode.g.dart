@@ -9,6 +9,7 @@ part of 'qrcode.dart';
 CheckinItem _$CheckinItemFromJson(Map<String, dynamic> json) {
   return CheckinItem(
     json['has_checked_in'] as bool ?? false,
+    json['check_in_timestamp'] as String ?? '',
     json['checkin_limit'] as int,
     json['self_checkin_enabled'] as bool,
     json['points'] as int,
@@ -27,6 +28,7 @@ CheckinItem _$CheckinItemFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$CheckinItemToJson(CheckinItem instance) =>
     <String, dynamic>{
       'has_checked_in': instance.has_checked_in,
+      'check_in_timestamp': instance.check_in_timestamp,
       'checkin_limit': instance.checkin_limit,
       'self_checkin_enabled': instance.self_checkin_enabled,
       'points': instance.points,

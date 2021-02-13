@@ -23,6 +23,8 @@ class QRHome extends StatefulWidget{
 class CheckinItem{
   @JsonKey(defaultValue: false)
   bool has_checked_in; // ignore: non_constant_identifier_names
+  @JsonKey(defaultValue: "")
+  String check_in_timestamp; // ignore: non_constant_identifier_names
   int checkin_limit; // ignore: non_constant_identifier_names
   bool self_checkin_enabled; // ignore: non_constant_identifier_names
   int points;
@@ -37,7 +39,7 @@ class CheckinItem{
   int access_code; // ignore: non_constant_identifier_names
   int active_status; // ignore: non_constant_identifier_names
 
-  CheckinItem(this.has_checked_in, this.checkin_limit,
+  CheckinItem(this.has_checked_in, this.check_in_timestamp, this.checkin_limit,
       this.self_checkin_enabled, this.points,
       this.id, this.name, this.desc, this.date, this.lat, this.long,
       this.units, this.access_code, this.active_status);
@@ -365,11 +367,13 @@ class InfoTile extends StatelessWidget{
                     child: ListBody(
                       children: <Widget>[
                         Text(
-                            '${DateFormat.jm().add_yMd().format(
+                          info.has_checked_in ?
+                            'Checked in ${DateFormat.jm().add_yMd().format(
                                 new DateTime.fromMillisecondsSinceEpoch(
-                                    int.parse(info.date)*1000,
+                                    int.parse(info.check_in_timestamp)*1000,
                                     ).toLocal()
-                            )}',
+                            )}.'
+                            : 'Not checked in.',
                             style: TextStyle(
                               fontSize: 20,
                               color: Colors.grey[700],
@@ -439,19 +443,13 @@ class InfoTile extends StatelessWidget{
                             ),
                             const SizedBox(height: 8),
                             Text(
-                                '${DateFormat.jm().add_yMd().format(
+                              info.has_checked_in ?
+                                'Checked in ${DateFormat.jm().add_yMd().format(
                                     new DateTime.fromMillisecondsSinceEpoch(
-                                      int.parse(info.date)*1000,
+                                      int.parse(info.check_in_timestamp)*1000,
                                     ).toLocal()
-                                )}',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.grey[500],
-                                )
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                                'Checked in by: X',
+                                )}.'
+                                : "Not checked in.",
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: Colors.grey[500],
