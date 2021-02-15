@@ -93,9 +93,11 @@ class LogIn extends StatelessWidget {
                       'Forget password?',
                       style: TextStyle(fontSize: 12.0),
                     ),
-                    RaisedButton(
-                      child: Text('Login'),
-                      color: Color(0xffE21031),
+                    ElevatedButton(
+                      child: Container(
+                        child: Text("Login"),
+                        color: Color(0xffE21031),
+                      ),
                       onPressed: () {
                         Navigator.push(
                           context,
