@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'main.dart';
+import 'package:http/http.dart' as http;
+import 'loginmodel.dart';
+import 'api.dart';
+import 'dart:async';
 
 class LogIn extends StatelessWidget {
   final emailController = new TextEditingController();
@@ -10,6 +14,11 @@ class LogIn extends StatelessWidget {
     emailController.dispose();
     passwordController.dispose();
     //super.dispose();
+  }
+
+  void login(String email, String password) async {
+    Login logindata = await checkCredentials(email, password);
+    print(logindata.user.name);
   }
 
   @override
@@ -122,8 +131,9 @@ class LogIn extends StatelessWidget {
                           side: BorderSide(
                               color: Color.fromARGB(255, 37, 130, 242))),
                       onPressed: () {
-                        print("email: ${emailController.text}");
-                        print("password: ${passwordController.text}");
+                        //print("email: ${emailController.text}");
+                        //print("password: ${passwordController.text}");
+                        login(emailController.text, passwordController.text);
                         /*Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -265,7 +275,7 @@ class _SecondState extends State<Second> {
                               color: Color.fromARGB(255, 37, 130, 242))),
                       onPressed: () {
                         print("title text field: ${emailController.text}");
-                        print("title text field: ${passwordController.text}");
+                        /*print("title text field: ${passwordController.text}");*/
                         /*Navigator.push(
                           context,
                           MaterialPageRoute(
