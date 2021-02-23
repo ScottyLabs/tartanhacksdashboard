@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e050d6a8-2474-4881-8248-40b269320cf3" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/tartanhacksdashboardkeren.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dashboard/lib/admin.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dashboard/lib/editEvents.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashboard/lib/anuda.dart" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/lib/anuda.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashboard/lib/eventinfo.dart" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/lib/eventinfo.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashboard/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/pubspec.lock" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dart File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1oRQnckboBX7SzDoPNFhIcn3eoS" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
+    <property name="io.flutter.reload.alreadyRun" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="show.migrate.to.gradle.popup" value="false" />
+  </component>
+  <component name="RunManager" selected="Flutter.Edit Events">
+    <configuration name="Anuda File" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="filePath" value="$PROJECT_DIR$/dashboard/lib/anuda.dart" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Edit Events" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="filePath" value="$PROJECT_DIR$/dashboard/lib/editEvents.dart" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Flutter.Anuda File" />
+      <item itemvalue="Flutter.Edit Events" />
+    </list>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e050d6a8-2474-4881-8248-40b269320cf3" name="Default Changelist" comment="" />
+      <created>1613247090613</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1613247090613</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="834" y="341" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1614111326244">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="834" y="341" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1614111326244" />
+    <state x="809" y="530" key="#com.intellij.ide.util.TreeFileChooserDialog" timestamp="1614111323364">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="809" y="530" key="#com.intellij.ide.util.TreeFileChooserDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1614111323364" />
+    <state x="571" y="288" width="1618" height="796" key="AVDManager" timestamp="1613247488813">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="571" y="288" width="1618" height="796" key="AVDManager/0.0.2560.1400@0.0.2560.1400" timestamp="1613247488813" />
+    <state x="1160" y="441" key="FileChooserDialogImpl" timestamp="1613247139870">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1160" y="441" key="FileChooserDialogImpl/0.0.2560.1400@0.0.2560.1400" timestamp="1613247139870" />
+    <state width="2517" height="289" key="GridCell.Tab.0.bottom" timestamp="1614111327673">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="289" key="GridCell.Tab.0.bottom/0.0.2560.1400@0.0.2560.1400" timestamp="1614111327673" />
+    <state width="2517" height="289" key="GridCell.Tab.0.center" timestamp="1614111327673">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="289" key="GridCell.Tab.0.center/0.0.2560.1400@0.0.2560.1400" timestamp="1614111327673" />
+    <state width="2517" height="289" key="GridCell.Tab.0.left" timestamp="1614111327673">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="289" key="GridCell.Tab.0.left/0.0.2560.1400@0.0.2560.1400" timestamp="1614111327673" />
+    <state width="2517" height="289" key="GridCell.Tab.0.right" timestamp="1614111327673">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="289" key="GridCell.Tab.0.right/0.0.2560.1400@0.0.2560.1400" timestamp="1614111327673" />
+    <state x="1213" y="376" key="SettingsEditor" timestamp="1614108570601">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1213" y="376" key="SettingsEditor/0.0.2560.1400@0.0.2560.1400" timestamp="1614108570601" />
+    <state x="1030" y="423" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1613836425117">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1030" y="423" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.2560.1400@0.0.2560.1400" timestamp="1613836425117" />
+    <state x="1406" y="442" width="672" height="678" key="search.everywhere.popup" timestamp="1614108916475">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1406" y="442" width="672" height="678" key="search.everywhere.popup/0.0.2560.1400@0.0.2560.1400" timestamp="1614108916475" />
+  </component>
+</project>
