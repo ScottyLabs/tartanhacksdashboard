@@ -3,13 +3,13 @@ import 'dart:async';
 import 'dart:convert';
 import 'loginmodel.dart';
 
-const baseUrl = "https://thd-api.herokuapp.com/auth/login";
+const baseUrl = "https://thd-api.herokuapp.com/auth/";
 
 Future<Login> checkCredentials(String email, String password) async {
   //print(email);
   //print(password);
 
-  String url = baseUrl;
+  String url = baseUrl + "login";
   Map<String, String> headers = {"Content-type": "application/json"};
   String json1 = '{"email":"' + email + '","password":"' + password + '"}';
 
@@ -29,7 +29,8 @@ Future<Login> checkCredentials(String email, String password) async {
 }
 
 Future<Login> resetPassword(String email) async {
-  String url = baseUrl;
+  print(email);
+  String url = baseUrl + "forgot";
   Map<String, String> headers = {"Content-type": "application/json"};
   String json1 = '{"email":"' + email + '"}';
   final response = await http.post(url, headers: headers, body: json1);
@@ -39,12 +40,15 @@ Future<Login> resetPassword(String email) async {
     Login loginData;
     var data = json.decode(response.body);
     loginData = new Login.fromJson(data);
+    //print("works");
     return loginData;
   } else if (response.statusCode == 401) {
     print(response.statusCode);
+    //print("here 1");
     return null;
   } else {
     print(json1);
+    //print("here 2");
     return null;
   }
 }
