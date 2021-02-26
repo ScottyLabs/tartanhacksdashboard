@@ -35,7 +35,9 @@ class _HackHomeState extends State<HackHome>{
 class _FormScreenState extends State<FormScreen> {
 
   String _teamName;
-  String _url;
+  String _githubUrl;
+  String _presUrl;
+  String _vidUrl;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Widget _buildName() {
     return TextFormField(
@@ -53,9 +55,9 @@ class _FormScreenState extends State<FormScreen> {
     );
   }
 
-  Widget _buildURL() {
+  Widget _buildGitHubURL() {
     return TextFormField(
-      decoration: InputDecoration(labelText: 'Project Url'),
+      decoration: InputDecoration(labelText: 'GitHub Repository Url'),
       keyboardType: TextInputType.url,
       validator: (String value) {
         if (value.isEmpty) {
@@ -65,20 +67,53 @@ class _FormScreenState extends State<FormScreen> {
         return null;
       },
       onSaved: (String value) {
-        _url = value;
+        _githubUrl = value;
       },
     );
   }
 
+  Widget _buildPresURL() {
+    return TextFormField(
+      decoration: InputDecoration(labelText: 'Presentation Url'),
+      keyboardType: TextInputType.url,
+      validator: (String value) {
+        if (value.isEmpty) {
+          return 'URL is Required';
+        }
+
+        return null;
+      },
+      onSaved: (String value) {
+        _presUrl = value;
+      },
+    );
+  }
+
+  Widget _buildVidURL() {
+    return TextFormField(
+      decoration: InputDecoration(labelText: 'Video Url'),
+      keyboardType: TextInputType.url,
+      validator: (String value) {
+        if (value.isEmpty) {
+          return 'URL is Required';
+        }
+
+        return null;
+      },
+      onSaved: (String value) {
+        _vidUrl = value;
+      },
+    );
+  }
   bool valuenone = false;  
   bool valueEchoAR = false;
   bool valueGoogle = false; 
   bool valueMicrosoft = false; 
   bool valueFacebook = false;
-  bool value5 = false; 
-  bool value6 = false; 
-  bool value7 = false; 
-  bool value8 = false; 
+  bool valueWayfair = false; 
+  bool valueCO = false; 
+  bool valueSocial = false; 
+  bool valueImpCMU = false; 
   bool value9 = false; 
   bool value10 = false; 
 
@@ -123,7 +158,7 @@ class _FormScreenState extends State<FormScreen> {
                 ),  
                 CheckboxListTile(
                   controlAffinity: ListTileControlAffinity.leading,
-                  title: const Text('Microsoft Prize'),  
+                  title: const Text('Microsoft: Azure Champ Prize: Hack for Good'),  
                   value: this.valueMicrosoft,  
                   onChanged: (bool value) {  
                     setState(() {  
@@ -143,44 +178,44 @@ class _FormScreenState extends State<FormScreen> {
                 ),  
                 CheckboxListTile(
                   controlAffinity: ListTileControlAffinity.leading,
-                  title: const Text('Prize 5'),  
-                  value: this.value5,  
+                  title: const Text('Wayfair Prize: Best Hack to Solve an Inequality Crisis'),  
+                  value: this.valueWayfair,  
                   onChanged: (bool value) {  
                     setState(() {  
-                      this.value5 = value;  
+                      this.valueWayfair = value;  
                     });  
                   },  
                 ), 
 
                 CheckboxListTile(
                   controlAffinity: ListTileControlAffinity.leading,
-                  title: const Text('Prize 6'),  
-                  value: this.value6,  
+                  title: const Text('CaptialOne Prize: Best Financial Hack'),  
+                  value: this.valueCO,  
                   onChanged: (bool value) {  
                     setState(() {  
-                      this.value6 = value;  
+                      this.valueCO = value;  
                     });  
                   },  
                 ), 
 
                 CheckboxListTile(
                   controlAffinity: ListTileControlAffinity.leading,
-                  title: const Text('Prize 7'),  
-                  value: this.value7,  
+                  title: const Text('Best Social Impact Hack'),  
+                  value: this.valueSocial,  
                   onChanged: (bool value) {  
                     setState(() {  
-                      this.value7 = value;  
+                      this.valueSocial = value;  
                     });  
                   },  
                 ), 
 
                 CheckboxListTile(
                   controlAffinity: ListTileControlAffinity.leading,
-                  title: const Text('Prize 8'),  
-                  value: this.value8,  
+                  title: const Text('Impact CMU Award'),  
+                  value: this.valueImpCMU,  
                   onChanged: (bool value) {  
                     setState(() {  
-                      this.value8 = value;  
+                      this.valueImpCMU = value;  
                     });  
                   },  
                 ), 
@@ -226,7 +261,9 @@ class _FormScreenState extends State<FormScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   _buildName(),
-                  _buildURL(),
+                  _buildGitHubURL(),
+                  _buildPresURL(),
+                  _buildVidURL(),
                   _buildPrizes(),
                   SizedBox(height: 10),
                   RaisedButton(
@@ -243,15 +280,17 @@ class _FormScreenState extends State<FormScreen> {
                       _formKey.currentState.save();
 
                       print(_teamName);
-                      print(_url);
+                      print(_githubUrl);
+                      print(_presUrl);
+                      print(_vidUrl);
                       print("EchoAR: $valueEchoAR ");
                       print("Google: $valueGoogle ");
                       print("Microsoft: $valueMicrosoft ");
                       print("Facebook: $valueFacebook ");
-                      print("Prize 5: $value5 ");
-                      print("Prize 6: $value6 ");
-                      print("Prize 7: $value7 ");
-                      print("Prize 8: $value8 ");
+                      print("Prize 5: $valueWayfair ");
+                      print("Prize 6: $valueCO ");
+                      print("Prize 7: $valueSocial ");
+                      print("Prize 8: $valueImpCMU ");
                       print("Prize 9: $value9 ");
                       print("Prize 10: $value10 ");
                       //Send to API
