@@ -64,7 +64,6 @@ class LogIn extends StatelessWidget {
                   fit: BoxFit.fill,
                 ),*/
                     Image(image: AssetImage('center_logo.png')),
-                // do not have the asset yet, this is for the signup page
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -210,9 +209,8 @@ class _SecondState extends State<Second> {
                       /*Image.asset(
                   'assets/center_logo.png',
                   fit: BoxFit.fill,
-                ),*/
-                      Image(image: AssetImage('center_logo.png'))
-                  // do not have the asset yet! - this is for log in page
+                ),*/ // if you want to do it this way, remember to move the png back into the assets folder
+                      Image(image: AssetImage('center_logo.png')) //not working
                   ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
