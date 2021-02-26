@@ -7,66 +7,42 @@ packages:
       name: async
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< Updated upstream
-    version: "2.5.0-nullsafety.1"
-=======
     version: "2.5.0-nullsafety.3"
->>>>>>> Stashed changes
   boolean_selector:
     dependency: transitive
     description:
       name: boolean_selector
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< Updated upstream
-    version: "2.1.0-nullsafety.1"
-=======
     version: "2.1.0-nullsafety.3"
->>>>>>> Stashed changes
   characters:
     dependency: transitive
     description:
       name: characters
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< Updated upstream
-    version: "1.1.0-nullsafety.3"
-=======
     version: "1.1.0-nullsafety.5"
->>>>>>> Stashed changes
   charcode:
     dependency: transitive
     description:
       name: charcode
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< Updated upstream
-    version: "1.2.0-nullsafety.1"
-=======
     version: "1.2.0-nullsafety.3"
->>>>>>> Stashed changes
   clock:
     dependency: transitive
     description:
       name: clock
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< Updated upstream
-    version: "1.1.0-nullsafety.1"
-=======
     version: "1.1.0-nullsafety.3"
->>>>>>> Stashed changes
   collection:
     dependency: transitive
     description:
       name: collection
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< Updated upstream
-    version: "1.15.0-nullsafety.3"
-=======
     version: "1.15.0-nullsafety.5"
->>>>>>> Stashed changes
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -80,11 +56,7 @@ packages:
       name: fake_async
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< Updated upstream
-    version: "1.2.0-nullsafety.1"
-=======
     version: "1.2.0-nullsafety.3"
->>>>>>> Stashed changes
   flutter:
     dependency: "direct main"
     description: flutter
@@ -95,8 +67,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-<<<<<<< Updated upstream
-=======
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -130,27 +100,19 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.3-nullsafety.3"
->>>>>>> Stashed changes
   matcher:
     dependency: transitive
     description:
       name: matcher
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< Updated upstream
-    version: "0.12.10-nullsafety.1"
-=======
     version: "0.12.10-nullsafety.3"
->>>>>>> Stashed changes
   meta:
     dependency: transitive
     description:
       name: meta
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< Updated upstream
-    version: "1.3.0-nullsafety.3"
-=======
     version: "1.3.0-nullsafety.6"
   mime:
     dependency: transitive
@@ -159,16 +121,12 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.9.7"
->>>>>>> Stashed changes
   path:
     dependency: transitive
     description:
       name: path
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< Updated upstream
-    version: "1.8.0-nullsafety.1"
-=======
     version: "1.8.0-nullsafety.3"
   pedantic:
     dependency: transitive
@@ -176,7 +134,7 @@ packages:
       name: pedantic
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.9.2"
+    version: "1.10.0"
   plugin_platform_interface:
     dependency: transitive
     description:
@@ -191,7 +149,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.5+4"
->>>>>>> Stashed changes
   sky_engine:
     dependency: transitive
     description: flutter
@@ -203,75 +160,48 @@ packages:
       name: source_span
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< Updated upstream
-    version: "1.8.0-nullsafety.2"
-=======
     version: "1.8.0-nullsafety.4"
->>>>>>> Stashed changes
   stack_trace:
     dependency: transitive
     description:
       name: stack_trace
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< Updated upstream
-    version: "1.10.0-nullsafety.1"
-=======
     version: "1.10.0-nullsafety.6"
->>>>>>> Stashed changes
   stream_channel:
     dependency: transitive
     description:
       name: stream_channel
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< Updated upstream
-    version: "2.1.0-nullsafety.1"
-=======
     version: "2.1.0-nullsafety.3"
->>>>>>> Stashed changes
   string_scanner:
     dependency: transitive
     description:
       name: string_scanner
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< Updated upstream
-    version: "1.1.0-nullsafety.1"
-=======
     version: "1.1.0-nullsafety.3"
->>>>>>> Stashed changes
   term_glyph:
     dependency: transitive
     description:
       name: term_glyph
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< Updated upstream
-    version: "1.2.0-nullsafety.1"
-=======
     version: "1.2.0-nullsafety.3"
->>>>>>> Stashed changes
   test_api:
     dependency: transitive
     description:
       name: test_api
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< Updated upstream
-    version: "0.2.19-nullsafety.2"
-=======
     version: "0.2.19-nullsafety.6"
->>>>>>> Stashed changes
   typed_data:
     dependency: transitive
     description:
       name: typed_data
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< Updated upstream
-    version: "1.3.0-nullsafety.3"
-=======
     version: "1.3.0-nullsafety.5"
   url_launcher:
     dependency: "direct main"
@@ -279,7 +209,7 @@ packages:
       name: url_launcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.7.6"
+    version: "5.7.10"
   url_launcher_linux:
     dependency: transitive
     description:
@@ -300,14 +230,14 @@ packages:
       name: url_launcher_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.8"
+    version: "1.0.9"
   url_launcher_web:
     dependency: transitive
     description:
       name: url_launcher_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.4+1"
+    version: "0.1.5+3"
   url_launcher_windows:
     dependency: transitive
     description:
@@ -315,20 +245,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.1+3"
->>>>>>> Stashed changes
   vector_math:
     dependency: transitive
     description:
       name: vector_math
       url: "https://pub.dartlang.org"
     source: hosted
-<<<<<<< Updated upstream
-    version: "2.1.0-nullsafety.3"
-sdks:
-  dart: ">=2.10.0-110 <2.11.0"
-=======
     version: "2.1.0-nullsafety.5"
 sdks:
   dart: ">=2.12.0-0.0 <3.0.0"
-  flutter: ">=1.12.13+hotfix.5 <2.0.0"
->>>>>>> Stashed changes
+  flutter: ">=1.22.0 <2.0.0"
