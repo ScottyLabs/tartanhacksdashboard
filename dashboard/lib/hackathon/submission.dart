@@ -11,30 +11,15 @@ class FormScreen extends StatefulWidget{
 class _SubmissionState extends State<Submission>{
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.red, 
-        title: Text('Hackathon'),
-      ),
-      body: Center(
-        child: RaisedButton(
-          child: Text('Project Submission Form', 
-          style: TextStyle(color: Colors.red, fontSize: 16),),
-          
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => FormScreen()),
-            );
-          },
-        ),
-      ),
-    );
+    return FormScreen();
   }
 }
 class _FormScreenState extends State<FormScreen> {
 
   String _teamName;
-  String _url;
+  String _githubUrl;
+  String _presUrl;
+  String _vidUrl;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Widget _buildName() {
     return TextFormField(
@@ -52,9 +37,9 @@ class _FormScreenState extends State<FormScreen> {
     );
   }
 
-  Widget _buildURL() {
+  Widget _buildGitHubURL() {
     return TextFormField(
-      decoration: InputDecoration(labelText: 'Project Url'),
+      decoration: InputDecoration(labelText: 'GitHub Repository Url'),
       keyboardType: TextInputType.url,
       validator: (String value) {
         if (value.isEmpty) {
@@ -64,17 +49,55 @@ class _FormScreenState extends State<FormScreen> {
         return null;
       },
       onSaved: (String value) {
-        _url = value;
+        _githubUrl = value;
       },
     );
   }
 
+  Widget _buildPresURL() {
+    return TextFormField(
+      decoration: InputDecoration(labelText: 'Presentation Url'),
+      keyboardType: TextInputType.url,
+      validator: (String value) {
+        if (value.isEmpty) {
+          return 'URL is Required';
+        }
+
+        return null;
+      },
+      onSaved: (String value) {
+        _presUrl = value;
+      },
+    );
+  }
+
+  Widget _buildVidURL() {
+    return TextFormField(
+      decoration: InputDecoration(labelText: 'Video Url'),
+      keyboardType: TextInputType.url,
+      validator: (String value) {
+        if (value.isEmpty) {
+          return 'URL is Required';
+        }
+
+        return null;
+      },
+      onSaved: (String value) {
+        _vidUrl = value;
+      },
+    );
+  }
   bool valuenone = false;  
-  bool value1 = false;
-  bool value2 = false; 
-  bool value3 = false; 
-  bool value4 = false;
-  bool value5 = false; 
+  bool valueEchoAR = false;
+  bool valueGoogle = false; 
+  bool valueMicrosoft = false; 
+  bool valueFacebook = false;
+  bool valueWayfair = false; 
+  bool valueCO = false; 
+  bool valueSocial = false; 
+  bool valueImpCMU = false; 
+  bool value9 = false; 
+  bool value10 = false; 
 
 
   Widget _buildPrizes(){
@@ -97,51 +120,106 @@ class _FormScreenState extends State<FormScreen> {
                 ),  
                 CheckboxListTile(
                   controlAffinity: ListTileControlAffinity.leading,
-                  title: const Text('Prize 1'),  
-                  value: this.value1,  
+                  title: const Text('EchoAR Prize: 3 month business plan'),  
+                  value: this.valueEchoAR,  
                   onChanged: (bool value) {  
                     setState(() {  
-                      this.value1 = value;  
+                      this.valueEchoAR = value;  
                     });  
                   },  
                 ),  
                 CheckboxListTile(  
                   controlAffinity: ListTileControlAffinity.leading,  
-                  title: const Text('Prize 2'),  
-                  value: this.value2,  
+                  title: const Text('Google Prize'),  
+                  value: this.valueGoogle,  
                   onChanged: (bool value) {  
                     setState(() {  
-                      this.value2 = value;  
+                      this.valueGoogle = value;  
                     });  
                   },  
                 ),  
                 CheckboxListTile(
                   controlAffinity: ListTileControlAffinity.leading,
-                  title: const Text('Prize 3'),  
-                  value: this.value3,  
+                  title: const Text('Microsoft: Azure Champ Prize: Hack for Good'),  
+                  value: this.valueMicrosoft,  
                   onChanged: (bool value) {  
                     setState(() {  
-                      this.value3 = value;  
+                      this.valueMicrosoft = value;  
                     });  
                   },  
                 ),  
                 CheckboxListTile(
                   controlAffinity: ListTileControlAffinity.leading,
-                  title: const Text('Prize 4'),  
-                  value: this.value4,  
+                  title: const Text('Facebook Prize'),  
+                  value: this.valueFacebook,  
                   onChanged: (bool value) {  
                     setState(() {  
-                      this.value4 = value;  
+                      this.valueFacebook = value;  
                     });  
                   },  
                 ),  
                 CheckboxListTile(
                   controlAffinity: ListTileControlAffinity.leading,
-                  title: const Text('Prize 5'),  
-                  value: this.value5,  
+                  title: const Text('Wayfair Prize: Best Hack to Solve an Inequality Crisis'),  
+                  value: this.valueWayfair,  
                   onChanged: (bool value) {  
                     setState(() {  
-                      this.value5 = value;  
+                      this.valueWayfair = value;  
+                    });  
+                  },  
+                ), 
+
+                CheckboxListTile(
+                  controlAffinity: ListTileControlAffinity.leading,
+                  title: const Text('CaptialOne Prize: Best Financial Hack'),  
+                  value: this.valueCO,  
+                  onChanged: (bool value) {  
+                    setState(() {  
+                      this.valueCO = value;  
+                    });  
+                  },  
+                ), 
+
+                CheckboxListTile(
+                  controlAffinity: ListTileControlAffinity.leading,
+                  title: const Text('Best Social Impact Hack'),  
+                  value: this.valueSocial,  
+                  onChanged: (bool value) {  
+                    setState(() {  
+                      this.valueSocial = value;  
+                    });  
+                  },  
+                ), 
+
+                CheckboxListTile(
+                  controlAffinity: ListTileControlAffinity.leading,
+                  title: const Text('Impact CMU Award'),  
+                  value: this.valueImpCMU,  
+                  onChanged: (bool value) {  
+                    setState(() {  
+                      this.valueImpCMU = value;  
+                    });  
+                  },  
+                ), 
+
+                CheckboxListTile(
+                  controlAffinity: ListTileControlAffinity.leading,
+                  title: const Text('Prize 9'),  
+                  value: this.value9,  
+                  onChanged: (bool value) {  
+                    setState(() {  
+                      this.value9 = value;  
+                    });  
+                  },  
+                ), 
+
+                CheckboxListTile(
+                  controlAffinity: ListTileControlAffinity.leading,
+                  title: const Text('Prize 10'),  
+                  value: this.value10,  
+                  onChanged: (bool value) {  
+                    setState(() {  
+                      this.value10 = value;  
                     });  
                   },  
                 ), 
@@ -153,7 +231,7 @@ class _FormScreenState extends State<FormScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.red, title: Text("Project Submission Form")),
+      appBar: AppBar(backgroundColor: Color.fromARGB(0xFF, 0x25, 0x82, 0xF2), title: Text("Project Submission Form")),
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
@@ -165,13 +243,16 @@ class _FormScreenState extends State<FormScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   _buildName(),
-                  _buildURL(),
+                  _buildGitHubURL(),
+                  _buildPresURL(),
+                  _buildVidURL(),
                   _buildPrizes(),
                   SizedBox(height: 10),
                   RaisedButton(
+                    color: Color.fromARGB(0xFF, 0x5D, 0x5F, 0x61),
                     child: Text(
                       'Send',
-                      style: TextStyle(color: Colors.red, fontSize: 16),
+                      style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                     onPressed: () {
                       if (!_formKey.currentState.validate()) {
@@ -181,13 +262,20 @@ class _FormScreenState extends State<FormScreen> {
                       _formKey.currentState.save();
 
                       print(_teamName);
-                      print(_url);
-                      print("Prize 1: $value1 ");
-                      print("Prize 2: $value2 ");
-                      print("Prize 3: $value3 ");
-                      print("Prize 4: $value4 ");
-                      print("Prize 5: $value5 ");
-                      //Send to where it needs to be sent
+                      print(_githubUrl);
+                      print(_presUrl);
+                      print(_vidUrl);
+                      print("EchoAR: $valueEchoAR ");
+                      print("Google: $valueGoogle ");
+                      print("Microsoft: $valueMicrosoft ");
+                      print("Facebook: $valueFacebook ");
+                      print("Prize 5: $valueWayfair ");
+                      print("Prize 6: $valueCO ");
+                      print("Prize 7: $valueSocial ");
+                      print("Prize 8: $valueImpCMU ");
+                      print("Prize 9: $value9 ");
+                      print("Prize 10: $value10 ");
+                      //Send to API
                     },
                   )
                 ],
