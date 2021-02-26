@@ -18,7 +18,7 @@ class LogIn extends StatelessWidget {
 
   void login(String email, String password) async {
     Login logindata = await checkCredentials(email, password);
-    print(logindata.user.name);
+    // print(logindata.user.name);
   }
 
   @override
@@ -184,6 +184,10 @@ class _SecondState extends State<Second> {
     //super.dispose();
   }
 
+  void reset(String email) async {
+    Login resetdata = await resetPassword(email);
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -274,7 +278,8 @@ class _SecondState extends State<Second> {
                           side: BorderSide(
                               color: Color.fromARGB(255, 37, 130, 242))),
                       onPressed: () {
-                        print("title text field: ${emailController.text}");
+                        //print("title text field: ${emailController.text}");
+                        reset(emailController.text);
                         /*print("title text field: ${passwordController.text}");*/
                         /*Navigator.push(
                           context,
