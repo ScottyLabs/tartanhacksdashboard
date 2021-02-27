@@ -22,6 +22,11 @@ class Preferences {
     return _localPreferences;
   }
 
+  Future<void> setString(String key, String value) async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setString(key, value);
+  }
+
   Future<void> _initPreferences() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
 
