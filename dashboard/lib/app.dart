@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 import 'package:dashboard/account/acc.dart';
 
+import 'home/home.dart';
+
 
 
 class App extends StatelessWidget {
@@ -32,6 +34,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
   List<Widget> _widgetOptions = <Widget>[
+    Home(),
     HackHome(),
     InfoHome(),
     AccountHome(),
@@ -42,6 +45,10 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: "Home"
+          ),
           BottomNavigationBarItem(
             icon: Icon(Icons.code),
             label: "Hackathon"

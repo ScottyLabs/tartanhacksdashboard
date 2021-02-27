@@ -6,9 +6,9 @@ import 'dart:async';
 import 'anuda.dart';
 
 
-void main() => runApp(editEventApp());
+void main() => runApp(EditEventApp());
 
-class editEventApp extends StatelessWidget {
+class EditEventApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

@@ -96,14 +96,6 @@ class LogIn extends StatelessWidget {
                     /*Text(
                       'Forget password?',
                       style: TextStyle(fontSize: 12.0),
-<<<<<<< HEAD
-                    ),
-                    ElevatedButton(
-                      child: Container(
-                        child: Text("Login"),
-                        color: Color(0xffE21031),
-                      ),
-=======
                     ),*/
                     RaisedButton(
                       child: Text('Login',
@@ -113,20 +105,14 @@ class LogIn extends StatelessWidget {
                           borderRadius: BorderRadius.circular(16.0),
                           side: BorderSide(
                               color: Color.fromARGB(255, 37, 130, 242))),
->>>>>>> mpalaval
                       onPressed: () {
                         print("email: ${emailController.text}");
                         print("password: ${passwordController.text}");
                         /*Navigator.push(
                           context,
                           MaterialPageRoute(
-<<<<<<< HEAD
-                              builder: (context) => App()),
-                        );
-=======
                               builder: (context) => TemporaryOutputs()),
                         );*/
->>>>>>> mpalaval
                       },
                     ),
                   ],
@@ -267,13 +253,8 @@ class _SecondState extends State<Second> {
                         /*Navigator.push(
                           context,
                           MaterialPageRoute(
-<<<<<<< HEAD
-                              builder: (context) => App()),
-                        );
-=======
                               builder: (context) => TemporaryOutputs()),
                         );*/
->>>>>>> mpalaval
                       },
                     ),
                   ],
