@@ -185,17 +185,44 @@ class _MyHomePageState extends State<MyHomePage> {
 
   // hyperlinked button for the event
   Widget zoomLink(data) {
-    return IconButton(
+    if (data.access_code == 2){
+      return IconButton(
+          icon: new Image.asset(
+            "lib/logos/hopinLogo.png",
+            width: 24,
+            height: 24,
+            color: Colors.white,
+          ),
+        tooltip: 'Zoom Link!',
+      color: Color.fromARGB(255, 37, 130, 242),
+      onPressed: () => launch('${data.zoom_link}')
+        );
+  }
+    else if (data.access_code == 1){
+      return IconButton(
           icon: Icon(
             Icons.videocam,
             color: Colors.white,
             size: 25,
           ),
           tooltip: 'Zoom Link!',
-      color: Color.fromARGB(255, 37, 130, 242),
-      onPressed: () => launch('${data.zoom_link}')
-        );
-  }
+          color: Color.fromARGB(255, 37, 130, 242),
+          onPressed: () => launch('${data.zoom_link}')
+      );
+    }
+    else{
+      return IconButton(
+          icon: new Image.asset(
+            "lib/logos/discordLogoWhite.png",
+            width: 24,
+            height: 24,
+            color: Colors.white,
+          ),
+          tooltip: 'Zoom Link!',
+          color: Color.fromARGB(255, 37, 130, 242),
+          onPressed: () => launch('${data.zoom_link}')
+      );
+    }}
 
   Widget calLink(data) {
     return IconButton(
@@ -349,11 +376,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                                       SizedBox(
                                                         width: 10,
                                                       ),
-                                                      Container(
+                                                      /*Container(
                                                         color: Color.fromARGB(255, 37, 130, 242),
                                                         child: calLink(
                                                             eventData[index]),
-                                                      ),
+                                                      ),*/
                                                     ]
                                                 ):Row(
                                                     children: <Widget>[
@@ -373,14 +400,14 @@ class _MyHomePageState extends State<MyHomePage> {
                                                       SizedBox(
                                                         width: 10,
                                                       ),
-                                                      Container(
+                                                      /*Container(
                                                         color: Color.fromARGB(255, 37, 130, 242),
                                                         child: calLink(
                                                               eventData[index]),
                                                         ),
                                                       SizedBox(
                                                         width: 10,
-                                                      ),
+                                                      ),*/
                                                       Container(
                                                         color: Colors.redAccent[700], //Color.fromARGB(255, 37, 130, 242) (Blue),
                                                         child: editEvent(

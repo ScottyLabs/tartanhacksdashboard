@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.8.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -27,6 +27,7 @@ dependencies:
   http: ^0.12.2
   intl: ^0.16.1
   share: ^0.6.5+4
+  date_time_picker: ^1.1.1
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -51,8 +52,13 @@ flutter:
     - family: TerminalGrotesque
       fonts:
         - asset: lib/fonts/terminal-grotesque.ttf
+    - family: CustomIcons
+      fonts:
+        - asset: lib/fonts/CustomIcons.ttf
 
-
+  assets:
+    - lib/logos/discordLogoWhite.png
+    - lib/logos/hopinLogo.png
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

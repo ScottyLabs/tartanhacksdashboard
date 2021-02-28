@@ -3,9 +3,37 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="NONE" />
   </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:upstream" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="e050d6a8-2474-4881-8248-40b269320cf3" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashboard/lib/anuda.dart" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/lib/anuda.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashboard/lib/editEvents.dart" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/lib/editEvents.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashboard/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashboard/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,11 +91,22 @@
     </task>
     <servers />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="WindowStateProjectService">
-    <state x="834" y="341" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1614111326244">
+    <state x="834" y="341" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1614481654202">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="834" y="341" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1614111326244" />
+    <state x="834" y="341" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1400@0.0.2560.1400" timestamp="1614481654202" />
     <state x="809" y="530" key="#com.intellij.ide.util.TreeFileChooserDialog" timestamp="1614111323364">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
@@ -80,22 +119,22 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1160" y="441" key="FileChooserDialogImpl/0.0.2560.1400@0.0.2560.1400" timestamp="1613247139870" />
-    <state width="2517" height="660" key="GridCell.Tab.0.bottom" timestamp="1614313165781">
+    <state width="2517" height="449" key="GridCell.Tab.0.bottom" timestamp="1614489030871">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2517" height="660" key="GridCell.Tab.0.bottom/0.0.2560.1400@0.0.2560.1400" timestamp="1614313165781" />
-    <state width="2517" height="660" key="GridCell.Tab.0.center" timestamp="1614313165781">
+    <state width="2517" height="449" key="GridCell.Tab.0.bottom/0.0.2560.1400@0.0.2560.1400" timestamp="1614489030871" />
+    <state width="2517" height="449" key="GridCell.Tab.0.center" timestamp="1614489030871">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2517" height="660" key="GridCell.Tab.0.center/0.0.2560.1400@0.0.2560.1400" timestamp="1614313165781" />
-    <state width="2517" height="660" key="GridCell.Tab.0.left" timestamp="1614313165781">
+    <state width="2517" height="449" key="GridCell.Tab.0.center/0.0.2560.1400@0.0.2560.1400" timestamp="1614489030871" />
+    <state width="2517" height="449" key="GridCell.Tab.0.left" timestamp="1614489030871">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2517" height="660" key="GridCell.Tab.0.left/0.0.2560.1400@0.0.2560.1400" timestamp="1614313165781" />
-    <state width="2517" height="660" key="GridCell.Tab.0.right" timestamp="1614313165781">
+    <state width="2517" height="449" key="GridCell.Tab.0.left/0.0.2560.1400@0.0.2560.1400" timestamp="1614489030871" />
+    <state width="2517" height="449" key="GridCell.Tab.0.right" timestamp="1614489030871">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2517" height="660" key="GridCell.Tab.0.right/0.0.2560.1400@0.0.2560.1400" timestamp="1614313165781" />
+    <state width="2517" height="449" key="GridCell.Tab.0.right/0.0.2560.1400@0.0.2560.1400" timestamp="1614489030871" />
     <state x="1213" y="376" key="SettingsEditor" timestamp="1614108570601">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
@@ -104,6 +143,10 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1030" y="423" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.2560.1400@0.0.2560.1400" timestamp="1613836425117" />
+    <state x="936" y="330" width="672" height="677" key="run.anything.popup" timestamp="1614488919795">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="936" y="330" width="672" height="677" key="run.anything.popup/0.0.2560.1400@0.0.2560.1400" timestamp="1614488919795" />
     <state x="1406" y="442" width="672" height="678" key="search.everywhere.popup" timestamp="1614108916475">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
