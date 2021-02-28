@@ -543,6 +543,9 @@ class _ConfigPageState extends State<ConfigPage> {
               style: Theme.of(context).textTheme.headline1),
           backgroundColor: Theme.of(context).primaryColor,
           toolbarHeight: 70,
+          iconTheme: IconThemeData(
+            color: Colors.white, //change your color here
+          ),
         ),
         body:Padding(
             padding: const EdgeInsets.all(24),
@@ -585,10 +588,7 @@ class _ConfigPageState extends State<ConfigPage> {
                                 }).toList(),
                                 disabledHint: Text("N/A"),
                                 underline: Container(
-                                    height: 2,
-                                    color: (!widget.scanConfig[2]) ?
-                                    Theme.of(context).primaryColor
-                                        : Colors.grey[500]
+                                    height: 0
                                 ),
                                 onChanged: (!widget.scanConfig[2]) ? (String newValue) {
                                   widget.setConfig(newValue, 0);

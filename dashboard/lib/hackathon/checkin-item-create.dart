@@ -251,7 +251,7 @@ class _NewCIIState extends State<NewCIIPage>{
     super.dispose();
   }
 
-  Future setUpEvent() async{
+  void setUpEvent(){
     input = widget.editing.toJson();
     controller1.text = input["name"];
     controller2.text = input["desc"];
@@ -266,14 +266,10 @@ class _NewCIIState extends State<NewCIIPage>{
     pickedTime = new TimeOfDay.fromDateTime(temp);
   }
 
-  Future setUpWrapper() async{
-    await setUpEvent();
-  }
-
   @override
   void initState(){
     if(widget.editing != null){
-      setUpWrapper();
+      setUpEvent();
     }
     super.initState();
   }
@@ -291,7 +287,7 @@ class _NewCIIState extends State<NewCIIPage>{
           toolbarHeight: 50,
         ),
           body: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 32),
+            padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 32),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
