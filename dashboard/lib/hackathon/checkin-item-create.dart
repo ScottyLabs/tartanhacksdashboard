@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter/services.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'json-classes.dart';
 
 
@@ -95,6 +96,10 @@ class SelectScreen extends StatelessWidget{
 
 
 class NewCIIPage extends StatefulWidget{
+  final CheckinItem editing;
+
+  NewCIIPage({this.editing});
+
   @override
   _NewCIIState createState() => _NewCIIState();
 }
@@ -164,6 +169,23 @@ class _NewCIIState extends State<NewCIIPage>{
     }
   }
 
+  Future editCII(context) async{
+    var response = await http.post(
+        Uri.encodeFull("https://thd-api.herokuapp.com/checkin/edit"),
+        headers: {
+          "token": token,
+          "Content-Type" : "application/json"},
+        body: json.encode(input)
+    );
+
+    Map data = json.decode(response.body);
+    if(response.statusCode != 200) {
+      errorDialog("Error", data['message'], context);
+    }else{
+      errorDialog("Success", data["message"], context);
+    }
+  }
+
   @override
   void dispose(){
     controller1.dispose();
@@ -172,13 +194,27 @@ class _NewCIIState extends State<NewCIIPage>{
     controller4.dispose();
     controller5.dispose();
     super.dispose();
-}
+  }
+
+  @override
+  void initState(){
+    if(widget.editing != null){
+      input = widget.editing.toJson();
+      controller1.text = input["name"];
+      controller2.text = input["desc"];
+      controller3.text = input["units"].toString();
+      controller4.text = input["checkin_limit"].toString();
+      controller5.text = input["points"].toString();
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('New Checkin Item',
+          title: Text(widget.editing == null ? 'New Checkin Item'
+              : 'Editing Checkin Item',
               style: Theme.of(context).textTheme.headline2),
           backgroundColor: Theme.of(context).primaryColor,
           toolbarHeight: 50,
@@ -353,19 +389,74 @@ class _NewCIIState extends State<NewCIIPage>{
                       }
                   ),
                   const SizedBox(height: 8),
-                  RaisedButton(
-                      onPressed: () {
-                        createCII(context);
-                      },
-                      padding: const EdgeInsets.only(top:10, bottom:10,
-                          left:30, right:30),
-                      child: Text('Create',
-                          style: Theme.of(context).textTheme.button)
-                  ),
+                  widget.editing != null ?
+                    RaisedButton(
+                        onPressed: () {
+                          editCII(context);
+                        },
+                        padding: const EdgeInsets.only(top:10, bottom:10,
+                            left:30, right:30),
+                        child: Text('Save',
+                            style: Theme.of(context).textTheme.button)
+                    )
+                    : RaisedButton(
+                        onPressed: () {
+                          createCII(context);
+                        },
+                        padding: const EdgeInsets.only(top:10, bottom:10,
+                            left:30, right:30),
+                        child: Text('Create',
+                            style: Theme.of(context).textTheme.button)
+                    ),
                 ]
               )
             )
           )
+    );
+  }
+}
+
+class InfoTile extends StatelessWidget{
+  final CheckinItem info;
+
+  InfoTile(this.info);
+
+  @override
+  Widget build(BuildContext context){
+    return Card(
+        margin: const EdgeInsets.all(12),
+        child: InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) =>
+                    NewCIIPage(editing:info)),
+              );
+            },
+            child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                        '${info.name}',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        )
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                        info.desc,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey[500],
+                        )
+                    ),
+                  ]
+                )
+            )
+        )
     );
   }
 }
@@ -377,23 +468,78 @@ class ViewCIIPage extends StatefulWidget{
 
 class _ViewCIIState extends State<ViewCIIPage>{
   List checkinItems;
-  String token;
+  String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.IjYwMjgxMGJhODNmMDlmMDAxYmViMDlmMCI.HAjKGgH35L3MSpf2ONVpQR6BS-dFMa5dA0pSNo2ZX9c";
+  bool loaded = false;
 
   Future getCheckinItems() async{
     var response = await http.post(
         Uri.encodeFull("https://thd-api.herokuapp.com/checkin/get"),
         headers:{"token": token}
     );
-    List input = json.decode(response.body);
-    setState(() {
-      checkinItems = input.map((element) =>
-          CheckinItem.fromJson(element)).toList();
-    });
+    List data = json.decode(response.body);
+    data = data.map((element) =>
+        CheckinItem.fromJson(element)).toList();
+    
+    if(this.mounted){
+      setState(() {
+        checkinItems = data;
+        loaded = true;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    if(checkinItems != null){
+      checkinItems = null;
+    }
+    getCheckinItems();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("All Checkin Events",
+              style: Theme.of(context).textTheme.headline2),
+          backgroundColor: Theme.of(context).primaryColor,
+          toolbarHeight: 50,
+        ),
+        body: Column(
+            children: <Widget>[
+              (checkinItems != null) ?
+              Expanded(
+                child: ListView.builder(
+                  itemCount: checkinItems.length,
+                  itemBuilder: (BuildContext context, int index){
+                    return InfoTile(checkinItems[index]);
+                  },
+                ),
+              )
+                  : SizedBox(
+                  height: 100,
+                  child: Align(
+                      alignment: Alignment.center,
+                      child:
+                      (loaded) ?
+                      Text(
+                          "No event data found.",
+                          style: TextStyle(
+                            fontSize: 30,
+                          )
+                      )
+                          : Text(
+                          "Loading...",
+                          style: TextStyle(
+                            fontSize: 35,
+                            fontWeight: FontWeight.bold,
+                          )
+                      )
+                  )
+              )
+            ]
+        )
+    );
   }
 }
