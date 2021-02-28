@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter/services.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:intl/intl.dart';
 import 'json-classes.dart';
 
 
@@ -94,6 +94,10 @@ class SelectScreen extends StatelessWidget{
   }
 }
 
+class AlwaysDisabledFocusNode extends FocusNode {
+  @override
+  bool get hasFocus => false;
+}
 
 class NewCIIPage extends StatefulWidget{
   final CheckinItem editing;
@@ -109,7 +113,7 @@ class _NewCIIState extends State<NewCIIPage>{
   Map input = {
     "name" : "",
     "desc" : "",
-    "date" : "0",
+    "date" : DateTime.now().millisecondsSinceEpoch.toString(),
     "lat" : 0,
     "long": 0,
     "units" : 0,
@@ -125,6 +129,12 @@ class _NewCIIState extends State<NewCIIPage>{
   TextEditingController controller3 = TextEditingController();
   TextEditingController controller4 = TextEditingController();
   TextEditingController controller5 = TextEditingController();
+  TextEditingController controller6 = TextEditingController();
+  TextEditingController controller7 = TextEditingController();
+
+  DateTime pickedDate = DateTime.now();
+  TimeOfDay pickedTime = TimeOfDay.now();
+
   String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.IjYwMjgxMGJhODNmMDlmMDAxYmViMDlmMCI.HAjKGgH35L3MSpf2ONVpQR6BS-dFMa5dA0pSNo2ZX9c";
 
   Future errorDialog(title, text, context) async {
@@ -170,6 +180,7 @@ class _NewCIIState extends State<NewCIIPage>{
   }
 
   Future editCII(context) async{
+    print(json.encode(input));
     var response = await http.post(
         Uri.encodeFull("https://thd-api.herokuapp.com/checkin/edit"),
         headers: {
@@ -186,6 +197,49 @@ class _NewCIIState extends State<NewCIIPage>{
     }
   }
 
+  void updateDate(){
+    DateTime combined = new DateTime(pickedDate.year, pickedDate.month,
+        pickedDate.day, pickedTime.hour, pickedTime.minute);
+    setState(() {
+      input["date"] = (combined.millisecondsSinceEpoch/1000).round().toString();
+    });
+  }
+
+  bool dateInRange(DateTime d, DateTime start, DateTime end){
+    return start.isBefore(d) && end.isAfter(d);
+  }
+
+  Future pickDate(BuildContext context) async {
+    DateTime sDate = DateTime(DateTime.now().year-5);
+    DateTime eDate = DateTime(DateTime.now().year+5);
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: dateInRange(pickedDate, sDate, eDate) ? pickedDate
+            : DateTime.now(),
+        firstDate: sDate,
+        lastDate: eDate,
+    );
+    if (picked != null && picked != pickedDate)
+      setState(() {
+        pickedDate = picked;
+        controller6.text = DateFormat.yMMMd().format(pickedDate);
+        updateDate();
+      });
+  }
+
+  Future pickTime(BuildContext context) async {
+    final TimeOfDay picked = await showTimePicker(
+      context: context,
+      initialTime: pickedTime,
+    );
+    if (picked != null && picked != pickedTime)
+      setState(() {
+        pickedTime = picked;
+        controller7.text = pickedTime.format(context);
+        updateDate();
+      });
+  }
+
   @override
   void dispose(){
     controller1.dispose();
@@ -193,24 +247,42 @@ class _NewCIIState extends State<NewCIIPage>{
     controller3.dispose();
     controller4.dispose();
     controller5.dispose();
+    controller6.dispose();
+    controller7.dispose();
     super.dispose();
+  }
+
+  Future setUpEvent() async{
+    input = widget.editing.toJson();
+    controller1.text = input["name"];
+    controller2.text = input["desc"];
+    controller3.text = input["units"].toString();
+    controller4.text = input["checkin_limit"].toString();
+    controller5.text = input["points"].toString();
+
+    DateTime temp = new DateTime.fromMillisecondsSinceEpoch(
+      int.parse(input["date"])*1000,
+    ).toLocal();
+    pickedDate = new DateTime(temp.year, temp.month, temp.day);
+    pickedTime = new TimeOfDay.fromDateTime(temp);
+  }
+
+  Future setUpWrapper() async{
+    await setUpEvent();
   }
 
   @override
   void initState(){
     if(widget.editing != null){
-      input = widget.editing.toJson();
-      controller1.text = input["name"];
-      controller2.text = input["desc"];
-      controller3.text = input["units"].toString();
-      controller4.text = input["checkin_limit"].toString();
-      controller5.text = input["points"].toString();
+      setUpWrapper();
     }
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    controller6.text = DateFormat.yMMMd().format(pickedDate);
+    controller7.text = pickedTime.format(context);
     return Scaffold(
         appBar: AppBar(
           title: Text(widget.editing == null ? 'New Checkin Item'
@@ -250,6 +322,32 @@ class _NewCIIState extends State<NewCIIPage>{
                       setState(() {
                         input["desc"] = value;
                       });
+                    },
+                  ),
+                  const SizedBox(height: 8),
+                  TextField(
+                    autofocus: false,
+                    focusNode: AlwaysDisabledFocusNode(),
+                    controller: controller6,
+                    decoration: InputDecoration(
+                        labelText: "Date",
+                        border: OutlineInputBorder()
+                    ),
+                    onTap: () {
+                      pickDate(context);
+                    },
+                  ),
+                  const SizedBox(height: 8),
+                  TextField(
+                    autofocus: false,
+                    focusNode: AlwaysDisabledFocusNode(),
+                    controller: controller7,
+                    decoration: InputDecoration(
+                        labelText: "Time",
+                        border: OutlineInputBorder()
+                    ),
+                    onTap: () {
+                      pickTime(context);
                     },
                   ),
                   const SizedBox(height: 8),
@@ -418,8 +516,9 @@ class _NewCIIState extends State<NewCIIPage>{
 
 class InfoTile extends StatelessWidget{
   final CheckinItem info;
+  final Function refresh;
 
-  InfoTile(this.info);
+  InfoTile(this.info, this.refresh);
 
   @override
   Widget build(BuildContext context){
@@ -431,7 +530,7 @@ class InfoTile extends StatelessWidget{
                 context,
                 MaterialPageRoute(builder: (context) =>
                     NewCIIPage(editing:info)),
-              );
+              ).then((val)=>refresh());
             },
             child: Padding(
                 padding: const EdgeInsets.all(24),
@@ -513,7 +612,7 @@ class _ViewCIIState extends State<ViewCIIPage>{
                 child: ListView.builder(
                   itemCount: checkinItems.length,
                   itemBuilder: (BuildContext context, int index){
-                    return InfoTile(checkinItems[index]);
+                    return InfoTile(checkinItems[index], getCheckinItems);
                   },
                 ),
               )
