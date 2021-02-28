@@ -179,7 +179,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                ProfileScreen()));
+                                                ProfileScreen(userData:userData)));
                                   },
                                   color: Color.fromARGB(255, 37, 130, 242),
                                   child: new Text(
