@@ -44,12 +44,6 @@ class _LoginScreenState extends State<LoginScreen> {
     Login logindata = await checkCredentials(email, password);
 
     if (logindata != null) {
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString('token', logindata.access_token);
-      prefs.setString('email', logindata.user.email);
-      prefs.setString('password', password);
-      prefs.setBool('is_admin', logindata.user.is_admin);
-      prefs.setString('team_id', logindata.user.team_id);
 
 
       Navigator.pop(context);

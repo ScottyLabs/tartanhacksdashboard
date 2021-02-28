@@ -21,4 +21,7 @@ dependencies: \
   /Users/anudaweerasinghe/Desktop/thd_working_app/thdapp/ios/Flutter/Flutter.framework/Headers/Flutter.h \
   /Users/anudaweerasinghe/Desktop/thd_working_app/thdapp/build/ios/Debug-iphonesimulator/shared_preferences/shared_preferences.framework/Headers/FLTSharedPreferencesPlugin.h \
   /Users/anudaweerasinghe/Desktop/thd_working_app/thdapp/build/ios/Debug-iphonesimulator/shared_preferences/shared_preferences.framework/Modules/module.modulemap \
-  /Users/anudaweerasinghe/Desktop/thd_working_app/thdapp/build/ios/Debug-iphonesimulator/shared_preferences/shared_preferences.framework/Headers/shared_preferences-umbrella.h
+  /Users/anudaweerasinghe/Desktop/thd_working_app/thdapp/build/ios/Debug-iphonesimulator/shared_preferences/shared_preferences.framework/Headers/shared_preferences-umbrella.h \
+  /Users/anudaweerasinghe/Desktop/thd_working_app/thdapp/build/ios/Debug-iphonesimulator/url_launcher/url_launcher.framework/Headers/FLTURLLauncherPlugin.h \
+  /Users/anudaweerasinghe/Desktop/thd_working_app/thdapp/build/ios/Debug-iphonesimulator/url_launcher/url_launcher.framework/Modules/module.modulemap \
+  /Users/anudaweerasinghe/Desktop/thd_working_app/thdapp/build/ios/Debug-iphonesimulator/url_launcher/url_launcher.framework/Headers/url_launcher-umbrella.h

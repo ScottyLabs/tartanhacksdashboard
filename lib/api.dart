@@ -2,6 +2,10 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 import 'models/login_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+
+SharedPreferences prefs;
 
 const baseUrl = "https://thd-api.herokuapp.com/";
 
@@ -16,6 +20,14 @@ Future<Login> checkCredentials(String email, String password) async {
     Login loginData;
     var data = json.decode(response.body);
     loginData = new Login.fromJson(data);
+
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('token', loginData.access_token);
+    prefs.setString('email', loginData.user.email);
+    prefs.setString('password', password);
+    prefs.setBool('is_admin', loginData.user.is_admin);
+    prefs.setString('team_id', loginData.user.team_id);
+
     return loginData;
   } else {
     print(json1);
