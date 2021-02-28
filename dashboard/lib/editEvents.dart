@@ -4,7 +4,7 @@ import 'package:date_time_picker/date_time_picker.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
-import 'anuda.dart';
+import 'events.dart';
 
 void main() => runApp(editEventApp());
 
@@ -76,25 +76,43 @@ class _editHomePageState extends State<editHomePage> {
       print(response.statusCode);
       return false;
     }
-    // if (response.statusCode == 200) {
-    //   Login loginData;
-    //   var data = json.decode(response.body);
-    //   loginData = new Login.fromJson(data);
-    //   return loginData;
-    // } else if (response.statusCode == 401) {
-    //   print(response.statusCode);
-    //   return null;
-    // } else {
-    //   print(json1);
-    //   return null;
-    // }
   }
   void saveData() async {
     bool result = await addEventAsync();
     if (result == true) {
-      print(true);
+      _showDialog('Your event was successfully saved!', 'Success');
+    }
+    else{
+      _showDialog('There was an error. Please try again.', 'Error.');
     }
   }
+  void _showDialog(String response, String title) {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text(title),
+          content: new Text(response),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text(
+                "OK",
+                style: new TextStyle(color: Colors.white),
+              ),
+              color: new Color.fromARGB(255, 255, 75, 43),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.

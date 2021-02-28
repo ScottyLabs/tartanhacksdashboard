@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-//import 'eventinfo.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'eventmodel.dart';
 import 'apicall.dart';

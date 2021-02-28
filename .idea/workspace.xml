@@ -28,8 +28,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e050d6a8-2474-4881-8248-40b269320cf3" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/dashboard/lib/eventsPreview.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dashboard/lib/anuda.dart" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/lib/anuda.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashboard/lib/anuda.dart" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/lib/events.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dashboard/lib/editEvents.dart" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/lib/editEvents.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +64,7 @@
   </component>
   <component name="RunManager" selected="Flutter.Edit Events">
     <configuration name="Anuda File" type="FlutterRunConfigurationType" factoryName="Flutter">
-      <option name="filePath" value="$PROJECT_DIR$/dashboard/lib/anuda.dart" />
+      <option name="filePath" value="$PROJECT_DIR$/dashboard/lib/events.dart" />
       <method v="2" />
     </configuration>
     <configuration name="Edit Events" type="FlutterRunConfigurationType" factoryName="Flutter">
@@ -116,22 +118,22 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1160" y="441" key="FileChooserDialogImpl/0.0.2560.1400@0.0.2560.1400" timestamp="1613247139870" />
-    <state width="2517" height="449" key="GridCell.Tab.0.bottom" timestamp="1614489030871">
+    <state width="2517" height="448" key="GridCell.Tab.0.bottom" timestamp="1614550093610">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2517" height="449" key="GridCell.Tab.0.bottom/0.0.2560.1400@0.0.2560.1400" timestamp="1614489030871" />
-    <state width="2517" height="449" key="GridCell.Tab.0.center" timestamp="1614489030871">
+    <state width="2517" height="448" key="GridCell.Tab.0.bottom/0.0.2560.1400@0.0.2560.1400" timestamp="1614550093610" />
+    <state width="2517" height="448" key="GridCell.Tab.0.center" timestamp="1614550093610">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2517" height="449" key="GridCell.Tab.0.center/0.0.2560.1400@0.0.2560.1400" timestamp="1614489030871" />
-    <state width="2517" height="449" key="GridCell.Tab.0.left" timestamp="1614489030871">
+    <state width="2517" height="448" key="GridCell.Tab.0.center/0.0.2560.1400@0.0.2560.1400" timestamp="1614550093610" />
+    <state width="2517" height="448" key="GridCell.Tab.0.left" timestamp="1614550093610">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2517" height="449" key="GridCell.Tab.0.left/0.0.2560.1400@0.0.2560.1400" timestamp="1614489030871" />
-    <state width="2517" height="449" key="GridCell.Tab.0.right" timestamp="1614489030871">
+    <state width="2517" height="448" key="GridCell.Tab.0.left/0.0.2560.1400@0.0.2560.1400" timestamp="1614550093610" />
+    <state width="2517" height="448" key="GridCell.Tab.0.right" timestamp="1614550093610">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2517" height="449" key="GridCell.Tab.0.right/0.0.2560.1400@0.0.2560.1400" timestamp="1614489030871" />
+    <state width="2517" height="448" key="GridCell.Tab.0.right/0.0.2560.1400@0.0.2560.1400" timestamp="1614550093610" />
     <state x="1213" y="376" key="SettingsEditor" timestamp="1614108570601">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
