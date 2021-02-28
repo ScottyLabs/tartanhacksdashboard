@@ -180,7 +180,6 @@ class _NewCIIState extends State<NewCIIPage>{
   }
 
   Future editCII(context) async{
-    print(json.encode(input));
     var response = await http.post(
         Uri.encodeFull("https://thd-api.herokuapp.com/checkin/edit"),
         headers: {

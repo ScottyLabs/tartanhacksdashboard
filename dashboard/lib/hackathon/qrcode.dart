@@ -25,7 +25,6 @@ class _QRHomeState extends State<QRHome> {
   String id;
   bool admin = false;
   String token;
-  List checkinItems;
 
   void delHistory(hItem){
     setState(() {
@@ -60,28 +59,9 @@ class _QRHomeState extends State<QRHome> {
     }
   }
 
-  Future getCheckinItems() async{
-    var response = await http.post(
-        Uri.encodeFull("https://thd-api.herokuapp.com/checkin/get"),
-        headers:{"token": token}
-    );
-    List data = json.decode(response.body);
-    setState(() {
-      checkinItems = data.map((element) =>
-          CheckinItem.fromJson(element))
-          .where((element) => element.self_checkin_enabled == false).toList();
-      scanConfig[0] = checkinItems[0].id;
-    });
-  }
-
-  Future setup() async{
-    await getID("gdl2@andrew.cmu.edu", "PerXBo@wgifCUYSk4bX3");
-    await getCheckinItems();
-  }
-
   @override
   void initState() {
-    setup();
+    getID("gdl2@andrew.cmu.edu", "PerXBo@wgifCUYSk4bX3");
     super.initState();
   }
 
@@ -114,8 +94,7 @@ class _QRHomeState extends State<QRHome> {
       ),
         home: QRPage(history: history, delHistory: delHistory,
           scanConfig: scanConfig, setConfig: setConfig,
-          getID: getID, id: id, admin: admin, token: token,
-          checkinItems: checkinItems)
+          getID: getID, id: id, admin: admin, token: token)
     );
   }
 }
@@ -131,11 +110,9 @@ class QRPage extends StatelessWidget{
   final String id;
   final bool admin;
   final String token;
-  final List checkinItems;
 
   QRPage({this.history, this.delHistory, this.scanConfig,
-    this.setConfig, this.getID, this.id, this.admin, this.token,
-    this.checkinItems});
+    this.setConfig, this.getID, this.id, this.admin, this.token});
 
   Future errorDialog(text, context) async {
     return showDialog<void>(
@@ -274,8 +251,8 @@ class QRPage extends StatelessWidget{
                               context,
                               MaterialPageRoute(builder: (context) =>
                                   ConfigPage(scanConfig: scanConfig,
-                                      setConfig: setConfig,
-                                      checkinItems: checkinItems)),
+                                      setConfig: setConfig, token: token)
+                              ),
                             );
                           },
                           padding: const EdgeInsets.only(top:10, bottom:10,
@@ -518,9 +495,9 @@ class _HistoryPageState extends State<HistoryPage>{
 class ConfigPage extends StatefulWidget{
   final List scanConfig;
   final Function setConfig;
-  final List checkinItems;
+  final String token;
 
-  ConfigPage({this.scanConfig, this.setConfig, this.checkinItems});
+  ConfigPage({this.scanConfig, this.setConfig, this.token});
 
   _ConfigPageState createState() => _ConfigPageState();
 }
@@ -529,6 +506,21 @@ class ConfigPage extends StatefulWidget{
 class _ConfigPageState extends State<ConfigPage> {
 
   final commentControl = TextEditingController();
+  List checkinItems;
+
+  Future getCheckinItems() async{
+    var response = await http.post(
+        Uri.encodeFull("https://thd-api.herokuapp.com/checkin/get"),
+        headers:{"token": widget.token}
+    );
+    List data = json.decode(response.body);
+    setState(() {
+      checkinItems = data.map((element) =>
+          CheckinItem.fromJson(element))
+          .where((element) => element.self_checkin_enabled == false).toList();
+      widget.scanConfig[0] = checkinItems[0].id;
+    });
+  }
 
   @override
   void dispose() {
@@ -539,6 +531,7 @@ class _ConfigPageState extends State<ConfigPage> {
   @override
   void initState() {
     commentControl.text = !widget.scanConfig[2] ? widget.scanConfig[1] : "";
+    getCheckinItems();
     super.initState();
   }
 
@@ -556,8 +549,22 @@ class _ConfigPageState extends State<ConfigPage> {
             child: SingleChildScrollView(
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Row(
+                  children:
+                  (checkinItems == null) ?
+                    [SizedBox(
+                        height: 100,
+                        child: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                                "Loading...",
+                                style: TextStyle(
+                                  fontSize: 35,
+                                  fontWeight: FontWeight.bold,
+                                )
+                            )
+                        )
+                    )]
+                  :[Row(
                         children: [
                           Container(
                             child: Text("Check In Item",
@@ -569,7 +576,7 @@ class _ConfigPageState extends State<ConfigPage> {
                             child: DropdownButton<String>(
                                 isExpanded: true,
                                 value: widget.scanConfig[0],
-                                items: widget.checkinItems
+                                items: checkinItems
                                     .map<DropdownMenuItem<String>>((value) {
                                   return DropdownMenuItem<String>(
                                       value: value.id,
