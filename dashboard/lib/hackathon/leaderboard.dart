@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:flutter/services.dart';
-
-part 'leaderboard.g.dart';
+import 'json-classes.dart';
 
 
 
@@ -22,23 +20,6 @@ class Leaderboard extends StatelessWidget{
         home: LBPage()
     );
   }
-}
-
-
-@JsonSerializable()
-class Participant{
-  int total_points; // ignore: non_constant_identifier_names
-  @JsonKey(name: '_id')
-  String id;
-  String name;
-  String email;
-
-  Participant(this.total_points, this.id, this.name, this.email);
-
-  factory Participant.fromJson(Map<String, dynamic> json) =>
-      _$ParticipantFromJson(json);
-
-  Map<String, dynamic> toJson() => _$ParticipantToJson(this);
 }
 
 
@@ -156,7 +137,7 @@ class _LBState extends State<LBPage>{
                       child:
                       (loaded) ?
                       Text(
-                          "There's nothing here :(",
+                          "No leaderboard data found.",
                           style: TextStyle(
                             fontSize: 30,
                           )

@@ -6,9 +6,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:json_annotation/json_annotation.dart';
+import 'json-classes.dart';
 
-part 'qrcode.g.dart';
 
 void main() {
   runApp(QRHome());
@@ -18,56 +17,6 @@ class QRHome extends StatefulWidget{
   @override
   _QRHomeState createState() => _QRHomeState();
 }
-
-@JsonSerializable()
-class CheckinItem{
-  @JsonKey(defaultValue: false)
-  bool has_checked_in; // ignore: non_constant_identifier_names
-  @JsonKey(defaultValue: "")
-  String check_in_timestamp; // ignore: non_constant_identifier_names
-  int checkin_limit; // ignore: non_constant_identifier_names
-  bool self_checkin_enabled; // ignore: non_constant_identifier_names
-  int points;
-  @JsonKey(name: '_id')
-  String id;
-  String name;
-  String desc;
-  String date;
-  int lat;
-  int long;
-  int units;
-  int access_code; // ignore: non_constant_identifier_names
-  int active_status; // ignore: non_constant_identifier_names
-
-  CheckinItem(this.has_checked_in, this.check_in_timestamp, this.checkin_limit,
-      this.self_checkin_enabled, this.points,
-      this.id, this.name, this.desc, this.date, this.lat, this.long,
-      this.units, this.access_code, this.active_status);
-
-
-  factory CheckinItem.fromJson(Map<String, dynamic> json) =>
-      _$CheckinItemFromJson(json);
-
-  Map<String, dynamic> toJson() => _$CheckinItemToJson(this);
-}
-
-@JsonSerializable()
-class CheckinEvent{
-  @JsonKey(name: '_id')
-  String id;
-  String timestamp;
-  CheckinItem checkin_item; // ignore: non_constant_identifier_names
-  String user;
-
-  CheckinEvent(this.id, this.timestamp, this.checkin_item, this.user);
-
-  factory CheckinEvent.fromJson(Map<String, dynamic> json) =>
-      _$CheckinEventFromJson(json);
-
-  Map<String, dynamic> toJson() => _$CheckinEventToJson(this);
-
-}
-
 
 class _QRHomeState extends State<QRHome> {
 
@@ -101,12 +50,14 @@ class _QRHomeState extends State<QRHome> {
           "password": pass
         }
     );
-    Map data = json.decode(response.body);
-    setState(() {
-      id = data["participant"]["_id"];
-      admin = data["participant"]["is_admin"];
-      token = data["access_token"];
-    });
+    if(response.statusCode == 200) {
+      Map data = json.decode(response.body);
+      setState(() {
+        id = data["participant"]["_id"];
+        admin = data["participant"]["is_admin"];
+        token = data["access_token"];
+      });
+    }
   }
 
   Future getCheckinItems() async{
@@ -124,7 +75,7 @@ class _QRHomeState extends State<QRHome> {
   }
 
   Future setup() async{
-    await getID("joyceh@andrew.cmu.edu", "TartanHacksTest");
+    await getID("gdl2@andrew.cmu.edu", "PerXBo@wgifCUYSk4bX3");
     await getCheckinItems();
   }
 
@@ -141,9 +92,9 @@ class _QRHomeState extends State<QRHome> {
         title: 'QR Scanner',
         theme: ThemeData(
           canvasColor: Colors.white,
-          primaryColor: Color(0xffcb1a1d),
-          accentColor: Colors.black,
-          buttonColor: Colors.black,
+          primaryColor: Color(0xFF2582F2),
+          accentColor: Color(0xFF212A36),
+          buttonColor: Color(0xFF212A36),
           fontFamily: 'Lato',
           textTheme: TextTheme(
             headline1: TextStyle(fontSize: 35, fontWeight: FontWeight.bold,
@@ -156,7 +107,7 @@ class _QRHomeState extends State<QRHome> {
           ),
           textButtonTheme: TextButtonThemeData(
             style: TextButton.styleFrom(
-              primary: Color(0xffcb1a1d),
+              primary: Color(0xFF2582F2),
               textStyle: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)
             ),
           ),
@@ -249,18 +200,20 @@ class QRPage extends StatelessWidget{
           title: Text('Your QR Code',
               style: Theme.of(context).textTheme.headline1),
           backgroundColor: Theme.of(context).primaryColor,
+          /*
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.admin_panel_settings, size: 30),
               onPressed: () {
                 if(!admin){
-                  getID("gdl2@andrew.cmu.edu", "8JK9NtPb&jdM!E3@");
+                  getID("gdl2@andrew.cmu.edu", "PerXBo@wgifCUYSk4bX3");
                 }else{
-                  getID("joyceh@andrew.cmu.edu", "TartanHacksTest");
+                  getID("wweerasi@andrew.cmu.edu", "Anuda123");
                 }
               },
             )
           ],
+          */
           toolbarHeight: 70,
         ),
         body: Center(
@@ -374,14 +327,6 @@ class InfoTile extends StatelessWidget{
                                     ).toLocal()
                             )}.'
                             : 'Not checked in.',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.grey[700],
-                            )
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                            'Checked in by: X',
                             style: TextStyle(
                               fontSize: 20,
                               color: Colors.grey[700],
@@ -515,7 +460,6 @@ class _HistoryPageState extends State<HistoryPage>{
       name = null;
     }
     getHistory();
-    //print(history.runtimeType);
     super.initState();
   }
 
@@ -620,7 +564,7 @@ class _ConfigPageState extends State<ConfigPage> {
                                 style: Theme.of(context).textTheme.subtitle1),
                             width: 150,
                           ),
-                          const SizedBox(width: 30),
+                          const SizedBox(width: 15),
                           Expanded(
                             child: DropdownButton<String>(
                                 isExpanded: true,
@@ -647,6 +591,7 @@ class _ConfigPageState extends State<ConfigPage> {
                         ]
                     ),
                     const SizedBox(height:20),
+                    /*
                     TextField(
                       autofocus: false,
                       enabled: !widget.scanConfig[2],
@@ -662,6 +607,7 @@ class _ConfigPageState extends State<ConfigPage> {
                       },
                     ),
                     const SizedBox(height:20),
+                    */
                     CheckboxListTile(
                       title: Text("View History"),
                       value: widget.scanConfig[2],
@@ -674,7 +620,7 @@ class _ConfigPageState extends State<ConfigPage> {
                         widget.setConfig(newValue, 2);
                       }
                     ),
-                    const SizedBox(height:20),
+                    const SizedBox(height:15),
                     CheckboxListTile(
                         title: Text("Self-checkin"),
                         value: widget.scanConfig[3],
