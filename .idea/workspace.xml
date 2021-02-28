@@ -28,12 +28,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e050d6a8-2474-4881-8248-40b269320cf3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dashboard/lib/anuda.dart" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/lib/anuda.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dashboard/lib/editEvents.dart" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/lib/editEvents.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dashboard/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dashboard/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/dashboard/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,6 +97,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="834" y="341" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1614481654202">

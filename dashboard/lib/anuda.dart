@@ -35,6 +35,8 @@ class _MyHomePageState extends State<MyHomePage> {
   bool _isFavorited = true;
   bool isAdmin = true;
   var eventData = [];
+  final past_events = [];
+  final upcoming_events = [];
 
   @override
   void initState() {
@@ -44,7 +46,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
   getData() async {
     eventData = await getEvents();
-    print(eventData);
+    var currentTime = DateTime.now().millisecondsSinceEpoch / 1000;
+    for (int i=0; i<eventData.length; i++) {
+      if (currentTime > int.parse(eventData[i].timestamp)) {
+        past_events.add(eventData[i]);
+      } else {
+        upcoming_events.add(eventData[i]);
+      }
+    }
+    eventData = upcoming_events;
     setState(() {});
   }
 
@@ -294,19 +304,21 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: AppBar(
           title: Text(widget.title),
           backgroundColor: Color.fromARGB(255, 37, 130, 242), //blue
-          actions: <Widget>[
-            Switch(
-              value: isSwitched,
-              onChanged: (value) {
-                setState(() {
-                  isSwitched=value;
-                  print(isSwitched);
-                });
-              },
-              activeTrackColor: Color.fromARGB(120, 33, 42, 54),
-              activeColor: Color.fromARGB(150, 33, 42, 54),
-            ),
-          ],
+            actions: <Widget>[
+              Switch(
+                value: isSwitched,
+                onChanged: (value) {
+                  setState(() {
+                    isSwitched=value;
+                    print(isSwitched);
+                    if (isSwitched == false) eventData = upcoming_events;
+                    else eventData = past_events;
+                  });
+                },
+                activeTrackColor: Color.fromARGB(120, 33, 42, 54),
+                activeColor: Color.fromARGB(150, 33, 42, 54),
+              ),
+            ],
         ),
         backgroundColor: Color.fromARGB(240, 255, 255, 255), //gray
         body: Container(
