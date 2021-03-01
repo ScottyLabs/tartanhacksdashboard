@@ -17,6 +17,7 @@ class Event {
   final String zoom_password;
   final String created_at;
   final int v;
+  final int duration;
 
 
   Event({this.zoom_access_enabled,
@@ -31,7 +32,8 @@ class Event {
     this.zoom_id,
     this.zoom_password,
     this.created_at,
-    this.v}
+    this.v,
+    this.duration}
       );
 
   factory Event.fromJson(Map<String, dynamic> parsedJson) {
@@ -49,6 +51,7 @@ class Event {
       zoom_password: parsedJson['zoom_password'],
       created_at: parsedJson['created_at'],
       v: parsedJson['__v'],
+      duration: parsedJson['duration'],
     );
   }
 }

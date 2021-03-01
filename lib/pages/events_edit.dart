@@ -10,14 +10,25 @@ import 'home.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 
 class EditEventsScreen extends StatefulWidget {
+
+  final Event eventData;
+
+  EditEventsScreen(
+      {Key key, this.eventData})
+      : super(key: key);
   @override
-  _EditEventsScreenState createState() => _EditEventsScreenState();
+  _EditEventsScreenState createState() => new _EditEventsScreenState(eventData: eventData);
 }
 
 class _EditEventsScreenState extends State<EditEventsScreen> {
 
-  bool isAdmin = true;
-  var eventData = [];
+  SharedPreferences prefs;
+
+  Event eventData;
+
+  _EditEventsScreenState({Key key, this.eventData});
+
+  bool isAdmin = false;
   var dropdownValue = 'Zoom';
   final idController = new TextEditingController();
   final eventNameController = new TextEditingController();
@@ -41,10 +52,49 @@ class _EditEventsScreenState extends State<EditEventsScreen> {
   @override
   void initState() {
     super.initState();
+    getData();
+  }
+
+  void getData() async{
+    prefs = await SharedPreferences.getInstance();
+
+    isAdmin = prefs.getBool("is_admin");
+
+    if(eventData != null){
+      eventNameController.text = eventData.name;
+      eventDescController.text = eventData.description;
+      zoomLinkController.text = eventData.zoom_link;
+      durationController.text = eventData.duration.toString();
+      selectedDate =  new DateTime.fromMillisecondsSinceEpoch(int.parse(eventData.timestamp) * 1000);
+
+      if(eventData.access_code == 1){
+         dropdownValue = 'Zoom';
+
+      }else if(eventData.access_code == 2){
+        dropdownValue = 'Hopin';
+
+      }else if(eventData.access_code == 3){
+        dropdownValue = 'Discord';
+
+      }else{
+        dropdownValue = 'Other';
+
+      }
+
+      setState(() {
+
+      });
+
+    }
   }
 
   void saveData() async {
-    bool result = await addEvents(eventNameController.text, unixTime, eventDescController.text, "a", zoomLinkController.text, accessCode, "a", "a", durationController.text);
+    bool result;
+    if(eventData == null){
+      result = await addEvents(eventNameController.text, unixTime, eventDescController.text, "a", zoomLinkController.text, accessCode, "a", "a", durationController.text);
+    }else{
+      result = await editEvents(eventData.id, eventNameController.text, unixTime, eventDescController.text, "a", zoomLinkController.text, accessCode, "a", "a", durationController.text);
+    }
     if (result == true) {
       _showDialog('Your event was successfully saved!', 'Success', result);
     }else{
@@ -91,6 +141,7 @@ class _EditEventsScreenState extends State<EditEventsScreen> {
   @override
   Widget build(BuildContext context) {
     // if statement (if participant, return this... if admin, return with admin privileges)
+
     return MaterialApp(
         theme: ThemeData(fontFamily: 'TerminalGrotesque'),
         home: Scaffold(
@@ -174,6 +225,7 @@ class _EditEventsScreenState extends State<EditEventsScreen> {
                       TextField(
                         controller: durationController,
                         decoration: InputDecoration(labelText: 'Duration'),
+                        keyboardType: TextInputType.number,
                       ),
                       Padding(
                           padding:
@@ -212,7 +264,7 @@ class _EditEventsScreenState extends State<EditEventsScreen> {
                             ),
                           ),
                           padding: const EdgeInsets.all(10.0),
-                          child: const Text('Submit Information',
+                          child: const Text('Save Information',
                               style: TextStyle(fontSize: 20)),
                         ),
                       ),

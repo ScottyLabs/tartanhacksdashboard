@@ -85,11 +85,26 @@ Future<bool> addEvents(String name, String unixTime, String description, String 
   }
 }
 
-Future<String> getToken() async{
+Future<bool> editEvents(String eventId, String name, String unixTime, String description, String gcal, String zoom_link, int access_code, String zoom_id, String zoom_password, String duration) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  String result = prefs.getString("token");
-  return result;
+
+  String token = prefs.getString("token");
+
+  String url = baseUrl + "events/edit";
+  Map<String, String> headers = {"Content-type": "application/json", "Token": token};
+  String json1 = '{"_id":"'+eventId+'","name":"' + name + '","timestamp":"' + unixTime + '","description":"' + description + '","zoom_access_enabled":true,"gcal_event_url":"' + gcal + '","zoom_link":"' + zoom_link + '","is_in_person":false,"access_code":' + access_code.toString() + ',"zoom_id":"' + zoom_id + '","zoom_password":"' + zoom_password + '","duration":' + duration + '}';
+  print(json1);
+  final response = await http.post(url, headers: headers, body: json1);
+  if (response.statusCode == 200) {
+    return true;
+  }else if(response.statusCode == 401){
+    refreshToken();
+    return addEvents(name, unixTime, description, gcal, zoom_link, access_code, zoom_id, zoom_password, duration);
+  }else{
+    return false;
+  }
 }
+
 
 void refreshToken() async{
   SharedPreferences prefs = await SharedPreferences.getInstance();

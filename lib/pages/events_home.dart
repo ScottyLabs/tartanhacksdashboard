@@ -215,7 +215,13 @@ class _EventsHomeScreenState extends State<EventsHomeScreen> {
         ),
         tooltip: 'Edit Event',
         color: Color.fromARGB(255, 37, 130, 242),
-        onPressed: () {});
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      EditEventsScreen(eventData:data)));
+        });
   }
 
   @override
