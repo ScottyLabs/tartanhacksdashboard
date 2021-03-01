@@ -53,7 +53,7 @@ class _FormScreenState extends State<FormScreen> {
   String projectID = "";
   //TODO: update with values from checkin endpoint
   String teamID = "Test";
-  String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.IjYwMjgyNjQzYTZmODk2MDAxYmUyMzM4MSI.6Ftn-T5xQ14U7iY7D_aYeAhhg3199lQ4CS6STFNWyLo";
+  String token = "xxx"; //dummy
   bool hasProject = false;
   bool isPresenting = false;
   TextEditingController nameController = TextEditingController();
