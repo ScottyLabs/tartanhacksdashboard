@@ -48,8 +48,8 @@ class _FormScreenState extends State<FormScreen> {
   List<String> selectedNames = [];
   List<String> prizeNames = [];
   //TODO: update with values from checkin endpoint
-  String teamID = "someTeam"; //dummy value for commit
-  String token = "123"; //dummy value for commit
+  String teamID = "Test";
+  String token = "dummy"; //change me
   bool hasProject = false;
   TextEditingController nameController = TextEditingController();
   TextEditingController githubController = TextEditingController();
@@ -77,7 +77,11 @@ class _FormScreenState extends State<FormScreen> {
       slidesController.text = _presUrl;
       videoController.text = _vidUrl;
       githubController.text = _githubUrl;
-      selectedNames = [];
+      print(_projName);
+      print(_presUrl);
+      print(_vidUrl);
+      print(_githubUrl);
+      selectedNames = proj.prizes;
     }
     setState(() {});
   }
@@ -170,6 +174,7 @@ class _FormScreenState extends State<FormScreen> {
         orientation: GroupedButtonsOrientation.VERTICAL,
         margin: const EdgeInsets.only(left: 12.0),
         labels: prizeNames,
+        checked: selectedNames,
         onSelected: ((List<String> checked) => selectedNames = checked)
     );
   }
