@@ -113,7 +113,7 @@ class _ForgotScreenState extends State<ForgotScreen> {
               ),
               ButtonTheme(
                 height: 45.0,
-                minWidth: double.infinity,
+                minWidth: 200,
                 padding: const EdgeInsets.all(14.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
