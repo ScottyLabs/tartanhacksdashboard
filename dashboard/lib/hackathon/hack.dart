@@ -5,6 +5,8 @@ import 'dart:async';
 import 'package:grouped_buttons/grouped_buttons.dart';
 import 'project.dart';
 import 'getTeamInfo.dart';
+import 'submitProject.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 class HackHome extends StatefulWidget {
   @override
@@ -47,10 +49,13 @@ class _FormScreenState extends State<FormScreen> {
   List<Prize> prizes = [];
   List<String> selectedNames = [];
   List<String> prizeNames = [];
+  List<String> initialPrizes = [];
+  String projectID = "";
   //TODO: update with values from checkin endpoint
   String teamID = "Test";
-  String token = "dummy"; //change me
+  String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.IjYwMjgyNjQzYTZmODk2MDAxYmUyMzM4MSI.6Ftn-T5xQ14U7iY7D_aYeAhhg3199lQ4CS6STFNWyLo";
   bool hasProject = false;
+  bool isPresenting = false;
   TextEditingController nameController = TextEditingController();
   TextEditingController githubController = TextEditingController();
   TextEditingController slidesController = TextEditingController();
@@ -73,17 +78,34 @@ class _FormScreenState extends State<FormScreen> {
       _presUrl = proj.slides;
       _vidUrl = proj.video;
       _githubUrl = proj.github;
+      projectID = proj.id;
+      isPresenting = proj.willPresent;
       nameController.text = _projName;
       slidesController.text = _presUrl;
       videoController.text = _vidUrl;
       githubController.text = _githubUrl;
-      print(_projName);
-      print(_presUrl);
-      print(_vidUrl);
-      print(_githubUrl);
       selectedNames = proj.prizes;
     }
     setState(() {});
+  }
+
+  submitProject(String teamID, String token, String github, String slides, String video, bool presenting, String id, List<String> prizeIds) async {
+    print("has project is");
+    print(hasProject);
+    print("printing project id");
+    print(id);
+    bool res = false;
+    if (hasProject) {
+      res = await editProject(teamID, token, github, slides, video, presenting, id, prizeIds);
+    }
+    else {
+      res = await newProject(teamID, token, github, slides, video, presenting, id, prizeIds);
+    }
+    if (res) {
+      print("success!");
+      return;
+    }
+    print("failure :(");
   }
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -158,6 +180,29 @@ class _FormScreenState extends State<FormScreen> {
     );
   }
 
+  Widget _buildPresentingLive() {
+    int initialVal = 1;
+    if (isPresenting) initialVal = 0;
+    return Container(
+        padding: new EdgeInsets.all(10.0),
+        child: Column(
+            children: <Widget>[
+              SizedBox(width: 20,),
+              Text('Presenting',textAlign: TextAlign.left, style: TextStyle(fontSize: 20.0), ),
+              Text('Do you wish to present live at the expo? If not, you must submit a video.',textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0), ),
+              Switch(
+                value: isPresenting,
+                onChanged: (value) {
+                  setState(() {
+                    isPresenting = value;
+                  });
+                }
+              )
+            ]
+        )
+    );
+  }
+
   List<String> getPrizeNames(List<Prize> prizes) {
     List<String> prizeNames = [];
 
@@ -169,13 +214,22 @@ class _FormScreenState extends State<FormScreen> {
 
 
   Widget _buildPrizes() {
-    return CheckboxGroup(
+    return Container(
+        padding: new EdgeInsets.all(10.0),
+    child: Column(
+    children: <Widget>[
+    SizedBox(width: 20,),
+    Text('Prizes',textAlign: TextAlign.left, style: TextStyle(fontSize: 20.0), ),
+    Text('Select which prizes you are submitting your project to. All projects are automatically submitted to the ScottyLabs Grand Prize.',textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0), ),
+    CheckboxGroup(
         padding: new EdgeInsets.all(10.0),
         orientation: GroupedButtonsOrientation.VERTICAL,
         margin: const EdgeInsets.only(left: 12.0),
         labels: prizeNames,
         checked: selectedNames,
-        onSelected: ((List<String> checked) => selectedNames = checked)
+        onSelected: ((List<String> checked) => setState (() { selectedNames = checked; }) ))
+    ]
+    )
     );
   }
   @override
@@ -196,6 +250,7 @@ class _FormScreenState extends State<FormScreen> {
                   _buildGitHubURL(),
                   _buildPresURL(),
                   _buildVidURL(),
+                  _buildPresentingLive(),
                   _buildPrizes(),
                   SizedBox(height: 10),
                   RaisedButton(
@@ -211,10 +266,6 @@ class _FormScreenState extends State<FormScreen> {
 
                       _formKey.currentState.save();
 
-                      print(_projName);
-                      print(_githubUrl);
-                      print(_presUrl);
-                      print(_vidUrl);
 
                       List<String> selectedIds = [];
 
@@ -226,6 +277,7 @@ class _FormScreenState extends State<FormScreen> {
                       print(selectedIds.toString());
 
                       //Send to API
+                      submitProject(teamID, token, _githubUrl, _presUrl, _vidUrl, isPresenting, projectID, selectedIds);
                     },
                   )
                 ],

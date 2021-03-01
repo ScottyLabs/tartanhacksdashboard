@@ -23,6 +23,7 @@ environment:
 dependencies:
   http: ^0.12.0+1
   grouped_buttons: ^1.0.4
+  toggle_switch: ^0.1.8
   flutter:
     sdk: flutter
 

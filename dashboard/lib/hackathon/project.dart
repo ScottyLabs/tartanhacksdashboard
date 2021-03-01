@@ -8,8 +8,9 @@ class Project{
   final String github;
   final bool willPresent;
   final List<String> prizes;
+  final String id;
 
-  Project({this.name, this.slides, this.video, this.willPresent, this.prizes, this.github});
+  Project({this.name, this.slides, this.video, this.willPresent, this.prizes, this.github, this.id});
 
   factory Project.fromJson(Map<String, dynamic> parsedJson) {
     var jsonList = parsedJson['eligible_prizes'] as List;
@@ -25,7 +26,8 @@ class Project{
         video: parsedJson['video_url'],
         willPresent: parsedJson['will_present_live'],
         prizes: prizeNames,
-        github: parsedJson['github_repo_url']
+        github: parsedJson['github_repo_url'],
+        id: parsedJson['_id']
     );
     return project;
   }
