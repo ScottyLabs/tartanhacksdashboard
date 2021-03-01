@@ -176,18 +176,6 @@ class _EventsHomeScreenState extends State<EventsHomeScreen> {
     }
   }
 
-  Widget calLink(data) {
-    return IconButton(
-        icon: Icon(
-          Icons.calendar_today,
-          color: Colors.white,
-          size: 25,
-        ),
-        tooltip: 'Calendar Link!',
-        color: Color.fromARGB(255, 37, 130, 242),
-        onPressed: () => launch('${data.gcal_event_url}'));
-  }
-
   Widget shareLink(data) {
     return IconButton(
       icon: Icon(
@@ -227,160 +215,158 @@ class _EventsHomeScreenState extends State<EventsHomeScreen> {
   @override
   Widget build(BuildContext context) {
     // if statement (if participant, return this... if admin, return with admin privileges)
-    return MaterialApp(
-      theme: ThemeData(fontFamily: 'TerminalGrotesque'),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("Events"),
-          backgroundColor: Color.fromARGB(255, 37, 130, 242), //blue
-          actions: <Widget>[
-            Switch(
-              value: isSwitched,
-              onChanged: (value) {
-                setState(() {
-                  isSwitched = value;
-                  print(isSwitched);
-                  if (isSwitched == false)
-                    eventData = upcoming_events;
-                  else
-                    eventData = past_events;
-                });
-              },
-              activeTrackColor: Color.fromARGB(120, 33, 42, 54),
-              activeColor: Color.fromARGB(150, 33, 42, 54),
-            ),
-          ],
-        ),
-        backgroundColor: Color.fromARGB(240, 255, 255, 255),
-        //gray
-        body: Container(
-            child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-              Expanded(
-                  child: ListView.builder(
-                      itemCount: eventData.length,
-                      itemBuilder: (context, index) {
-                        return Container(
-                            padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                            height: 220,
-                            width: double.maxFinite,
-                            child: Card(
-                              elevation: 3,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              //color: getColor(eventData[index].access_code),
-                              child: Padding(
-                                  padding: EdgeInsets.all(7),
-                                  child: Stack(children: <Widget>[
-                                    Align(
-                                        alignment: Alignment.center,
-                                        child: Stack(children: <Widget>[
-                                          Align(
-                                            alignment: Alignment.centerRight,
-                                            child: Container(
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                  color: Color.fromARGB(
-                                                      255, 37, 130, 242),
-                                                ),
-                                                width: 100,
-                                                height: 220,
-                                                child: Align(
-                                                    alignment: Alignment.center,
-                                                    child: eventTime(
-                                                        eventData[index]))),
-                                          ),
-                                          Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 10, top: 5),
-                                              child: Column(children: <Widget>[
-                                                Expanded(
-                                                    flex: 1,
-                                                    child:
-                                                        Row(children: <Widget>[
-                                                      //eventIcon(eventData[index]),
-                                                      eventName(
+    return new Scaffold(
+      appBar: AppBar(
+        title: Text("Events"),
+        backgroundColor: Color.fromARGB(255, 37, 130, 242), //blue
+        actions: <Widget>[
+          Switch(
+            value: isSwitched,
+            onChanged: (value) {
+              setState(() {
+                isSwitched = value;
+                print(isSwitched);
+                if (isSwitched == false)
+                  eventData = upcoming_events;
+                else
+                  eventData = past_events;
+              });
+            },
+            activeTrackColor: Color.fromARGB(120, 33, 42, 54),
+            activeColor: Color.fromARGB(150, 33, 42, 54),
+          ),
+        ],
+      ),
+      backgroundColor: Color.fromARGB(240, 255, 255, 255),
+      //gray
+      body: Container(
+          child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Expanded(
+                    child: ListView.builder(
+                        itemCount: eventData.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                              height: 220,
+                              width: double.maxFinite,
+                              child: Card(
+                                elevation: 3,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                //color: getColor(eventData[index].access_code),
+                                child: Padding(
+                                    padding: EdgeInsets.all(7),
+                                    child: Stack(children: <Widget>[
+                                      Align(
+                                          alignment: Alignment.center,
+                                          child: Stack(children: <Widget>[
+                                            Align(
+                                              alignment: Alignment.centerRight,
+                                              child: Container(
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                    BorderRadius.circular(8),
+                                                    color: Color.fromARGB(
+                                                        255, 37, 130, 242),
+                                                  ),
+                                                  width: 100,
+                                                  height: 220,
+                                                  child: Align(
+                                                      alignment: Alignment.center,
+                                                      child: eventTime(
+                                                          eventData[index]))),
+                                            ),
+                                            Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 10, top: 5),
+                                                child: Column(children: <Widget>[
+                                                  Expanded(
+                                                      flex: 1,
+                                                      child:
+                                                      Row(children: <Widget>[
+                                                        //eventIcon(eventData[index]),
+                                                        eventName(
+                                                            eventData[index]),
+                                                      ])),
+                                                  Expanded(
+                                                    flex: 2,
+                                                    child: Row(children: <Widget>[
+                                                      eventDescription(
                                                           eventData[index]),
-                                                    ])),
-                                                Expanded(
-                                                  flex: 2,
-                                                  child: Row(children: <Widget>[
-                                                    eventDescription(
-                                                        eventData[index]),
-                                                  ]),
-                                                ),
-                                                Expanded(
-                                                  flex: 3,
-                                                  child: !isAdmin
-                                                      ? Row(children: <Widget>[
-                                                          Container(
-                                                            color:
-                                                                Color.fromARGB(
-                                                                    255,
-                                                                    37,
-                                                                    130,
-                                                                    242),
-                                                            child: zoomLink(
-                                                                eventData[
-                                                                    index]),
-                                                          ),
-                                                          SizedBox(
-                                                            width: 10,
-                                                          ),
-                                                          Container(
-                                                            color:
-                                                                Color.fromARGB(
-                                                                    255,
-                                                                    37,
-                                                                    130,
-                                                                    242),
-                                                            child: shareLink(
-                                                                eventData[
-                                                                    index]),
-                                                          ),
-                                                          SizedBox(
-                                                            width: 10,
-                                                          ),
-                                                          /*Container(
+                                                    ]),
+                                                  ),
+                                                  Expanded(
+                                                    flex: 3,
+                                                    child: !isAdmin
+                                                        ? Row(children: <Widget>[
+                                                      Container(
+                                                        color:
+                                                        Color.fromARGB(
+                                                            255,
+                                                            37,
+                                                            130,
+                                                            242),
+                                                        child: zoomLink(
+                                                            eventData[
+                                                            index]),
+                                                      ),
+                                                      SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Container(
+                                                        color:
+                                                        Color.fromARGB(
+                                                            255,
+                                                            37,
+                                                            130,
+                                                            242),
+                                                        child: shareLink(
+                                                            eventData[
+                                                            index]),
+                                                      ),
+                                                      SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      /*Container(
                                                         color: Color.fromARGB(255, 37, 130, 242),
                                                         child: calLink(
                                                             eventData[index]),
                                                       ),*/
-                                                        ])
-                                                      : Row(children: <Widget>[
-                                                          Container(
-                                                            color:
-                                                                Color.fromARGB(
-                                                                    255,
-                                                                    37,
-                                                                    130,
-                                                                    242),
-                                                            child: zoomLink(
-                                                                eventData[
-                                                                    index]),
-                                                          ),
-                                                          SizedBox(
-                                                            width: 10,
-                                                          ),
-                                                          Container(
-                                                            color:
-                                                                Color.fromARGB(
-                                                                    255,
-                                                                    37,
-                                                                    130,
-                                                                    242),
-                                                            child: shareLink(
-                                                                eventData[
-                                                                    index]),
-                                                          ),
-                                                          SizedBox(
-                                                            width: 10,
-                                                          ),
-                                                          /*Container(
+                                                    ])
+                                                        : Row(children: <Widget>[
+                                                      Container(
+                                                        color:
+                                                        Color.fromARGB(
+                                                            255,
+                                                            37,
+                                                            130,
+                                                            242),
+                                                        child: zoomLink(
+                                                            eventData[
+                                                            index]),
+                                                      ),
+                                                      SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Container(
+                                                        color:
+                                                        Color.fromARGB(
+                                                            255,
+                                                            37,
+                                                            130,
+                                                            242),
+                                                        child: shareLink(
+                                                            eventData[
+                                                            index]),
+                                                      ),
+                                                      SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      /*Container(
                                                         color: Color.fromARGB(255, 37, 130, 242),
                                                         child: calLink(
                                                               eventData[index]),
@@ -388,53 +374,52 @@ class _EventsHomeScreenState extends State<EventsHomeScreen> {
                                                       SizedBox(
                                                         width: 10,
                                                       ),*/
-                                                          Container(
-                                                            color: Colors
-                                                                .redAccent[700],
-                                                            //Color.fromARGB(255, 37, 130, 242) (Blue),
-                                                            child: editEvent(
-                                                                eventData[
-                                                                    index]),
-                                                          ),
-                                                        ]),
-                                                )
-                                              ])),
-                                        ]))
-                                  ])),
-                            ));
-                      }))
-            ])),
-        // floating action button needs to show up exclusively for participants
-        floatingActionButton: !isAdmin
-            ? null
-            : FloatingActionButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              EditEventsScreen())); // need to move into a new event popup page here;
-                },
-                child: Icon(Icons.add),
-                backgroundColor: Colors.redAccent[
-                    700], // Color.fromARGB(255, 37, 130, 242) Blue// ,
-              ),
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-                icon: Icon(Icons.dashboard), title: Text('HOME')),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.event), title: Text('SCHEDULE')),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.code), title: Text('PROJECT')),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.videogame_asset), title: Text('POINTS')),
-          ],
-          currentIndex: selectedIndex,
-          fixedColor: Color.fromARGB(255, 37, 130, 242),
-          onTap: onNavigationItemTapped,
-        ),
+                                                      Container(
+                                                        color: Colors
+                                                            .redAccent[700],
+                                                        //Color.fromARGB(255, 37, 130, 242) (Blue),
+                                                        child: editEvent(
+                                                            eventData[
+                                                            index]),
+                                                      ),
+                                                    ]),
+                                                  )
+                                                ])),
+                                          ]))
+                                    ])),
+                              ));
+                        }))
+              ])),
+      // floating action button needs to show up exclusively for participants
+      floatingActionButton: !isAdmin
+          ? null
+          : FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      EditEventsScreen())); // need to move into a new event popup page here;
+        },
+        child: Icon(Icons.add),
+        backgroundColor: Colors.redAccent[
+        700], // Color.fromARGB(255, 37, 130, 242) Blue// ,
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+              icon: Icon(Icons.dashboard), title: Text('HOME')),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.event), title: Text('SCHEDULE')),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.code), title: Text('PROJECT')),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.videogame_asset), title: Text('POINTS')),
+        ],
+        currentIndex: selectedIndex,
+        fixedColor: Color.fromARGB(255, 37, 130, 242),
+        onTap: onNavigationItemTapped,
       ),
     );
   }

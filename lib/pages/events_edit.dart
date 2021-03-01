@@ -49,6 +49,8 @@ class _EditEventsScreenState extends State<EditEventsScreen> {
   String unixTime = '';
   int accessCode = 0;
 
+  String appBarTitle = 'Create New Event';
+
   @override
   void initState() {
     super.initState();
@@ -61,6 +63,7 @@ class _EditEventsScreenState extends State<EditEventsScreen> {
     isAdmin = prefs.getBool("is_admin");
 
     if(eventData != null){
+      appBarTitle = 'Edit '+ eventData.name;
       eventNameController.text = eventData.name;
       eventDescController.text = eventData.description;
       zoomLinkController.text = eventData.zoom_link;
@@ -142,134 +145,132 @@ class _EditEventsScreenState extends State<EditEventsScreen> {
   Widget build(BuildContext context) {
     // if statement (if participant, return this... if admin, return with admin privileges)
 
-    return MaterialApp(
-        theme: ThemeData(fontFamily: 'TerminalGrotesque'),
-        home: Scaffold(
-          appBar: AppBar(
-            title: Text("Create New Event"),
-            backgroundColor: Color.fromARGB(255, 37, 130, 242), //blue
-          ),
-          backgroundColor: Color.fromARGB(240, 255, 255, 255), //gray
-          body: Padding(
-              padding: EdgeInsets.all(25.0),
-              child: SingleChildScrollView(
-                  child: Column(
-                    children: [
+    return new Scaffold(
+      appBar: AppBar(
+        title: Text(appBarTitle),
+        backgroundColor: Color.fromARGB(255, 37, 130, 242), //blue
+      ),
+      backgroundColor: Color.fromARGB(240, 255, 255, 255), //gray
+      body: Padding(
+          padding: EdgeInsets.all(25.0),
+          child: SingleChildScrollView(
+              child: Column(
+                children: [
 
-                      TextField(
-                        controller: eventNameController,
-                        decoration: InputDecoration(labelText: 'Event Name'),
-                      ),
-                      Padding(
-                          padding:
-                          EdgeInsets.symmetric(vertical: 10.0, horizontal: 0)),
-                      TextField(
-                        controller: eventDescController,
-                        decoration: InputDecoration(labelText: 'Event Description'),
-                      ),
-                      Padding(
-                          padding:
-                          EdgeInsets.symmetric(vertical: 10.0, horizontal: 0)),
-                      TextField(
-                        controller: zoomLinkController,
-                        decoration: InputDecoration(
-                            labelText: 'Event Link (Zoom/Discord/Hopin etc)'),
-                      ),
-                      Padding(
-                          padding:
-                          EdgeInsets.symmetric(vertical: 10.0, horizontal: 0)),
-                      Text('Meeting Platform',
-                          style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
-                      Padding(
-                          padding:
-                          EdgeInsets.symmetric(vertical: 10.0, horizontal: 0)),
-                      DropdownButton<String>(
-                        value: dropdownValue,
-                        icon: Icon(Icons.arrow_downward),
-                        iconSize: 24,
-                        elevation: 16,
-                        style: TextStyle(color: Color.fromARGB(255, 37, 130, 242)),
-                        underline: Container(
-                          height: 2,
-                          color: Color.fromARGB(255, 37, 130, 242),
-                        ),
-                        onChanged: (String newValue) {
-                          setState(() {
-                            dropdownValue = newValue;
-                            if (newValue == 'Zoom'){
-                              accessCode = 1;
-                            }
-                            else if (newValue == 'Hopin'){
-                              accessCode = 2;
-                            }
-                            else if (newValue == 'Discord'){
-                              accessCode = 3;
-                            }
-                            else {
-                              accessCode = 0;
-                            }
-                          });
-                        },
-                        items: <String>['Zoom', 'Discord', 'Hopin', 'Other']
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                      ),
-                      Padding(
-                          padding:
-                          EdgeInsets.symmetric(vertical: 10.0, horizontal: 0)),
-                      TextField(
-                        controller: durationController,
-                        decoration: InputDecoration(labelText: 'Duration'),
-                        keyboardType: TextInputType.number,
-                      ),
-                      Padding(
-                          padding:
-                          EdgeInsets.symmetric(vertical: 10.0, horizontal: 0)),
-                      DateTimePicker(
-                        type: DateTimePickerType.dateTime,
-                        dateMask: 'd MMM, yyyy',
-                        initialValue: DateTime.now().toString(),
-                        firstDate: DateTime(2000),
-                        lastDate: DateTime(2100),
-                        icon: Icon(Icons.event),
-                        dateLabelText: 'Date',
-                        timeLabelText: "Hour",
-                        onChanged: (val) => getDate(DateTime.parse(val)),
-                        validator: (val) {
-                          print(val);
-                          return null;
-                        },
-                        onSaved: (val) => getDate(DateTime.parse(val)),
-                      ),
-                      const SizedBox(height: 30),
-                      RaisedButton(
-                        onPressed: () {
-                          saveData();// API Call stuff here
-                        },
-                        textColor: Colors.white,
-                        padding: const EdgeInsets.all(0.0),
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: <Color>[
-                                Color(0xFF0D47A1),
-                                Color(0xFF1976D2),
-                                Color(0xFF42A5F5),
-                              ],
-                            ),
-                          ),
-                          padding: const EdgeInsets.all(10.0),
-                          child: const Text('Save Information',
-                              style: TextStyle(fontSize: 20)),
+                  TextField(
+                    controller: eventNameController,
+                    decoration: InputDecoration(labelText: 'Event Name'),
+                  ),
+                  Padding(
+                      padding:
+                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 0)),
+                  TextField(
+                    controller: eventDescController,
+                    decoration: InputDecoration(labelText: 'Event Description'),
+                  ),
+                  Padding(
+                      padding:
+                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 0)),
+                  TextField(
+                    controller: zoomLinkController,
+                    decoration: InputDecoration(
+                        labelText: 'Event Link (Zoom/Discord/Hopin etc)'),
+                  ),
+                  Padding(
+                      padding:
+                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 0)),
+                  Text('Meeting Platform',
+                      style:
+                      TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
+                  Padding(
+                      padding:
+                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 0)),
+                  DropdownButton<String>(
+                    value: dropdownValue,
+                    icon: Icon(Icons.arrow_downward),
+                    iconSize: 24,
+                    elevation: 16,
+                    style: TextStyle(color: Color.fromARGB(255, 37, 130, 242)),
+                    underline: Container(
+                      height: 2,
+                      color: Color.fromARGB(255, 37, 130, 242),
+                    ),
+                    onChanged: (String newValue) {
+                      setState(() {
+                        dropdownValue = newValue;
+                        if (newValue == 'Zoom'){
+                          accessCode = 1;
+                        }
+                        else if (newValue == 'Hopin'){
+                          accessCode = 2;
+                        }
+                        else if (newValue == 'Discord'){
+                          accessCode = 3;
+                        }
+                        else {
+                          accessCode = 0;
+                        }
+                      });
+                    },
+                    items: <String>['Zoom', 'Discord', 'Hopin', 'Other']
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
+                  Padding(
+                      padding:
+                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 0)),
+                  TextField(
+                    controller: durationController,
+                    decoration: InputDecoration(labelText: 'Duration'),
+                    keyboardType: TextInputType.number,
+                  ),
+                  Padding(
+                      padding:
+                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 0)),
+                  DateTimePicker(
+                    type: DateTimePickerType.dateTime,
+                    dateMask: 'd MMM, yyyy',
+                    initialValue: DateTime.now().toString(),
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2100),
+                    icon: Icon(Icons.event),
+                    dateLabelText: 'Date',
+                    timeLabelText: "Hour",
+                    onChanged: (val) => getDate(DateTime.parse(val)),
+                    validator: (val) {
+                      print(val);
+                      return null;
+                    },
+                    onSaved: (val) => getDate(DateTime.parse(val)),
+                  ),
+                  const SizedBox(height: 30),
+                  RaisedButton(
+                    onPressed: () {
+                      saveData();// API Call stuff here
+                    },
+                    textColor: Colors.white,
+                    padding: const EdgeInsets.all(0.0),
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: <Color>[
+                            Color(0xFF0D47A1),
+                            Color(0xFF1976D2),
+                            Color(0xFF42A5F5),
+                          ],
                         ),
                       ),
-                    ],
-                  ))),
-        ));
+                      padding: const EdgeInsets.all(10.0),
+                      child: const Text('Save Information',
+                          style: TextStyle(fontSize: 20)),
+                    ),
+                  ),
+                ],
+              ))),
+    );
   }
 }
