@@ -7,7 +7,10 @@ import 'package:intl/intl.dart';
 import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'home.dart';
+import 'checkin_home.dart';
 import 'events_edit.dart';
+import 'package:thdapp/models/login_model.dart';
+import 'package:thdapp/models/participant_model.dart';
 
 class EventsHomeScreen extends StatefulWidget {
   @override
@@ -17,6 +20,7 @@ class EventsHomeScreen extends StatefulWidget {
 class _EventsHomeScreenState extends State<EventsHomeScreen> {
 
   SharedPreferences prefs;
+  Participant userData;
 
   bool isAdmin = false;
   var eventData = [];
@@ -42,6 +46,10 @@ class _EventsHomeScreenState extends State<EventsHomeScreen> {
         );
       } else if (selectedIndex == 2) {
       } else if (selectedIndex == 3) {
+        Navigator.pushReplacement(
+          context,
+          new MaterialPageRoute(builder: (ctxt) => new CheckinHomeScreen(userId: userData.id,)),
+        );
       } else if (selectedIndex == 4) {}
     });
   }
@@ -62,6 +70,13 @@ class _EventsHomeScreenState extends State<EventsHomeScreen> {
       }
     }
     eventData = upcoming_events;
+
+    String email = prefs.get('email');
+    String password = prefs.get('password');
+    isAdmin = prefs.getBool('is_admin');
+
+    Login  loginData = await checkCredentials(email, password);
+    userData = loginData.user;
     setState(() {});
   }
 
