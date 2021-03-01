@@ -8,6 +8,7 @@ import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:thdapp/models/participant_model.dart';
 import 'package:thdapp/models/login_model.dart';
 import 'package:thdapp/api.dart';
+import 'events_home.dart';
 
 
 
@@ -62,14 +63,32 @@ class _HomeScreenState extends State<HomeScreen> {
     prefs = await SharedPreferences.getInstance();
     await prefs.clear();
 
-    Navigator.pop(context);
     Navigator.pushReplacement(
       context,
       new MaterialPageRoute(builder: (ctxt) => new LoginScreen()),
     );
   }
 
-  void onNavigationItemTapped(int index) {}
+  void onNavigationItemTapped(int index) {
+    setState(() {
+      selectedIndex = index;
+
+      if (selectedIndex==1){
+
+        Navigator.pushReplacement(
+          context,
+          new MaterialPageRoute(builder: (ctxt) => new EventsHomeScreen()),
+        );
+
+      }else if(selectedIndex == 2) {
+
+      } else if (selectedIndex == 3) {
+
+      }else if (selectedIndex == 4) {
+
+      }
+    });
+  }
 
   openUrl(String url) async {
     if (await canLaunch(url)) {
@@ -172,7 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             Expanded(
-                                flex: 2,
+                                flex: 3,
                                 child: RaisedButton(
                                   onPressed: () {
                                     Navigator.push(
@@ -276,7 +295,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           endTime: 1615136400000,
                           textStyle: new TextStyle(
                             color: Color.fromARGB(255, 37, 130, 242),
-                            fontSize: 40,
+                            fontSize: 30,
                           ),
                         ),
                         Padding(

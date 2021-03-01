@@ -27,6 +27,9 @@ dependencies:
   shared_preferences: ^0.5.3+1
   url_launcher: ^5.0.3
   flutter_countdown_timer: ^3.0.1
+  intl: ^0.16.1
+  share: ^0.6.5+4
+  date_time_picker: ^1.1.1
 
 
 
@@ -52,6 +55,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - images/center_logo.png
+    - lib/logos/discordLogoWhite.png
+    - lib/logos/hopinLogo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

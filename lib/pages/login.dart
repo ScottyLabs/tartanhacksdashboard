@@ -29,7 +29,6 @@ class _LoginScreenState extends State<LoginScreen> {
     prefs = await SharedPreferences.getInstance();
 
     if(prefs.get('email')!=null){
-      Navigator.pop(context);
       Navigator.pushReplacement(
         context,
         new MaterialPageRoute(builder: (ctxt) => new HomeScreen()),
@@ -46,7 +45,6 @@ class _LoginScreenState extends State<LoginScreen> {
     if (logindata != null) {
 
 
-      Navigator.pop(context);
       Navigator.pushReplacement(
         context,
         new MaterialPageRoute(builder: (ctxt) => new HomeScreen()),
@@ -154,7 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               ButtonTheme(
                 height: 45.0,
-                minWidth: 380.0,
+                minWidth: 200,
                 padding: const EdgeInsets.all(10.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

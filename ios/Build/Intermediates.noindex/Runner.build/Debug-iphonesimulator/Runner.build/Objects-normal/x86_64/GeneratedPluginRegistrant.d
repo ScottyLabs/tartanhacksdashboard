@@ -19,6 +19,9 @@ dependencies: \
   /Users/anudaweerasinghe/Desktop/thd_working_app/thdapp/ios/Flutter/Flutter.framework/Headers/FlutterMacros.h \
   /Users/anudaweerasinghe/Desktop/thd_working_app/thdapp/ios/Flutter/Flutter.framework/Headers/FlutterAppDelegate.h \
   /Users/anudaweerasinghe/Desktop/thd_working_app/thdapp/ios/Flutter/Flutter.framework/Headers/Flutter.h \
+  /Users/anudaweerasinghe/Desktop/thd_working_app/thdapp/build/ios/Debug-iphonesimulator/share/share.framework/Headers/FLTSharePlugin.h \
+  /Users/anudaweerasinghe/Desktop/thd_working_app/thdapp/build/ios/Debug-iphonesimulator/share/share.framework/Modules/module.modulemap \
+  /Users/anudaweerasinghe/Desktop/thd_working_app/thdapp/build/ios/Debug-iphonesimulator/share/share.framework/Headers/share-umbrella.h \
   /Users/anudaweerasinghe/Desktop/thd_working_app/thdapp/build/ios/Debug-iphonesimulator/shared_preferences/shared_preferences.framework/Headers/FLTSharedPreferencesPlugin.h \
   /Users/anudaweerasinghe/Desktop/thd_working_app/thdapp/build/ios/Debug-iphonesimulator/shared_preferences/shared_preferences.framework/Modules/module.modulemap \
   /Users/anudaweerasinghe/Desktop/thd_working_app/thdapp/build/ios/Debug-iphonesimulator/shared_preferences/shared_preferences.framework/Headers/shared_preferences-umbrella.h \
