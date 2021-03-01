@@ -3,6 +3,8 @@ import 'prize.dart';
 import 'getPrizes.dart';
 import 'dart:async';
 import 'package:grouped_buttons/grouped_buttons.dart';
+import 'project.dart';
+import 'getTeamInfo.dart';
 
 class HackHome extends StatefulWidget {
   @override
@@ -38,39 +40,62 @@ class _HackHomeState extends State<HackHome>{
 }
 class _FormScreenState extends State<FormScreen> {
 
-  String _teamName;
-  String _githubUrl;
-  String _presUrl;
-  String _vidUrl;
+  String _projName = "";
+  String _githubUrl = "";
+  String _presUrl = "";
+  String _vidUrl = "";
   List<Prize> prizes = [];
   List<String> selectedNames = [];
   List<String> prizeNames = [];
+  //TODO: update with values from checkin endpoint
+  String teamID = "someTeam"; //dummy value for commit
+  String token = "123"; //dummy value for commit
+  bool hasProject = false;
+  TextEditingController nameController = TextEditingController();
+  TextEditingController githubController = TextEditingController();
+  TextEditingController slidesController = TextEditingController();
+  TextEditingController videoController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    getPrizeData();
+    getData();
+
   }
 
-  getPrizeData() async {
+  getData() async {
     prizes = await getAllPrizes();
     prizeNames = getPrizeNames(prizes);
+    Project proj = await getProject(teamID, token);
+    if (proj != null) {
+      hasProject = true;
+      _projName = proj.name;
+      _presUrl = proj.slides;
+      _vidUrl = proj.video;
+      _githubUrl = proj.github;
+      nameController.text = _projName;
+      slidesController.text = _presUrl;
+      videoController.text = _vidUrl;
+      githubController.text = _githubUrl;
+      selectedNames = [];
+    }
     setState(() {});
   }
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Widget _buildName() {
     return TextFormField(
-      decoration: InputDecoration(labelText: 'Team Name'),
+      decoration: InputDecoration(labelText: 'Project Name'),
+      controller: nameController,
       validator: (String value) {
         if (value.isEmpty) {
-          return 'Name is Required';
+          return 'Project name is required';
         }
 
         return null;
       },
       onSaved: (String value) {
-        _teamName = value;
+        _projName = value;
       },
     );
   }
@@ -79,6 +104,7 @@ class _FormScreenState extends State<FormScreen> {
     return TextFormField(
       decoration: InputDecoration(labelText: 'GitHub Repository Url'),
       keyboardType: TextInputType.url,
+      controller: githubController,
       validator: (String value) {
         if (value.isEmpty) {
           return 'URL is Required';
@@ -95,6 +121,7 @@ class _FormScreenState extends State<FormScreen> {
   Widget _buildPresURL() {
     return TextFormField(
       decoration: InputDecoration(labelText: 'Presentation Url'),
+      controller: slidesController,
       keyboardType: TextInputType.url,
       validator: (String value) {
         if (value.isEmpty) {
@@ -112,6 +139,7 @@ class _FormScreenState extends State<FormScreen> {
   Widget _buildVidURL() {
     return TextFormField(
       decoration: InputDecoration(labelText: 'Video Url'),
+      controller: videoController,
       keyboardType: TextInputType.url,
       validator: (String value) {
         if (value.isEmpty) {
@@ -136,16 +164,14 @@ class _FormScreenState extends State<FormScreen> {
   }
 
 
-  Widget _buildPrizes(){
-
+  Widget _buildPrizes() {
     return CheckboxGroup(
-      padding: new EdgeInsets.all(10.0),
-      orientation: GroupedButtonsOrientation.VERTICAL,
-      margin: const EdgeInsets.only(left: 12.0),
-      labels: prizeNames,
-      onSelected: ((List<String> checked) => selectedNames = checked)
+        padding: new EdgeInsets.all(10.0),
+        orientation: GroupedButtonsOrientation.VERTICAL,
+        margin: const EdgeInsets.only(left: 12.0),
+        labels: prizeNames,
+        onSelected: ((List<String> checked) => selectedNames = checked)
     );
-
   }
   @override
   Widget build(BuildContext context) {
@@ -180,7 +206,7 @@ class _FormScreenState extends State<FormScreen> {
 
                       _formKey.currentState.save();
 
-                      print(_teamName);
+                      print(_projName);
                       print(_githubUrl);
                       print(_presUrl);
                       print(_vidUrl);
