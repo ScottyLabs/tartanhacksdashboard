@@ -11,6 +11,7 @@ import 'package:http/http.dart' as http;
 import 'home.dart';
 import 'events_home.dart';
 import 'leaderboard.dart';
+import 'qrcode.dart';
 
 class CheckinHomeScreen extends StatefulWidget {
   final String userId;
@@ -166,7 +167,11 @@ class _CheckinHomeScreenState extends State<CheckinHomeScreen> {
                                 horizontal: 5, vertical: 0),
                             child: RaisedButton(
                               onPressed: () {
-
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            QRPage()));
                               },
                               color: Color.fromARGB(255, 37, 130, 242),
                               child: new Text(
