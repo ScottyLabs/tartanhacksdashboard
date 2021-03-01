@@ -1,3 +1,4 @@
+import 'package:dashboard/hackathon/qrcode.dart';
 import 'package:dashboard/hackathon/submission.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,14 @@ class HackHome extends StatelessWidget {
             subtitle: Text("Submit your project link here!"),
             onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Submission())),
             ),
-        )
+        ),
+        Card(
+          child: ListTile(
+            title: Text("QR Code"),
+            subtitle: Text("Submit your project link here!"),
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => QRHome()),
+            ),
+        )),
       ],
     ));
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'app.dart';
-import 'main.dart';
+
 
 class LogIn extends StatelessWidget {
   final emailController = new TextEditingController();
@@ -33,12 +33,10 @@ class LogIn extends StatelessWidget {
               Container(
                 width: width,
                 height: height * 0.45,
-                child:
-                    /*Image.asset(
-                  'assets/center_logo.png',
+                child: Image.asset(
+                  'assets/tartanhackslogo.png',
                   fit: BoxFit.fill,
-                ),*/
-                    Image(image: AssetImage('center_logo.png')),
+                ),
                 // do not have the asset yet, this is for the signup page
               ),
               Padding(
@@ -75,7 +73,7 @@ class LogIn extends StatelessWidget {
                 obscureText: true,
                 decoration: InputDecoration(
                   hintText: 'Password',
-                  /*suffixIcon: Icon(Icons.lock),*/
+                  suffixIcon: Icon(Icons.visibility_off),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20.0),
                   ),
@@ -86,33 +84,24 @@ class LogIn extends StatelessWidget {
               SizedBox(
                 height: 30.0,
               ),
-              ButtonTheme(
-                height: 45.0,
-                minWidth: 380.0,
+              Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    /*Text(
+                    Text(
                       'Forget password?',
                       style: TextStyle(fontSize: 12.0),
-                    ),*/
+                    ),
                     RaisedButton(
-                      child: Text('Login',
-                          style: TextStyle(color: Color(0xffffffff))),
-                      color: Color.fromARGB(255, 37, 130, 242),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16.0),
-                          side: BorderSide(
-                              color: Color.fromARGB(255, 37, 130, 242))),
+                      child: Text('Login'),
+                      color: Color(0xffE21031),
                       onPressed: () {
-                        print("email: ${emailController.text}");
-                        print("password: ${passwordController.text}");
-                        /*Navigator.push(
+                        Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => TemporaryOutputs()),
-                        );*/
+                              builder: (context) => App()),
+                        );
                       },
                     ),
                   ],
@@ -125,11 +114,10 @@ class LogIn extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => Second()));
                 },
                 child: Text.rich(
-                  TextSpan(children: [
+                  TextSpan(text: 'Don\'t have an account?\t', children: [
                     TextSpan(
-                      text: 'Forget Password',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 37, 130, 242)),
+                      text: 'Signup',
+                      style: TextStyle(color: Color(0xffE21031)),
                     ),
                   ]),
                 ),
@@ -148,16 +136,6 @@ class Second extends StatefulWidget {
 }
 
 class _SecondState extends State<Second> {
-  final emailController = new TextEditingController();
-  final passwordController = new TextEditingController();
-  //@override
-  void dispose() {
-    // Clean up the controller when the widget is disposed.
-    emailController.dispose();
-    passwordController.dispose();
-    //super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -174,23 +152,21 @@ class _SecondState extends State<Second> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                  width: width,
-                  height: height * 0.45,
-                  child:
-                      /*Image.asset(
-                  'assets/center_logo.png',
+                width: width,
+                height: height * 0.45,
+                child: Image.asset(
+                  'assets/tartanhackslogo.png',
                   fit: BoxFit.fill,
-                ),*/
-                      Image(image: AssetImage('center_logo.png'))
-                  // do not have the asset yet! - this is for log in page
-                  ),
+                ),
+                // do not have the asset yet! - this is for log in page
+              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      'Password Reset',
+                      'Signup',
                       style: TextStyle(
                           fontSize: 25.0, fontWeight: FontWeight.bold),
                     ),
@@ -201,7 +177,6 @@ class _SecondState extends State<Second> {
                 height: 30.0,
               ),
               TextField(
-                controller: emailController,
                 decoration: InputDecoration(
                   hintText: 'Email',
                   suffixIcon: Icon(Icons.email),
@@ -210,11 +185,10 @@ class _SecondState extends State<Second> {
                   ),
                 ),
               ),
-              /*SizedBox(
+              SizedBox(
                 height: 20.0,
               ),
               TextField(
-                controller: passwordController,
                 obscureText: true,
                 decoration: InputDecoration(
                   hintText: 'Password',
@@ -223,44 +197,34 @@ class _SecondState extends State<Second> {
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                 ),
-              ),*/
+              ),
               SizedBox(
                 height: 30.0,
               ),
-              ButtonTheme(
-                height: 45.0,
-                minWidth: 380.0,
-                padding: const EdgeInsets.all(14.0),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    /*Text(
+                    Text(
                       'Forget password?',
                       style: TextStyle(fontSize: 12.0),
-                    ),*/
+                    ),
                     RaisedButton(
-                      child: Text('Recover',
-                          style: TextStyle(
-                              fontSize: 15.0, color: Color(0xffffffff))),
-                      color: Color.fromARGB(255, 37, 130, 242),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16.0),
-                          side: BorderSide(
-                              color: Color.fromARGB(255, 37, 130, 242))),
+                      child: Text('Signup'),
+                      color: Color(0xffE21031),
                       onPressed: () {
-                        print("title text field: ${emailController.text}");
-                        print("title text field: ${passwordController.text}");
-                        /*Navigator.push(
+                        Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => TemporaryOutputs()),
-                        );*/
+                              builder: (context) => App()),
+                        );
                       },
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: 40.0),
+              SizedBox(height: 20.0),
               GestureDetector(
                 onTap: () {
                   Navigator.push(context,
@@ -269,9 +233,8 @@ class _SecondState extends State<Second> {
                 child: Text.rich(
                   TextSpan(text: 'Already have an account\t', children: [
                     TextSpan(
-                      text: 'Login',
-                      style:
-                          TextStyle(color: Color.fromARGB(255, 37, 130, 242)),
+                      text: 'Signin',
+                      style: TextStyle(color: Color(0xffE21031)),
                     ),
                   ]),
                 ),

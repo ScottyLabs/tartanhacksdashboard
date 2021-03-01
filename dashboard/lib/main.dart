@@ -1,14 +1,14 @@
-import 'package:dashboard/hackathon/hack.dart';
-import 'package:dashboard/info/info.dart';
 import 'package:flutter/material.dart';
-
-import 'package:dashboard/account/acc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'app.dart';
+import 'login-savecreds.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  static bool loggedin = false;
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -31,43 +31,29 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
+
+
 class _MyHomePageState extends State<MyHomePage> {
-  int _selectedIndex = 0;
-  List<Widget> _widgetOptions = <Widget>[
-    HackHome(),
-    InfoHome(),
-    AccountHome(),
-  ];
+  bool _loaded = false;
+
+
+  Future<void> checkLoginStatus() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String result = pref.get('name');
+    setState(() {
+      _loaded = true;
+      if (result != null) MyApp.loggedin = true;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    checkLoginStatus();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.code),
-            label: "Hackathon"
-          ),
-
-          BottomNavigationBarItem(
-            icon: Icon(Icons.info),
-            label: "Information"
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: "Account"
-          )
-        ],
-        selectedItemColor: Colors.red,
-        onTap: (index) => setState(
-          () {
-            _selectedIndex = index;
-          } 
-        ),
-      ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+    return _loaded ? (MyApp.loggedin ? App() : LogIn()) : Container();
   }
 }
