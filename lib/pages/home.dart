@@ -124,6 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
     api_response = await getEvents();
     var currentTime = DateTime.now().millisecondsSinceEpoch / 1000;
     int length = 0;
+    print(api_response);
     for (int i = 0; i < api_response.length; i++) {
       if (currentTime < int.parse(api_response[i].timestamp)) {
         if(length <2){
@@ -556,7 +557,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             left: 10, top: 5),
                                                         child: Column(children: <Widget>[
                                                           Expanded(
-                                                              flex: 1,
+                                                              flex: 3,
                                                               child:
                                                               Row(children: <Widget>[
                                                                 //eventIcon(eventData[index]),
@@ -564,14 +565,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                     eventData[index]),
                                                               ])),
                                                           Expanded(
-                                                            flex: 2,
-                                                            child: Row(children: <Widget>[
-                                                              eventDescription(
-                                                                  eventData[index]),
-                                                            ]),
-                                                          ),
-                                                          Expanded(
-                                                            flex: 3,
+                                                            flex: 4,
                                                             child: !isAdmin
                                                                 ? Row(children: <Widget>[
                                                               Container(

@@ -182,12 +182,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          //TODO:Add edit profile functionality
-        },
-        child: Icon(Icons.edit, color: Colors.white,),
-        backgroundColor: new Color.fromARGB(255, 37, 130, 242),
-      ),    );
+       );
   }
 }

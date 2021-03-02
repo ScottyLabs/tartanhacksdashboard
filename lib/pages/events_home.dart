@@ -305,7 +305,7 @@ class _EventsHomeScreenState extends State<EventsHomeScreen> {
                                                     left: 10, top: 5),
                                                 child: Column(children: <Widget>[
                                                   Expanded(
-                                                      flex: 1,
+                                                      flex: 2,
                                                       child:
                                                       Row(children: <Widget>[
                                                         //eventIcon(eventData[index]),
@@ -313,7 +313,7 @@ class _EventsHomeScreenState extends State<EventsHomeScreen> {
                                                             eventData[index]),
                                                       ])),
                                                   Expanded(
-                                                    flex: 2,
+                                                    flex: 5,
                                                     child: Row(children: <Widget>[
                                                       eventDescription(
                                                           eventData[index]),
