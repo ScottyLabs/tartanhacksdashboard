@@ -47,21 +47,26 @@ class _QRPageState extends State<QRPage>{
     });
   }
 
-  Future getCheckinItems() async{
+  Future<List> getCheckinItems() async{
     var response = await http.post(
         Uri.encodeFull("https://thd-api.herokuapp.com/checkin/get"),
         headers:{"token": token}
     );
     List data = json.decode(response.body);
-    setState(() {
-      checkinItems = data.map((element) =>
+    if(response.statusCode == 200){
+
+      List res = data.map((element) =>
           CheckinItem.fromJson(element))
           .where((element) => element.self_checkin_enabled == false).toList();
-      List itemIDs = checkinItems.map((element) => element.id).toList();
-      if(!itemIDs.contains(scanConfig[0])){
-        scanConfig[0] = checkinItems[0].id;
-      }
-    });
+      setState(() {
+        List itemIDs = res.map((element) => element.id).toList();
+        if(!itemIDs.contains(scanConfig[0])){
+          scanConfig[0] = res[0].id;
+        }
+      });
+      return res;
+    }
+    return null;
   }
 
   Future errorDialog(text, context) async {
@@ -122,7 +127,9 @@ class _QRPageState extends State<QRPage>{
 
   Future setup() async{
     await getID();
-    await getCheckinItems();
+    setState(() async{
+      checkinItems = await getCheckinItems();
+    });
   }
 
   @override
@@ -487,7 +494,6 @@ class ConfigPage extends StatefulWidget{
   final List checkinItems;
   final Function getCheckinItems;
 
-
   ConfigPage({this.scanConfig, this.setConfig, this.token,
       this.checkinItems, this.getCheckinItems});
 
@@ -497,23 +503,41 @@ class ConfigPage extends StatefulWidget{
 
 class _ConfigPageState extends State<ConfigPage> {
 
-  final commentControl = TextEditingController();
+  //final commentControl = TextEditingController();
+  List scanConfig;
+  List checkinItems;
+
+  void setConfig(value, index){
+    widget.setConfig(value, index);
+    setState(() {
+      scanConfig[index] = value;
+    });
+  }
+
+  Future setup() async{
+    List l = await widget.getCheckinItems();
+    setState(() {
+      checkinItems = l;
+      scanConfig = widget.scanConfig;
+    });
+  }
 
   @override
   void dispose() {
-    commentControl.dispose();
+    //commentControl.dispose();
     super.dispose();
   }
 
   @override
   void initState() {
-    commentControl.text = !widget.scanConfig[2] ? widget.scanConfig[1] : "";
-    widget.getCheckinItems();
+    //commentControl.text = !widget.scanConfig[2] ? widget.scanConfig[1] : "";
+    setup();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    print(checkinItems);
     return Scaffold(
         appBar: PreferredSize(
             child: new AppBar(
@@ -534,7 +558,7 @@ class _ConfigPageState extends State<ConfigPage> {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children:
-                  (widget.checkinItems == null) ?
+                  (checkinItems == null) ?
                     [SizedBox(
                         height: 100,
                         child: Align(
@@ -559,8 +583,8 @@ class _ConfigPageState extends State<ConfigPage> {
                           Expanded(
                             child: DropdownButton<String>(
                                 isExpanded: true,
-                                value: widget.scanConfig[0],
-                                items: widget.checkinItems
+                                value: scanConfig[0],
+                                items: checkinItems
                                     .map<DropdownMenuItem<String>>((value) {
                                   return DropdownMenuItem<String>(
                                       value: value.id,
@@ -571,9 +595,9 @@ class _ConfigPageState extends State<ConfigPage> {
                                 underline: Container(
                                     height: 0
                                 ),
-                                onChanged: (!widget.scanConfig[2] && !widget.scanConfig[3]) ?
+                                onChanged: (!scanConfig[2] && !scanConfig[3]) ?
                                     (String newValue) {
-                                  widget.setConfig(newValue, 0);
+                                  setConfig(newValue, 0);
                                 } : null
                             )
                           )
@@ -592,7 +616,7 @@ class _ConfigPageState extends State<ConfigPage> {
                             : "No comments in viewing mode"
                       ),
                       onChanged: (String value) {
-                        widget.setConfig(value, 3);
+                        setConfig(value, 3);
                       },
                     ),
                     const SizedBox(height:20),
@@ -601,25 +625,29 @@ class _ConfigPageState extends State<ConfigPage> {
                       title: Text("View History"),
                       value: widget.scanConfig[2],
                       onChanged: (bool newValue) {
+                        /*
                         if(newValue){
                           commentControl.clear();
                         }else{
                           commentControl.text = widget.scanConfig[1];
                         }
-                        widget.setConfig(newValue, 2);
+                         */
+                        setConfig(newValue, 2);
                       }
                     ),
                     const SizedBox(height:15),
                     CheckboxListTile(
                         title: Text("Self-checkin"),
-                        value: widget.scanConfig[3],
+                        value: scanConfig[3],
                         onChanged: (bool newValue) {
+                          /*
                           if(newValue){
                             commentControl.clear();
                           }else{
                             commentControl.text = widget.scanConfig[1];
                           }
-                          widget.setConfig(newValue, 3);
+                           */
+                          setConfig(newValue, 3);
                         }
                     ),
                     const SizedBox(height:20),
@@ -629,8 +657,11 @@ class _ConfigPageState extends State<ConfigPage> {
                       },
                       padding: const EdgeInsets.only(top:10, bottom:10,
                           left:60, right:60),
+                      color: Color.fromARGB(255, 37, 130, 242),
                       child: Text('Confirm',
-                          style: Theme.of(context).textTheme.button),
+                          style: new TextStyle(
+                              color: Colors.white,
+                              fontSize: 30)),
                     )
                   ]
               )
