@@ -3,6 +3,7 @@ import 'prize.dart';
 
 class Project{
   final String name;
+  final String desc;
   final String slides;
   final String video;
   final String github;
@@ -10,7 +11,7 @@ class Project{
   final List<String> prizes;
   final String id;
 
-  Project({this.name, this.slides, this.video, this.willPresent, this.prizes, this.github, this.id});
+  Project({this.name, this.desc, this.slides, this.video, this.willPresent, this.prizes, this.github, this.id});
 
   factory Project.fromJson(Map<String, dynamic> parsedJson) {
     var jsonList = parsedJson['eligible_prizes'] as List;
@@ -22,6 +23,7 @@ class Project{
     print(parsedJson['slides_url']);
     Project project = new Project(
         name: parsedJson['name'],
+        desc: parsedJson['description'],
         slides: parsedJson['slides_url'],
         video: parsedJson['video_url'],
         willPresent: parsedJson['will_present_live'],

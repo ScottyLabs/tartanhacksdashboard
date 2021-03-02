@@ -45,6 +45,7 @@ class _HackHomeState extends State<HackHome>{
 class _FormScreenState extends State<FormScreen> {
 
   String _projName = "";
+  String _projDesc = "";
   String _githubUrl = "";
   String _presUrl = "";
   String _vidUrl = "";
@@ -59,6 +60,7 @@ class _FormScreenState extends State<FormScreen> {
   bool hasProject = false;
   bool isPresenting = false;
   TextEditingController nameController = TextEditingController();
+  TextEditingController descController = TextEditingController();
   TextEditingController githubController = TextEditingController();
   TextEditingController slidesController = TextEditingController();
   TextEditingController videoController = TextEditingController();
@@ -90,6 +92,16 @@ class _FormScreenState extends State<FormScreen> {
   }
 
   @override
+  void dispose(){
+    nameController.dispose();
+    descController.dispose();
+    githubController.dispose();
+    slidesController.dispose();
+    videoController.dispose();
+    super.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
     getData();
@@ -107,12 +119,14 @@ class _FormScreenState extends State<FormScreen> {
     if (proj != null) {
       hasProject = true;
       _projName = proj.name;
+      _projDesc = proj.desc;
       _presUrl = proj.slides;
       _vidUrl = proj.video;
       _githubUrl = proj.github;
       projectID = proj.id;
       isPresenting = proj.willPresent;
       nameController.text = _projName;
+      descController.text = _projDesc;
       slidesController.text = _presUrl;
       videoController.text = _vidUrl;
       githubController.text = _githubUrl;
@@ -148,17 +162,17 @@ class _FormScreenState extends State<FormScreen> {
     );
   }
 
-  submitProject(String teamID, String token, String github, String slides, String video, bool presenting, String id, List<String> prizeIds, Function _showDialog) async {
+  submitProject(String name, String desc, String teamID, String token, String github, String slides, String video, bool presenting, String id, List<String> prizeIds, Function _showDialog) async {
     print("has project is");
     print(hasProject);
     print("printing project id");
     print(id);
     bool res = false;
     if (hasProject) {
-      res = await editProject(teamID, token, github, slides, video, presenting, id, prizeIds, _showDialog);
+      res = await editProject(name, desc, teamID, token, github, slides, video, presenting, id, prizeIds, _showDialog);
     }
     else {
-      res = await newProject(teamID, token, github, slides, video, presenting, id, prizeIds, _showDialog);
+      res = await newProject(name, desc, teamID, token, github, slides, video, presenting, id, prizeIds, _showDialog);
     }
     if (res) {
       print("success!");
@@ -181,6 +195,23 @@ class _FormScreenState extends State<FormScreen> {
       },
       onSaved: (String value) {
         _projName = value;
+      },
+    );
+  }
+
+  Widget _buildDesc() {
+    return TextFormField(
+      decoration: InputDecoration(labelText: 'Project Description'),
+      controller: descController,
+      validator: (String value) {
+        if (value.isEmpty) {
+          return 'Project description is required';
+        }
+
+        return null;
+      },
+      onSaved: (String value) {
+        _projDesc = value;
       },
     );
   }
@@ -306,6 +337,7 @@ class _FormScreenState extends State<FormScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   _buildName(),
+                  _buildDesc(),
                   _buildGitHubURL(),
                   _buildPresURL(),
                   _buildVidURL(),
@@ -336,7 +368,7 @@ class _FormScreenState extends State<FormScreen> {
                       print(selectedIds.toString());
 
                       //Send to API
-                      submitProject(teamID, token, _githubUrl, _presUrl, _vidUrl, isPresenting, projectID, selectedIds, _showDialog);
+                      submitProject(_projName, _projDesc, teamID, token, _githubUrl, _presUrl, _vidUrl, isPresenting, projectID, selectedIds, _showDialog);
                     },
                   )
                 ],

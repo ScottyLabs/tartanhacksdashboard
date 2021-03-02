@@ -127,8 +127,9 @@ class _QRPageState extends State<QRPage>{
 
   Future setup() async{
     await getID();
-    setState(() async{
-      checkinItems = await getCheckinItems();
+    List l = await getCheckinItems();
+    setState(() {
+      checkinItems = l;
     });
   }
 

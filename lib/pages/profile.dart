@@ -96,7 +96,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         padding: EdgeInsets.all(10),
                       ),
                       new Text(
-                        'team = '+userData.team_id,
+                        (userData.team_id != null) ?
+                        'team = '+userData.team_id
+                        : 'team = N/A',
                         textAlign: TextAlign.left,
                         style: new TextStyle(
                           fontWeight: FontWeight.w300,
@@ -122,7 +124,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       new Text(
-                        'github_url = '+userData.github_profile_url,
+                        (userData.github_profile_url != null) ?
+                        'github_url = '  + userData.github_profile_url
+                        : 'github_url = N/A',
                         textAlign: TextAlign.left,
                         style: new TextStyle(
                           fontWeight: FontWeight.w300,
@@ -133,7 +137,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         padding: EdgeInsets.all(10),
                       ),
                       new Text(
-                        'resume_url = '+userData.resume_url,
+                        (userData.resume_url != null) ?
+                        'resume_url = '+userData.resume_url
+                        : 'resume_url = N/A',
                         textAlign: TextAlign.left,
                         style: new TextStyle(
                           fontWeight: FontWeight.w300,
@@ -159,7 +165,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       new Text(
-                        'bio = '+userData.github_profile_url,
+                        (userData.github_profile_url != null) ?
+                        'bio = '+userData.github_profile_url
+                        : 'bio = N/A',
                         textAlign: TextAlign.left,
                         style: new TextStyle(
                           fontWeight: FontWeight.w300,

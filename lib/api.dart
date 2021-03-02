@@ -178,6 +178,7 @@ void enterProject(String projectID, List<String> prizeIds, String token, Functio
     if (response.statusCode != 200 && response.statusCode != 400) {
       print("error");
       print(response.statusCode);
+      print(response.body);
       showDialog("Error with Submission", "Unable to submit project for prize");
       return;
     }
@@ -185,7 +186,7 @@ void enterProject(String projectID, List<String> prizeIds, String token, Functio
   }
 }
 
-Future<bool> editProject(String teamID, String token, String github,
+Future<bool> editProject(String name, String desc, String teamID, String token, String github,
     String slides, String video, bool presenting, String id,
     List<String> prizeIds, Function showDialog) async {
 
@@ -197,7 +198,7 @@ Future<bool> editProject(String teamID, String token, String github,
 
   Map<String, String> headers = {"Content-type": "application/json", "Token": token};
 
-  var body = json.encode({'_id' : id, 'team_id' : teamID, 'github_url' : github, 'slides_url' : slides,
+  var body = json.encode({'_id' : id, 'name' : name, 'desc' : desc, 'team_id' : teamID, 'github_url' : github, 'slides_url' : slides,
     'video_url' : video, 'will_present_live' : presenting});
 
   final response = await http.post(new_url, headers: headers, body: body);
@@ -211,7 +212,7 @@ Future<bool> editProject(String teamID, String token, String github,
   return false;
 }
 
-Future<bool> newProject(String teamID, String token, String github,
+Future<bool> newProject(String name, String desc, String teamID, String token, String github,
     String slides, String video, bool presenting, String id,
     List<String> prizeIds, Function showDialog) async {
 
@@ -220,8 +221,8 @@ Future<bool> newProject(String teamID, String token, String github,
 
   Map<String, String> headers = {"Content-type": "application/json", "Token": token};
 
-  var body = json.encode({'_id' : id, 'team_id' : teamID, 'github_url' : github, 'slides_url' : slides,
-    'video_url' : video, 'will_present_live' : presenting, '_id' : id});
+  var body = json.encode({'name' : name, 'desc' : desc, 'team_id' : teamID, 'github_url' : github, 'slides_url' : slides,
+    'video_url' : video, 'will_present_live' : presenting});
 
   final response = await http.post(new_url, headers: headers, body: body);
 
@@ -229,5 +230,6 @@ Future<bool> newProject(String teamID, String token, String github,
     enterProject(id, prizeIds, token, showDialog);
     return true;
   }
+  print(response.body);
   return false;
 }

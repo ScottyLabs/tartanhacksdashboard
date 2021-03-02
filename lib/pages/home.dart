@@ -478,7 +478,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             minWidth: double.infinity,
                             child: RaisedButton(
                               onPressed: () {
-                                //TODO: OPen project page
+                                Navigator.pushReplacement(
+                                  context,
+                                  new MaterialPageRoute(builder: (ctxt) => new FormScreen()),
+                                );
                               },
                               color: Color.fromARGB(255, 37, 130, 242),
                               child: new Text(
