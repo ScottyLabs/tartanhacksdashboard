@@ -11,6 +11,7 @@ import 'checkin_home.dart';
 import 'events_edit.dart';
 import 'package:thdapp/models/login_model.dart';
 import 'package:thdapp/models/participant_model.dart';
+import 'hack.dart';
 
 class EventsHomeScreen extends StatefulWidget {
   @override
@@ -45,6 +46,10 @@ class _EventsHomeScreenState extends State<EventsHomeScreen> {
           new MaterialPageRoute(builder: (ctxt) => new HomeScreen()),
         );
       } else if (selectedIndex == 2) {
+        Navigator.pushReplacement(
+          context,
+          new MaterialPageRoute(builder: (ctxt) => new FormScreen()),
+        );
       } else if (selectedIndex == 3) {
         Navigator.pushReplacement(
           context,

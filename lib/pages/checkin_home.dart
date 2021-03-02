@@ -12,6 +12,7 @@ import 'home.dart';
 import 'events_home.dart';
 import 'leaderboard.dart';
 import 'qrcode.dart';
+import 'hack.dart';
 
 class CheckinHomeScreen extends StatefulWidget {
   final String userId;
@@ -52,7 +53,12 @@ class _CheckinHomeScreenState extends State<CheckinHomeScreen> {
           context,
           new MaterialPageRoute(builder: (ctxt) => new EventsHomeScreen()),
         );
-      } else if (selectedIndex == 2) {} else if (selectedIndex == 0) {
+      } else if (selectedIndex == 2) {
+        Navigator.pushReplacement(
+          context,
+          new MaterialPageRoute(builder: (ctxt) => new FormScreen()),
+        );
+      } else if (selectedIndex == 0) {
         Navigator.pushReplacement(
           context,
           new MaterialPageRoute(builder: (ctxt) => new HomeScreen()),

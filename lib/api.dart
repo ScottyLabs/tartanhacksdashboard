@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'models/login_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'models/event_model.dart';
+import 'models/prize.dart';
+import 'models/project.dart';
 
 
 SharedPreferences prefs;
@@ -114,3 +116,118 @@ void refreshToken() async{
   Login res = await checkCredentials(email, password);
 }
 
+
+Future<List<Prize>> getAllPrizes() async {
+  const url = "https://thd-api.herokuapp.com/projects/prizes/get";
+  final response = await http.post(url);
+
+  if (response.statusCode == 200) {
+    List<Prize> prizes;
+    var jsonList = json.decode(response.body) as List;
+    prizes = jsonList.map((i) => Prize.fromJson(i)).toList();
+    print(prizes.toString);
+    return prizes;
+  }
+  return null;
+}
+
+Future<Project> getProject(String teamID, String token, Function showDialog) async {
+
+  const url = "https://thd-api.herokuapp.com/projects/get";
+  var body = json.encode({'team_id' : teamID});
+
+  print("printing team ID");
+  print(teamID);
+
+  print(body.toString());
+
+  Map<String, String> headers = {"Content-type": "application/json", "Token": token};
+
+  final response = await http.post(url, headers: headers, body: body);
+
+  print(response.body.toString());
+
+  if (response.statusCode == 200) {
+    print("response = 200");
+    var jsonList = json.decode(response.body);
+    print(jsonList.toString());
+    if (jsonList.length == 0) {
+      showDialog("Could not find an existing project", "No project found");
+    }
+    Project project = Project.fromJson(jsonList[0]);
+    return project;
+  }
+  else if (response.statusCode == 401){
+    showDialog("Please try logging out and back in", "Error accessing projects");
+  }
+  return null;
+}
+
+void enterProject(String projectID, List<String> prizeIds, String token, Function showDialog) async {
+  String url = "https://thd-api.herokuapp.com/projects/";
+  String new_url = url + "/prizes/enter" + "?project_id=" + projectID;
+
+  Map<String, String> headers = {
+    "Content-type": "application/json",
+    "Token": token
+  };
+
+  for (String prize in prizeIds) {
+    String updated_url = new_url + "&prize_id=" + prize;
+    var response = await http.get(updated_url, headers: headers);
+    if (response.statusCode != 200 && response.statusCode != 400) {
+      print("error");
+      print(response.statusCode);
+      showDialog("Error with Submission", "Unable to submit project for prize");
+      return;
+    }
+    showDialog("Your project was submitted.", "Success");
+  }
+}
+
+Future<bool> editProject(String teamID, String token, String github,
+    String slides, String video, bool presenting, String id,
+    List<String> prizeIds, Function showDialog) async {
+
+  String url = "https://thd-api.herokuapp.com/projects/";
+  String new_url = url + "/edit";
+
+  print("printing id again");
+  print(id);
+
+  Map<String, String> headers = {"Content-type": "application/json", "Token": token};
+
+  var body = json.encode({'_id' : id, 'team_id' : teamID, 'github_url' : github, 'slides_url' : slides,
+    'video_url' : video, 'will_present_live' : presenting});
+
+  final response = await http.post(new_url, headers: headers, body: body);
+
+  print(response.body.toString());
+
+  if (response.statusCode == 200) {
+    enterProject(id, prizeIds, token, showDialog);
+    return true;
+  }
+  return false;
+}
+
+Future<bool> newProject(String teamID, String token, String github,
+    String slides, String video, bool presenting, String id,
+    List<String> prizeIds, Function showDialog) async {
+
+  String url = "https://thd-api.herokuapp.com/projects/";
+  String new_url = url + "/new";
+
+  Map<String, String> headers = {"Content-type": "application/json", "Token": token};
+
+  var body = json.encode({'_id' : id, 'team_id' : teamID, 'github_url' : github, 'slides_url' : slides,
+    'video_url' : video, 'will_present_live' : presenting, '_id' : id});
+
+  final response = await http.post(new_url, headers: headers, body: body);
+
+  if (response.statusCode == 200) {
+    enterProject(id, prizeIds, token, showDialog);
+    return true;
+  }
+  return false;
+}

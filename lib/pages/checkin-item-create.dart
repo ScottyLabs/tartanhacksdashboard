@@ -505,15 +505,18 @@ class _ViewCIIState extends State<ViewCIIPage>{
         Uri.encodeFull("https://thd-api.herokuapp.com/checkin/get"),
         headers:{"token": token}
     );
-    List data = json.decode(response.body);
-    data = data.map((element) =>
-        CheckinItem.fromJson(element)).toList();
-    
-    if(this.mounted){
-      setState(() {
-        checkinItems = data;
-        loaded = true;
-      });
+
+    if(response.statusCode == 200) {
+      List data = json.decode(response.body);
+      data = data.map((element) =>
+          CheckinItem.fromJson(element)).toList();
+
+      if (this.mounted) {
+        setState(() {
+          checkinItems = data;
+          loaded = true;
+        });
+      }
     }
   }
 

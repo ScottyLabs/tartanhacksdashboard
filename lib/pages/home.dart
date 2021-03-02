@@ -13,6 +13,7 @@ import 'package:intl/intl.dart';
 import 'package:share/share.dart';
 import 'events_edit.dart';
 import 'checkin_home.dart';
+import 'hack.dart';
 
 
 
@@ -89,7 +90,10 @@ class _HomeScreenState extends State<HomeScreen> {
         );
 
       }else if(selectedIndex == 2) {
-
+        Navigator.pushReplacement(
+          context,
+          new MaterialPageRoute(builder: (ctxt) => new FormScreen()),
+        );
       } else if (selectedIndex == 3) {
         Navigator.pushReplacement(
           context,
