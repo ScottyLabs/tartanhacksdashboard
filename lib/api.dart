@@ -209,6 +209,7 @@ Future<bool> editProject(String name, String desc, String teamID, String token, 
     enterProject(id, prizeIds, token, showDialog);
     return true;
   }
+  showDialog(json.decode(response.body)['message'], "Error");
   return false;
 }
 
@@ -230,6 +231,6 @@ Future<bool> newProject(String name, String desc, String teamID, String token, S
     enterProject(id, prizeIds, token, showDialog);
     return true;
   }
-  print(response.body);
+  showDialog(json.decode(response.body)['message'], "Error");
   return false;
 }
