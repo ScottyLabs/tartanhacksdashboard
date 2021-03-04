@@ -78,7 +78,7 @@ class _CheckinHomeScreenState extends State<CheckinHomeScreen> {
         headers: {"token": token});
 
     Map data = json.decode(response.body);
-    List raw = data["checkin_history"];
+    List raw = (data["checkin_history"]).reversed.toList();
     raw = raw
         .map((element) =>
         CheckinItem.fromJson(Map<String, dynamic>.from(element)))

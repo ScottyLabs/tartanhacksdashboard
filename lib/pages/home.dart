@@ -68,6 +68,44 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  void logOutConfirm(String response, String title) {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text(title),
+          content: new Text(response),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text(
+                "Log Out",
+                style: new TextStyle(color: Colors.white),
+              ),
+              color: new Color.fromARGB(255, 255, 75, 43),
+              onPressed: () {
+                Navigator.of(context).pop();
+                logOut();
+              },
+            ),
+            new FlatButton(
+              child: new Text(
+                "Keep Hacking",
+                style: new TextStyle(color: Colors.white),
+              ),
+              color: new Color.fromARGB(255, 255, 75, 43),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   void logOut() async {
     prefs = await SharedPreferences.getInstance();
     await prefs.clear();
@@ -306,7 +344,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 IconButton(
                   icon: Icon(Icons.exit_to_app),
                   onPressed: () {
-                    logOut();
+                    logOutConfirm("Are you sure you want to log out?", "Logging out already?");
                   },
                   color: Colors.white,
                 )
@@ -331,7 +369,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 IconButton(
                   icon: Icon(Icons.exit_to_app),
                   onPressed: () {
-                    logOut();
+                    logOutConfirm("Are you sure you want to log out?", "Logging out already?");
                   },
                   color: Colors.white,
                 )

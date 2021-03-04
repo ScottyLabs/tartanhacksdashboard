@@ -111,7 +111,7 @@ class _EventsHomeScreenState extends State<EventsHomeScreen> {
               text: '\n${data.description}',
               style: TextStyle(
                 color: Colors.black,
-                fontSize: 15,
+                fontSize: 10,
               ),
             ))));
   }
