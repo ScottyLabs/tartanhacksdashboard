@@ -69,12 +69,12 @@ class _QRPageState extends State<QRPage>{
     return null;
   }
 
-  Future errorDialog(text, context) async {
+  Future errorDialog(title, text, context) async {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Check in failed',
+          title: Text(title,
             style: TextStyle(
               fontSize: 30,
               fontWeight: FontWeight.bold,
@@ -105,7 +105,9 @@ class _QRPageState extends State<QRPage>{
     );
     if(response.statusCode != 200) {
       Map data = json.decode(response.body);
-      errorDialog(data['message'], context);
+      errorDialog("Check-in Failed!", data['message'], context);
+    }else{
+      errorDialog("Success!", "You were successfully checked in", context);
     }
   }
 
