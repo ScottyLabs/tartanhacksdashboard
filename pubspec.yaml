@@ -31,7 +31,7 @@ dependencies:
   share: ^0.6.5+4
   date_time_picker: ^1.1.1
   qr_flutter: ^3.1.0
-  qrscan: ^0.2.17
+  barras: ^0.0.2
   json_annotation: ^3.1.1
   grouped_buttons: ^1.0.4
   toggle_switch: ^0.1.8

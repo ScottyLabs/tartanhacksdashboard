@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:qrscan/qrscan.dart' as scanner;
+import 'package:barras/barras.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -110,7 +110,8 @@ class _QRPageState extends State<QRPage>{
   }
 
   Future scan(BuildContext context) async {
-    String scanRes = await scanner.scan();
+    final data = await Barras.scan(context);
+    String scanRes = data;
     if(scanConfig[2] == true) {
       Navigator.push(
         context,
