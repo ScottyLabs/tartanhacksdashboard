@@ -182,7 +182,6 @@ void enterProject(String projectID, List<String> prizeIds, String token, Functio
       showDialog("Error with Submission", "Unable to submit project for prize");
       return;
     }
-    showDialog("Your project was submitted.", "Success");
   }
 }
 
