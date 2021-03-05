@@ -163,31 +163,27 @@ Future<Project> getProject(String teamID, String token, Function showDialog) asy
   return null;
 }
 
-void enterProject(String projectID, List<String> prizeIds, String token, Function showDialog) async {
+void enterProject(String projectID, String prizeId, String token, Function showDialog) async {
   String url = "https://thd-api.herokuapp.com/projects/";
-  String new_url = url + "/prizes/enter" + "?project_id=" + projectID;
+  String new_url = url + "/prizes/enter" + "?project_id=" + projectID + "&prize_id=" + prizeId;
 
   Map<String, String> headers = {
     "Content-type": "application/json",
     "Token": token
   };
 
-  for (String prize in prizeIds) {
-    String updated_url = new_url + "&prize_id=" + prize;
-    var response = await http.get(updated_url, headers: headers);
-    if (response.statusCode != 200 && response.statusCode != 400) {
-      print("error");
-      print(response.statusCode);
-      print(response.body);
-      showDialog("Error with Submission", "Unable to submit project for prize");
-      return;
-    }
+  var response = await http.get(new_url, headers: headers);
+  if(response.statusCode != 200) {
+    Map data = json.decode(response.body);
+    showDialog(data['message'], "Submission Failed");
+  }else{
+    showDialog("Successfully submitted for prize", "Success!");
   }
 }
 
+
 Future<bool> editProject(String name, String desc, String teamID, String token, String github,
-    String slides, String video, bool presenting, String id,
-    List<String> prizeIds, Function showDialog) async {
+    String slides, String video, bool presenting, String id, Function showDialog) async {
 
   String url = "https://thd-api.herokuapp.com/projects/";
   String new_url = url + "/edit";
@@ -205,7 +201,6 @@ Future<bool> editProject(String name, String desc, String teamID, String token, 
   print(response.body.toString());
 
   if (response.statusCode == 200) {
-    enterProject(id, prizeIds, token, showDialog);
     return true;
   }
   showDialog(json.decode(response.body)['message'], "Error");
@@ -213,8 +208,7 @@ Future<bool> editProject(String name, String desc, String teamID, String token, 
 }
 
 Future<bool> newProject(String name, String desc, String teamID, String token, String github,
-    String slides, String video, bool presenting, String id,
-    List<String> prizeIds, Function showDialog) async {
+    String slides, String video, bool presenting, String id, Function showDialog) async {
 
   String url = "https://thd-api.herokuapp.com/projects/";
   String new_url = url + "/new";
@@ -227,7 +221,6 @@ Future<bool> newProject(String name, String desc, String teamID, String token, S
   final response = await http.post(new_url, headers: headers, body: body);
 
   if (response.statusCode == 200) {
-    enterProject(id, prizeIds, token, showDialog);
     return true;
   }
   showDialog(json.decode(response.body)['message'], "Error");

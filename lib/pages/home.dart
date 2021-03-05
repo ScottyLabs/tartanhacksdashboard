@@ -360,7 +360,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 'TartanHacks 2021',
                 textAlign: TextAlign.center,
                 style: new TextStyle(
-                  fontWeight: FontWeight.bold,
                   fontSize: 20,
                 ),
               ),

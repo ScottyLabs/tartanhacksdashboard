@@ -109,7 +109,7 @@ class _QRPageState extends State<QRPage>{
     print(response.body);
     if(response.statusCode != 200) {
       Map data = json.decode(response.body);
-      errorDialog("Check-in Failed!", data['message'], context);
+      errorDialog("Check-in Failed", data['message'], context);
     }else{
       errorDialog("Success!", "You were successfully checked in", context);
     }
@@ -162,7 +162,6 @@ class _QRPageState extends State<QRPage>{
                 'Your QR Code',
                 textAlign: TextAlign.center,
                 style: new TextStyle(
-                  fontWeight: FontWeight.bold,
                   fontSize: 20,
                 ),
               ),
@@ -489,7 +488,6 @@ class _HistoryPageState extends State<HistoryPage>{
                 "$name's History",
                 textAlign: TextAlign.center,
                 style: new TextStyle(
-                  fontWeight: FontWeight.bold,
                   fontSize: 20,
                 ),
               ),
@@ -594,7 +592,6 @@ class _ConfigPageState extends State<ConfigPage> {
                 'Scan Config',
                 textAlign: TextAlign.center,
                 style: new TextStyle(
-                  fontWeight: FontWeight.bold,
                   fontSize: 20,
                 ),
               ),

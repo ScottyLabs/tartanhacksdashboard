@@ -114,7 +114,6 @@ class _CheckinHomeScreenState extends State<CheckinHomeScreen> {
               'Swag Points',
               textAlign: TextAlign.center,
               style: new TextStyle(
-                fontWeight: FontWeight.bold,
                 fontSize: 20,
               ),
             ),

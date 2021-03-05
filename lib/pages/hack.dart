@@ -1,47 +1,19 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-import 'package:grouped_buttons/grouped_buttons.dart';
 import 'package:thdapp/api.dart';
-import 'package:toggle_switch/toggle_switch.dart';
 import 'package:thdapp/models/project.dart';
 import 'package:thdapp/models/prize.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'checkin_home.dart';
 import 'home.dart';
 import 'events_home.dart';
+import 'enter_prizes.dart';
 
-class HackHome extends StatefulWidget {
-  @override
-  _HackHomeState createState() => _HackHomeState();
-}
+
 class FormScreen extends StatefulWidget{
   @override
   _FormScreenState createState() => _FormScreenState();
 }
-class _HackHomeState extends State<HackHome>{
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(backgroundColor: Color.fromARGB(0xFF, 0x25, 0x82, 0xF2), 
-        title: Text('Hackathon'),
-      ),
-      body: Center(
-        child: RaisedButton(
-          color: Color.fromARGB(0xFF, 0x5D, 0x5F, 0x61),
-          child: Text('Project Submission Form', 
-          style: TextStyle(color: Colors.white, fontSize: 16),),
-          
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => FormScreen()),
-            );
-          },
-        ),
-      ),
-    );
-  }
-}
+
 class _FormScreenState extends State<FormScreen> {
 
   String _projName = "";
@@ -169,10 +141,10 @@ class _FormScreenState extends State<FormScreen> {
     print(id);
     bool res = false;
     if (hasProject) {
-      res = await editProject(name, desc, teamID, token, github, slides, video, presenting, id, prizeIds, _showDialog);
+      res = await editProject(name, desc, teamID, token, github, slides, video, presenting, id, _showDialog);
     }
     else {
-      res = await newProject(name, desc, teamID, token, github, slides, video, presenting, id, prizeIds, _showDialog);
+      res = await newProject(name, desc, teamID, token, github, slides, video, presenting, id, _showDialog);
     }
     if (res) {
       print("success!");
@@ -302,33 +274,21 @@ class _FormScreenState extends State<FormScreen> {
     return prizeNames;
   }
 
-
-  Widget _buildPrizes() {
-    return Container(
-        padding: new EdgeInsets.all(10.0),
-        child: Column(
-            children: <Widget>[
-              SizedBox(width: 20,),
-              Text('Prizes',textAlign: TextAlign.left, style: TextStyle(fontSize: 20.0), ),
-              Text('Select which prizes you are submitting your project to. All projects are automatically submitted to the ScottyLabs Grand Prize.',textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0), ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: CheckboxGroup(
-                    padding: new EdgeInsets.all(10.0),
-                    orientation: GroupedButtonsOrientation.VERTICAL,
-                    margin: const EdgeInsets.only(left: 12.0),
-                    labels: prizeNames,
-                    checked: selectedNames,
-                    onSelected: ((List<String> checked) => setState (() { selectedNames = checked; }) )),
-              )
-            ]
-        )
-    );
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: Color.fromARGB(0xFF, 0x25, 0x82, 0xF2), title: Text("Project Submission Form")),
+      appBar: PreferredSize(
+          child: new AppBar(
+            title: new Text(
+              'Project Submission Form',
+              textAlign: TextAlign.center,
+              style: new TextStyle(
+                fontSize: 20,
+              ),
+            ),
+            backgroundColor: Color.fromARGB(255, 37, 130, 242),
+          ),
+          preferredSize: Size.fromHeight(60)),
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
@@ -345,8 +305,6 @@ class _FormScreenState extends State<FormScreen> {
                   _buildPresURL(),
                   _buildVidURL(),
                   _buildPresentingLive(),
-                  _buildPrizes(),
-                  SizedBox(height: 10),
                   RaisedButton(
                     color: Color.fromARGB(0xFF, 0x5D, 0x5F, 0x61),
                     child: Text(
@@ -373,7 +331,27 @@ class _FormScreenState extends State<FormScreen> {
                       //Send to API
                       submitProject(_projName, _projDesc, teamID, token, _githubUrl, _presUrl, _vidUrl, isPresenting, projectID, selectedIds, _showDialog);
                     },
-                  )
+                  ),
+                  RaisedButton(
+                    color: Color.fromARGB(0xFF, 0x5D, 0x5F, 0x61),
+                    child: Text(
+                      'Submit for Prizes',
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                    onPressed: () {
+                      if(hasProject) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) =>
+                              PrizePage()
+                          ),
+                        );
+                      }else{
+                        _showDialog("Please create a project before submitting for prizes.",
+                            "You don't have a project yet!");
+                      }
+                    },
+                  ),
                 ],
               ),
             ),

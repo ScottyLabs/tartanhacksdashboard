@@ -54,7 +54,6 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
               'Swag Points Leaderboard',
               textAlign: TextAlign.center,
               style: new TextStyle(
-                fontWeight: FontWeight.bold,
                 fontSize: 20,
               ),
             ),
