@@ -201,6 +201,7 @@ Future<bool> editProject(String name, String desc, String teamID, String token, 
   print(response.body.toString());
 
   if (response.statusCode == 200) {
+    showDialog("Successfully saved project edits.", "Success");
     return true;
   }
   showDialog(json.decode(response.body)['message'], "Error");
@@ -221,6 +222,7 @@ Future<bool> newProject(String name, String desc, String teamID, String token, S
   final response = await http.post(new_url, headers: headers, body: body);
 
   if (response.statusCode == 200) {
+    showDialog("Successfully created new project.", "Success");
     return true;
   }
   showDialog(json.decode(response.body)['message'], "Error");
