@@ -25,6 +25,7 @@ class _QRPageState extends State<QRPage>{
   bool admin = false;
   String token;
   SharedPreferences prefs;
+  TextEditingController checkinIdController = TextEditingController();
 
   void delHistory(hItem){
     setState(() {
@@ -58,12 +59,14 @@ class _QRPageState extends State<QRPage>{
       List res = data.map((element) =>
           CheckinItem.fromJson(element))
           .where((element) => element.self_checkin_enabled == false).toList();
-      setState(() {
-        List itemIDs = res.map((element) => element.id).toList();
-        if(!itemIDs.contains(scanConfig[0])){
-          scanConfig[0] = res[0].id;
-        }
-      });
+      if(res.length > 0) {
+        setState(() {
+          List itemIDs = res.map((element) => element.id).toList();
+          if (!itemIDs.contains(scanConfig[0])) {
+            scanConfig[0] = res[0].id;
+          }
+        });
+      }
       return res;
     }
     return null;
@@ -103,6 +106,7 @@ class _QRPageState extends State<QRPage>{
         "checkin_item_id": item,
       }
     );
+    print(response.body);
     if(response.statusCode != 200) {
       Map data = json.decode(response.body);
       errorDialog("Check-in Failed!", data['message'], context);
@@ -137,6 +141,12 @@ class _QRPageState extends State<QRPage>{
   }
 
   @override
+  void dispose() {
+    checkinIdController.dispose();
+    super.dispose();
+  }
+
+  @override
   void initState() {
     setup();
     super.initState();
@@ -159,17 +169,18 @@ class _QRPageState extends State<QRPage>{
               backgroundColor: Color.fromARGB(255, 37, 130, 242),
             ),
             preferredSize: Size.fromHeight(60)),
-        body: Center(
+        body: SingleChildScrollView(
             child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 20),
                   SizedBox(
-                    height: 300,
-                    width: 300,
+                    height: 250,
+                    width: 250,
                     child: (id != null) ? QrImage(
                       data: "$id",
                       version: QrVersions.auto,
-                      size: 300.0,
+                      size: 250.0,
                       foregroundColor: Colors.black,
                     )
                     : Align(
@@ -221,6 +232,40 @@ class _QRPageState extends State<QRPage>{
                         )
                       ]
                   ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 8, bottom:8, left:25, right:25),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children:[
+                          Expanded(
+                            child:TextField(
+                                autofocus: false,
+                                controller: checkinIdController,
+                                decoration: InputDecoration(
+                                    labelText: "Check in with event ID",
+                                    border: OutlineInputBorder()
+                                )
+                            ),
+                          ),
+                          const SizedBox(width:10),
+                          Container(
+                            width: 60,
+                            child: RaisedButton(
+                              onPressed: () {
+                                checkinUser(id, checkinIdController.text, context);
+                              },
+                              padding: const EdgeInsets.only(top:10, bottom:10),
+                              color: Color.fromARGB(255, 37, 130, 242),
+                              child: Icon(
+                                  Icons.keyboard_return,
+                                  size: 25,
+                                  color: Colors.white),
+                            ),
+                          )
+                        ]
+                    )
+                  ),
+                  const SizedBox(height:10),
                   if(admin)
                   RaisedButton(
                     onPressed: () {

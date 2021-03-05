@@ -306,23 +306,23 @@ class _FormScreenState extends State<FormScreen> {
   Widget _buildPrizes() {
     return Container(
         padding: new EdgeInsets.all(10.0),
-    child: Column(
-    children: <Widget>[
-    SizedBox(width: 20,),
-    Text('Prizes',textAlign: TextAlign.left, style: TextStyle(fontSize: 20.0), ),
-    Text('Select which prizes you are submitting your project to. All projects are automatically submitted to the ScottyLabs Grand Prize.',textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0), ),
-      SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: CheckboxGroup(
-            padding: new EdgeInsets.all(10.0),
-            orientation: GroupedButtonsOrientation.VERTICAL,
-            margin: const EdgeInsets.only(left: 12.0),
-            labels: prizeNames,
-            checked: selectedNames,
-            onSelected: ((List<String> checked) => setState (() { selectedNames = checked; }) )),
-      )
-    ]
-    )
+        child: Column(
+            children: <Widget>[
+              SizedBox(width: 20,),
+              Text('Prizes',textAlign: TextAlign.left, style: TextStyle(fontSize: 20.0), ),
+              Text('Select which prizes you are submitting your project to. All projects are automatically submitted to the ScottyLabs Grand Prize.',textAlign: TextAlign.left, style: TextStyle(fontSize: 15.0), ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: CheckboxGroup(
+                    padding: new EdgeInsets.all(10.0),
+                    orientation: GroupedButtonsOrientation.VERTICAL,
+                    margin: const EdgeInsets.only(left: 12.0),
+                    labels: prizeNames,
+                    checked: selectedNames,
+                    onSelected: ((List<String> checked) => setState (() { selectedNames = checked; }) )),
+              )
+            ]
+        )
     );
   }
   @override

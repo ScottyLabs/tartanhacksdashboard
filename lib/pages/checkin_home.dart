@@ -177,7 +177,8 @@ class _CheckinHomeScreenState extends State<CheckinHomeScreen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            QRPage()));
+                                            QRPage())
+                                ).then((val)=>getHistory());
                               },
                               color: Color.fromARGB(255, 37, 130, 242),
                               child: new Text(
