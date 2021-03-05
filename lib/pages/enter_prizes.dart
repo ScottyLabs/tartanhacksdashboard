@@ -95,8 +95,6 @@ class _PrizeState extends State<PrizePage>{
       prizes = pzs;
       project = proj;
     });
-    print(token);
-    print(teamID);
   }
 
   @override

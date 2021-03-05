@@ -166,8 +166,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           side: BorderSide(
                               color: Color.fromARGB(255, 37, 130, 242))),
                       onPressed: () {
-                        print(emailController.text);
-                        print(passwordController.text);
                         login(emailController.text, passwordController.text);
                       },
                     ),

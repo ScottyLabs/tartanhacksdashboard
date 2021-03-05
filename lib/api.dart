@@ -34,13 +34,11 @@ Future<Login> checkCredentials(String email, String password) async {
 
     return loginData;
   } else {
-    print(json1);
     return null;
   }
 }
 
 Future<String> resetPassword(String email) async {
-  print(email);
   String url = baseUrl + "auth/forgot";
   Map<String, String> headers = {"Content-type": "application/json"};
   String json1 = '{"email":"' + email + '"}';
@@ -57,7 +55,6 @@ Future<String> resetPassword(String email) async {
 Future<List<Event>> getEvents() async {
   var url = baseUrl+'events/get';
   final response = await http.post(url);
-  print(response.statusCode);
   if (response.statusCode == 200){
     List<Event> EventsList;
     var data = json.decode(response.body) as List;
@@ -76,7 +73,6 @@ Future<bool> addEvents(String name, String unixTime, String description, String 
   String url = baseUrl + "events/new";
   Map<String, String> headers = {"Content-type": "application/json", "Token": token};
   String json1 = '{"name":"' + name + '","timestamp":"' + unixTime + '","description":"' + description + '","zoom_access_enabled":true,"gcal_event_url":"' + gcal + '","zoom_link":"' + zoom_link + '","is_in_person":false,"access_code":' + access_code.toString() + ',"zoom_id":"' + zoom_id + '","zoom_password":"' + zoom_password + '","duration":' + duration + '}';
-  print(json1);
   final response = await http.post(url, headers: headers, body: json1);
   if (response.statusCode == 200) {
     return true;
@@ -96,7 +92,6 @@ Future<bool> editEvents(String eventId, String name, String unixTime, String des
   String url = baseUrl + "events/edit";
   Map<String, String> headers = {"Content-type": "application/json", "Token": token};
   String json1 = '{"_id":"'+eventId+'","name":"' + name + '","timestamp":"' + unixTime + '","description":"' + description + '","zoom_access_enabled":true,"gcal_event_url":"' + gcal + '","zoom_link":"' + zoom_link + '","is_in_person":false,"access_code":' + access_code.toString() + ',"zoom_id":"' + zoom_id + '","zoom_password":"' + zoom_password + '","duration":' + duration + '}';
-  print(json1);
   final response = await http.post(url, headers: headers, body: json1);
   if (response.statusCode == 200) {
     return true;
@@ -125,7 +120,6 @@ Future<List<Prize>> getAllPrizes() async {
     List<Prize> prizes;
     var jsonList = json.decode(response.body) as List;
     prizes = jsonList.map((i) => Prize.fromJson(i)).toList();
-    print(prizes.toString);
     return prizes;
   }
   return null;
@@ -136,21 +130,15 @@ Future<Project> getProject(String teamID, String token, Function showDialog) asy
   const url = "https://thd-api.herokuapp.com/projects/get";
   var body = json.encode({'team_id' : teamID});
 
-  print("printing team ID");
-  print(teamID);
 
-  print(body.toString());
 
   Map<String, String> headers = {"Content-type": "application/json", "Token": token};
 
   final response = await http.post(url, headers: headers, body: body);
 
-  print(response.body.toString());
 
   if (response.statusCode == 200) {
-    print("response = 200");
     var jsonList = json.decode(response.body);
-    print(jsonList.toString());
     if (jsonList.length == 0) {
       showDialog("Could not find an existing project", "No project found");
     }
@@ -188,8 +176,6 @@ Future<bool> editProject(String name, String desc, String teamID, String token, 
   String url = "https://thd-api.herokuapp.com/projects/";
   String new_url = url + "/edit";
 
-  print("printing id again");
-  print(id);
 
   Map<String, String> headers = {"Content-type": "application/json", "Token": token};
 
@@ -198,7 +184,6 @@ Future<bool> editProject(String name, String desc, String teamID, String token, 
 
   final response = await http.post(new_url, headers: headers, body: body);
 
-  print(response.body.toString());
 
   if (response.statusCode == 200) {
     showDialog("Successfully saved project edits.", "Success");

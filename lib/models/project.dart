@@ -16,11 +16,7 @@ class Project{
   factory Project.fromJson(Map<String, dynamic> parsedJson) {
     var jsonList = parsedJson['eligible_prizes'] as List;
     List<String> prizeNames = jsonList.map((i) => Prize.fromJson(i).name).toList();
-    print("prize names here");
-    print(prizeNames.toString());
-    print("testing");
-    print(parsedJson['name']);
-    print(parsedJson['slides_url']);
+
     Project project = new Project(
         name: parsedJson['name'],
         desc: parsedJson['description'],

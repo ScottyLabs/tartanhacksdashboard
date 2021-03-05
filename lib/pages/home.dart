@@ -162,7 +162,6 @@ class _HomeScreenState extends State<HomeScreen> {
     api_response = await getEvents();
     var currentTime = DateTime.now().millisecondsSinceEpoch / 1000;
     int length = 0;
-    print(api_response);
     for (int i = 0; i < api_response.length; i++) {
       if (currentTime < int.parse(api_response[i].timestamp)) {
         if(length <2){

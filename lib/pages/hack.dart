@@ -135,10 +135,6 @@ class _FormScreenState extends State<FormScreen> {
   }
 
   submitProject(String name, String desc, String teamID, String token, String github, String slides, String video, bool presenting, String id, List<String> prizeIds, Function _showDialog) async {
-    print("has project is");
-    print(hasProject);
-    print("printing project id");
-    print(id);
     bool res = false;
     if (hasProject) {
       res = await editProject(name, desc, teamID, token, github, slides, video, presenting, id, _showDialog);
@@ -147,10 +143,8 @@ class _FormScreenState extends State<FormScreen> {
       res = await newProject(name, desc, teamID, token, github, slides, video, presenting, id, _showDialog);
     }
     if (res) {
-      print("success!");
       return;
     }
-    print("failure :(");
   }
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -326,7 +320,6 @@ class _FormScreenState extends State<FormScreen> {
                           selectedIds.add(prizeItem.id);
                         }
                       }
-                      print(selectedIds.toString());
 
                       //Send to API
                       submitProject(_projName, _projDesc, teamID, token, _githubUrl, _presUrl, _vidUrl, isPresenting, projectID, selectedIds, _showDialog);
